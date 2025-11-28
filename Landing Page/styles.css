@@ -1,0 +1,327 @@
+:root {
+    --bg: #05060a;
+    --bg-light: #0e111a;
+    --card: #111524;
+    --primary: #58ffda;
+    --primary-dark: #3adab6;
+    --text: #f8fbff;
+    --muted: #b4bed1;
+    --border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #16223b, #05060a 55%);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.hero {
+    padding: 2rem clamp(1.5rem, 4vw, 4rem) 4rem;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
+.logo {
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.75rem;
+    border-radius: 999px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn.primary {
+    background: var(--primary);
+    color: #04252a;
+    box-shadow: 0 15px 40px rgba(88, 255, 218, 0.25);
+}
+
+.btn.secondary {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: var(--text);
+}
+
+.btn.ghost {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 0.5rem 1rem;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.hero-content {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.hero-text h1 {
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    line-height: 1.1;
+    margin: 1rem 0;
+}
+
+.hero-text p {
+    color: var(--muted);
+}
+
+.hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem 0 2.5rem;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(88, 255, 218, 0.12);
+    color: var(--primary);
+}
+
+.metrics {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.metrics strong {
+    font-size: 1.6rem;
+    display: block;
+}
+
+.hero-visual {
+    position: relative;
+    background: linear-gradient(150deg, rgba(88, 255, 218, 0.1), rgba(24, 52, 92, 0.5));
+    border-radius: 28px;
+    padding: 1rem;
+    border: 1px solid var(--border);
+}
+
+.hero-visual img {
+    border-radius: 20px;
+}
+
+.floating-card {
+    position: absolute;
+    bottom: 12%;
+    right: 8%;
+    background: #0b1729;
+    padding: 0.85rem 1.2rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    font-size: 0.9rem;
+}
+
+main {
+    padding: 0 clamp(1.5rem, 4vw, 4rem) 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+section {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: clamp(2rem, 4vw, 3rem);
+}
+
+.trust {
+    text-align: center;
+    color: var(--muted);
+    border: none;
+    background: transparent;
+}
+
+.trust .logos {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.section-heading {
+    max-width: 720px;
+    margin-bottom: 2rem;
+}
+
+.section-heading h2 {
+    font-size: clamp(2rem, 3.2vw, 2.8rem);
+    margin: 1rem 0;
+}
+
+.section-heading p {
+    color: var(--muted);
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.feature-grid article {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+}
+
+.feature-grid h3 {
+    margin-bottom: 0.8rem;
+}
+
+.comparison-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.comparison-table .column {
+    padding: 1.5rem;
+    border-radius: 20px;
+    background: rgba(6, 13, 25, 0.65);
+}
+
+.comparison-table ul {
+    list-style: none;
+    color: var(--muted);
+}
+
+.comparison-table li {
+    margin-bottom: 0.7rem;
+}
+
+.steps {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+}
+
+.steps li {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 18px;
+    border: 1px solid var(--border);
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+blockquote {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    font-style: italic;
+    color: var(--muted);
+}
+
+blockquote cite {
+    display: block;
+    margin-top: 1rem;
+    font-style: normal;
+    color: var(--text);
+}
+
+.cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    background: linear-gradient(120deg, #0c1c2e, #092932 60%);
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.faq-grid article {
+    padding: 1.5rem;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.footer {
+    padding: 3rem clamp(1.5rem, 4vw, 4rem);
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+    .nav ul {
+        display: none;
+    }
+    .hero-content {
+        margin-top: 2rem;
+    }
+    .metrics {
+        gap: 1rem;
+    }
+}

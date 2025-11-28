@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0187079B2ED9BF5B00952A9B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0187079A2ED9BF5B00952A9B /* StoreKit.framework */; };
 		CALC001 /* CalcCLTPJApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CALC101 /* CalcCLTPJApp.swift */; };
 		CALC002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CALC102 /* ContentView.swift */; };
 		CALC003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CALC103 /* Assets.xcassets */; };
@@ -18,9 +19,12 @@
 		CALC009 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CALC109 /* SettingsView.swift */; };
 		CALC010 /* ProposalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CALC112 /* ProposalsView.swift */; };
 		CALC011 /* TestScenarios.swift in Sources */ = {isa = PBXBuildFile; fileRef = CALC113 /* TestScenarios.swift */; };
+		CALC012 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CALC114 /* StoreManager.swift */; };
+		CALC013 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CALC115 /* PaywallView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0187079A2ED9BF5B00952A9B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		CALC100 /* CalcCLTPJ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalcCLTPJ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CALC101 /* CalcCLTPJApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcCLTPJApp.swift; sourceTree = "<group>"; };
 		CALC102 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -34,6 +38,9 @@
 		CALC110 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CALC112 /* ProposalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalsView.swift; sourceTree = "<group>"; };
 		CALC113 /* TestScenarios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestScenarios.swift; sourceTree = "<group>"; };
+		CALC114 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		CALC115 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		CALC116 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,12 +48,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0187079B2ED9BF5B00952A9B /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		018707992ED9BF5B00952A9B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0187079A2ED9BF5B00952A9B /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CALC111 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -54,6 +70,7 @@
 				CALC108 /* AnalysisView.swift */,
 				CALC109 /* SettingsView.swift */,
 				CALC112 /* ProposalsView.swift */,
+				CALC115 /* PaywallView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -75,9 +92,11 @@
 				CALC104 /* Models.swift */,
 				CALC105 /* ViewModels.swift */,
 				CALC106 /* Components.swift */,
+				CALC114 /* StoreManager.swift */,
 				CALC113 /* TestScenarios.swift */,
 				CALC103 /* Assets.xcassets */,
 				CALC110 /* Info.plist */,
+				CALC116 /* Configuration.storekit */,
 			);
 			path = CalcCLTPJ;
 			sourceTree = "<group>";
@@ -86,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				CALCROOT /* CalcCLTPJ */,
+				018707992ED9BF5B00952A9B /* Frameworks */,
 				CALCPRD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -170,6 +190,8 @@
 				CALC009 /* SettingsView.swift in Sources */,
 				CALC010 /* ProposalsView.swift in Sources */,
 				CALC011 /* TestScenarios.swift in Sources */,
+				CALC012 /* StoreManager.swift in Sources */,
+				CALC013 /* PaywallView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,7 +203,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -234,6 +258,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CalcCLTPJ/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Calculadora CLT x PJ";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -342,7 +368,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -389,6 +417,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CalcCLTPJ/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Calculadora CLT x PJ";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

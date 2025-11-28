@@ -1,0 +1,90 @@
+{
+  "identifier" : "C4B28C8F-3D2E-4B8A-9F1E-5A6B7C8D9E0F",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : false,
+      "internalID" : "A1B2C3D4-E5F6-7890-ABCD-EF1234567890",
+      "localizations" : [
+        {
+          "description" : "Desbloqueie todos os benefícios, propostas ilimitadas e relatórios completos.",
+          "displayName" : "Premium Vitalício",
+          "locale" : "pt_BR"
+        },
+        {
+          "description" : "Unlock all benefits, unlimited proposals and complete reports.",
+          "displayName" : "Lifetime Premium",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.calccltpj.premium",
+      "referenceName" : "Premium",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "1234567890",
+    "_developerTeamID" : "ZTT8S9QUXR",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 757396800,
+    "_locale" : "pt_BR",
+    "_storefront" : "BRA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
