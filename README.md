@@ -1,72 +1,63 @@
-# Calculadora CLT x PJ - Website
+# Calculadora CLT x PJ — Landing page and web simulator for comparing CLT vs PJ compensation in Brazil
 
-Landing page oficial da Calculadora CLT x PJ, ferramenta que ajuda profissionais a comparar propostas de trabalho CLT versus PJ (CNPJ).
+Official website for the CLT x PJ Calculator, a tool that helps professionals compare job offers under CLT (formal employment) versus PJ/CNPJ (independent contractor) regimes in Brazil. Includes a real-time salary simulator and a blog with career and finance content.
 
-## Links
+## Features
 
-- **Site**: https://calculadoracltpj.com.br
-- **App iOS**: https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441
+- Real-time CLT vs PJ salary simulator with annual net income comparison
+- AI-powered comparative analysis (mock mode by default)
+- Blog with articles on career, finance, and labor law
+- iOS app download link and Android waitlist
+- Responsive mobile-first design with glassmorphism theme
+- Scroll animations respecting `prefers-reduced-motion`
 
-## Stack
+## Tech Stack
 
-| Tecnologia | Uso |
-|------------|-----|
-| HTML5 | Estrutura semântica |
-| TailwindCSS (CDN) | Estilização utility-first |
-| CSS Custom | Tema glassmorphism (Navy + Gold) |
-| Vanilla JS | Lógica do simulador |
-| GitHub Actions | CI/CD via FTP |
-| Hostinger | Hospedagem |
+- HTML5 with semantic structure
+- TailwindCSS (CDN) for utility-first styling
+- Custom CSS with Navy + Gold glassmorphism theme
+- Vanilla JavaScript for calculator logic
+- GitHub Actions for CI/CD via FTP
+- Hosted on Hostinger
 
-## Estrutura
+## Screenshots
+
+The landing page features a dark navy theme with gold accents, an interactive salary simulator card, feature highlights, audience-specific sections, and a blog feed.
+
+## Project Structure
 
 ```
 public/
-├── index.html            # Landing page com simulador
-├── css/styles.css        # Estilos customizados
-├── js/app.js             # Lógica da calculadora
-├── blog/                 # Artigos do blog
-├── privacy.html          # Política de Privacidade
-├── terms.html            # Termos de Uso
-└── android-waitlist.html # Waitlist Android
+├── index.html            # Landing page with simulator
+├── css/styles.css        # Custom styles
+├── js/app.js             # Calculator logic
+├── blog/                 # Blog articles
+├── privacy.html          # Privacy Policy
+├── terms.html            # Terms of Use
+└── android-waitlist.html # Android waitlist page
 ```
 
-## Desenvolvimento
+## Getting Started
 
 ```bash
-# Servidor local
+# Local server
 cd public && python -m http.server 8000
 
-# Alternativa com Node
+# Or with Node
 npx serve public
 ```
 
-Acesse http://localhost:8000
+Open http://localhost:8000
 
-## Deploy
+## Deployment
 
-O deploy é automático via GitHub Actions ao fazer push na branch `main`:
+Deployment is automatic via GitHub Actions on push to `main`. The workflow at `.github/workflows/deploy.yml` syncs the `public/` folder to Hostinger via FTP.
 
-```bash
-git push origin main
-```
+## Links
 
-O workflow `.github/workflows/deploy.yml` sincroniza a pasta `public/` para o Hostinger via FTP.
+- **Website**: https://calculadoracltpj.com.br
+- **iOS App**: https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441
 
-## Funcionalidades
+## License
 
-- Simulador CLT vs PJ com cálculo em tempo real
-- Análise comparativa com IA (modo mock por padrão)
-- Blog com conteúdo sobre carreira e finanças
-- Design responsivo mobile-first
-- Animações respeitando `prefers-reduced-motion`
-
-## Documentação
-
-- [CLAUDE.md](./CLAUDE.md) - Guia para assistentes de IA
-- [HOSTINGER.md](./HOSTINGER.md) - Instruções de deploy
-- [calccltxpj_artifacts/](./calccltxpj_artifacts/) - Documentação do produto
-
-## Licença
-
-Todos os direitos reservados.
+All rights reserved.
