@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Public+Sans:wght@300;400;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #ec5b13;
+  --color-brand-deep: #0A192F;
+  --color-brand-electric: #00d2ff;
+  --color-brand-cyan: #00f5ff;
+  --color-background-light: #f6f6f8;
+  --color-background-dark: #0A192F;
+  --color-card-dark: #121426;
+  --color-success: #32D74B;
+  --color-text-secondary-dark: #94A3B8;
+
+  --font-display: "Public Sans", "Sora", sans-serif;
+  --font-publicSans: "Public Sans", sans-serif;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .glass-nav {
+      background: rgba(10, 13, 46, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+body {
+  font-family: 'Public Sans', sans-serif;
+  @apply bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased;
+  min-height: max(884px, 100dvh);
+}
