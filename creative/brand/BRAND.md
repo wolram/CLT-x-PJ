@@ -5,9 +5,19 @@
 `CLT x PJ` e uma marca de clareza para negociacao profissional.
 Ela existe para transformar uma decisao confusa em uma escolha objetiva, segura e bem explicada.
 
+## ICP (Ideal Customer Profile)
+
+Profissional sênior em transição de carreira ou processo seletivo, com 5+ anos de experiência, que recebe propostas CLT e PJ simultâneas.
+
+- Idade: 28-45
+- Localização: Brasil (grandes cidades + remoto)
+- Renda alvo: R$ 10k-50k/mês
+- Áreas: Tech, finanças, consultoria, gestão
+- Comportamento: Pesquisa online, pede opinião a amigos, negocia sem dados
+
 ## Posicionamento
 
-Para profissionais e empresas que precisam comparar uma proposta CLT com uma proposta PJ sem cair em achismo, `CLT x PJ` traduz impostos, beneficios, risco e liquidez em uma leitura clara e acionavel.
+Para profissionais que precisam comparar uma proposta CLT com uma proposta PJ sem cair em achismo, `CLT x PJ` traduz impostos, benefícios, risco e liquidez em uma leitura clara e acionável.
 
 ## Promessa
 
