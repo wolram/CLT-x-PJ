@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO & Identity -->
-    <title>Calculadora CLT x CNPJ - Simule e Compare</title>
+    <title>CLT x PJ | Compare propostas com clareza</title>
     <meta name="description"
-        content="Compare seu salário CLT vs PJ (CNPJ) gratuitamente. Descubra qual regime vale mais a pena com nossa calculadora de impostos e benefícios.">
+        content="Compare CLT e PJ com clareza. Entenda o valor real de salario, beneficios, impostos e risco antes de aceitar uma proposta.">
 
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Calculadora CLT x CNPJ - Vale a pena virar PJ?">
+    <meta property="og:title" content="CLT x PJ | Decida sua proposta com clareza">
     <meta property="og:description"
-        content="Simulação rápida e precisa de salário líquido. Descubra se vale a pena trocar a CLT pelo CNPJ agora mesmo.">
+        content="Compare o valor real de uma proposta CLT ou PJ e tome uma decisao com mais criterio.">
     <meta property="og:url" content="https://calculadoracltpj.com.br/">
     <meta property="og:image"
         content="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&h=630&q=80">
@@ -25,7 +25,7 @@
 
     <!-- Styles -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 
@@ -76,9 +76,8 @@
                 <div class="flex items-center gap-3">
                     <img src="logo.jpg" alt="CLT x PJ Logo"
                         class="w-10 h-10 rounded-xl shadow-lg shadow-amber-500/25 object-cover">
-                    <span class="font-bold text-white text-lg tracking-tight hidden sm:inline">Calculadora CLT x
-                        CNPJ</span>
-                    <span class="font-bold text-white text-lg tracking-tight sm:hidden">CLT x CNPJ</span>
+                    <span class="font-bold text-white text-lg tracking-tight hidden sm:inline">CLT x PJ</span>
+                    <span class="font-bold text-white text-lg tracking-tight sm:hidden">CLT x PJ</span>
                 </div>
 
                 <!-- Desktop Menu -->
@@ -143,15 +142,15 @@
 
                 <!-- Texto Hero -->
                 <div class="max-w-2xl animate-on-scroll">
-                    <span class="tag inline-block mb-6">
-                        Disponível para iOS
+                    <span class="eyebrow mb-6">
+                        Clareza para decidir propostas
                     </span>
                     <h1 class="text-4xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
-                        CLT ou CNPJ? <span class="text-brand">Descubra</span> qual vale mais a pena.
+                        Compare <span class="text-brand">CLT e PJ</span> pelo valor real, nao pelo achismo.
                     </h1>
                     <p class="text-lg text-slate-400 mb-8 leading-relaxed">
-                        Não perca dinheiro na hora de negociar seu salário. Faça uma simulação rápida agora e baixe o
-                        app para uma análise detalhada com impostos e benefícios reais.
+                        Veja com clareza o impacto de salario, beneficios, impostos e risco antes de aceitar uma
+                        proposta. Simule em segundos e aprofunde a analise no app.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <a href="https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441" target="_blank"
@@ -175,19 +174,10 @@
                                     breve</span></span>
                         </a>
                     </div>
-                    <div class="mt-8 flex items-center gap-4 text-sm text-slate-500">
-                        <div class="flex -space-x-2">
-                            <img class="w-8 h-8 rounded-full border-2 border-slate-800"
-                                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=64&h=64"
-                                alt="User">
-                            <img class="w-8 h-8 rounded-full border-2 border-slate-800"
-                                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=64&h=64"
-                                alt="User">
-                            <img class="w-8 h-8 rounded-full border-2 border-slate-800"
-                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=64&h=64"
-                                alt="User">
-                        </div>
-                        <p>Junte-se a milhares de profissionais</p>
+                    <div class="hero-proof mt-8">
+                        <span>Comparacao anual liquida</span>
+                        <span>Beneficios e impostos no mesmo quadro</span>
+                        <span>Feito para negociacao real</span>
                     </div>
                 </div>
 
@@ -215,7 +205,7 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-semibold text-slate-300 mb-2">Proposta CNPJ
+                                <label class="block text-sm font-semibold text-slate-300 mb-2">Proposta PJ
                                     (Mensal)</label>
                                 <div class="relative">
                                     <input type="text" id="input-pj" value="9500"
@@ -240,7 +230,7 @@
                                 </div>
 
                                 <div class="flex justify-between items-center mb-2">
-                                    <span class="text-slate-400">CNPJ (Simples Nacional)</span>
+                                    <span class="text-slate-400">PJ estimado</span>
                                     <span id="res-pj" class="font-bold text-lg text-brand">R$ 0,00</span>
                                 </div>
                                 <div class="w-full bg-slate-700/50 rounded-full h-2">
@@ -257,7 +247,7 @@
                                 <div class="mb-4">
                                     <button onclick="handleAnalysisClick()" id="btn-ia"
                                         class="tag text-xs font-semibold px-4 py-2 hover:bg-indigo-500/30 transition flex items-center justify-center mx-auto mb-2 cursor-pointer">
-                                        Ver Leitura Comparativa
+                                        Ver leitura da proposta
                                     </button>
                                     <div id="ia-result"
                                         class="hidden text-left text-sm text-slate-400 glass p-4 rounded-xl italic">
@@ -266,7 +256,7 @@
                                 <div class="flex flex-col items-center gap-3 mb-4">
                                     <button id="btn-analise-pro"
                                         class="text-xs font-semibold text-slate-400 glass px-4 py-2.5 rounded-full hover:border-slate-500 hover:text-white transition inline-flex items-center justify-center w-full sm:w-64 cursor-pointer">
-                                        Quero uma análise mais profunda
+                                        Quero apoio para negociar
                                     </button>
                                     <div id="analise-opcoes" class="hidden w-full">
                                         <div class="flex flex-col sm:flex-row gap-3 justify-center">
@@ -285,10 +275,10 @@
                                 <a href="https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441"
                                     target="_blank"
                                     class="block w-full bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-400 text-slate-900 text-center font-bold py-4 rounded-xl hover:shadow-lg hover:shadow-amber-500/30 transition">
-                                    Ver Cálculo Completo no App
+                                    Abrir comparacao completa no app
                                 </a>
                                 <p class="text-xs text-slate-500 mt-3 text-center">
-                                    *Valores estimados. Baixe o app para cálculo exato de IR, INSS e benefícios.
+                                    *Valores estimados. O app aprofunda impostos, beneficios e cenarios.
                                 </p>
                             </div>
                         </div>
@@ -346,9 +336,8 @@
     <section id="beneficios" class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
-                <h2 class="text-3xl font-bold text-white mb-4">Por que usar nosso app?</h2>
-                <p class="text-slate-400 text-lg">Muitas calculadoras online escondem os custos reais. Nosso app
-                    considera tudo.</p>
+                <h2 class="text-3xl font-bold text-white mb-4">Uma marca feita para decisao, nao so simulacao</h2>
+                <p class="text-slate-400 text-lg">Menos ruido, mais contexto para comparar propostas de forma justa.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-6">
@@ -361,8 +350,8 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Cálculo Preciso</h3>
-                    <p class="text-slate-400">Consideramos INSS, IRPF, Férias, 13º, FGTS e até custos mensais do CNPJ
+                    <h3 class="text-xl font-bold text-white mb-2">Comparacao com criterio</h3>
+                    <p class="text-slate-400">Consideramos INSS, IRPF, ferias, 13o, FGTS e custos recorrentes do PJ
                         como contador.</p>
                 </div>
 
@@ -375,8 +364,8 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Simples Nacional vs Lucro Presumido</h3>
-                    <p class="text-slate-400">O app seleciona automaticamente o melhor anexo tributário para o seu
+                    <h3 class="text-xl font-bold text-white mb-2">Leitura fiscal mais realista</h3>
+                    <p class="text-slate-400">O app ajuda a aproximar o regime tributario mais coerente para o seu
                         perfil.</p>
                 </div>
 
@@ -389,8 +378,8 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Relatórios PDF</h3>
-                    <p class="text-slate-400">Gere um PDF detalhado da simulação para apresentar ao recrutador ou
+                    <h3 class="text-xl font-bold text-white mb-2">Material para negociar melhor</h3>
+                    <p class="text-slate-400">Gere um PDF detalhado da simulacao para apresentar ao recrutador ou
                         guardar.</p>
                 </div>
             </div>
@@ -401,8 +390,8 @@
     <section class="py-20 border-t border-slate-800/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-12 animate-on-scroll">
-                <h2 class="text-3xl font-bold text-white mb-4">Feito para todos os lados da negociação</h2>
-                <p class="text-slate-400 text-lg">Clareza para alinhar expectativas e fechar acordos com transparência.
+                    <h2 class="text-3xl font-bold text-white mb-4">Feito para todos os lados da negociacao</h2>
+                    <p class="text-slate-400 text-lg">Clareza para alinhar expectativa, margem e seguranca antes de fechar.
                 </p>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
@@ -532,8 +521,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-8 md:mb-0">
-                    <h2 class="text-2xl font-bold text-white">Calculadora CLT x CNPJ</h2>
-                    <p class="text-slate-500 mt-2">Tome a melhor decisão para sua carreira.</p>
+                    <h2 class="text-2xl font-bold text-white">CLT x PJ</h2>
+                    <p class="text-slate-500 mt-2">Clareza para comparar propostas e negociar melhor sua carreira.</p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-4 items-center">
                     <a href="https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441" target="_blank"
@@ -554,7 +543,7 @@
             </div>
             <div
                 class="border-t border-slate-800/50 mt-10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
-                <p>&copy; 2025 Calculadora CLT x CNPJ. Todos os direitos reservados.</p>
+                <p>&copy; 2025 CLT x PJ. Todos os direitos reservados.</p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
                     <a href="blog/index.html" class="hover:text-white transition">Blog</a>
                     <a href="privacy.html" class="hover:text-white transition">Privacidade</a>

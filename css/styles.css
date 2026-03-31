@@ -1,25 +1,25 @@
 /* ============================================
-   DARK FUTURISTIC THEME - GLASSMORPHISM
+   BRAND SYSTEM - CLARITY + CONFIDENCE
    ============================================ */
 
-/* CSS Variables - NAVY + GOLD THEME */
+/* CSS Variables - INK + GOLD THEME */
 :root {
-    --bg-primary: #0d1a2d;
-    --bg-secondary: #152238;
-    --bg-tertiary: #1a2744;
-    --glass-bg: rgba(201, 162, 39, 0.02);
-    --glass-border: rgba(201, 162, 39, 0.1);
-    --glass-hover: rgba(201, 162, 39, 0.05);
-    --accent-primary: #c9a227;
-    --accent-secondary: #d4af37;
-    --accent-tertiary: #e6c547;
-    --accent-cyan: #c9a227;
-    --accent-gradient: linear-gradient(135deg, #c9a227, #d4af37, #e6c547);
-    --text-primary: #f8fafc;
-    --text-secondary: #a0aec0;
-    --text-muted: #718096;
-    --glow-primary: rgba(201, 162, 39, 0.15);
-    --glow-secondary: rgba(212, 175, 55, 0.1);
+    --bg-primary: #08111f;
+    --bg-secondary: #101b2e;
+    --bg-tertiary: #17253a;
+    --glass-bg: rgba(255, 255, 255, 0.035);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-hover: rgba(255, 255, 255, 0.06);
+    --accent-primary: #d3a63d;
+    --accent-secondary: #e0b85f;
+    --accent-tertiary: #f4d793;
+    --accent-cyan: #d3a63d;
+    --accent-gradient: linear-gradient(135deg, #f4d793, #e0b85f, #d3a63d);
+    --text-primary: #f5f7fb;
+    --text-secondary: #b8c2d3;
+    --text-muted: #7d8ba1;
+    --glow-primary: rgba(211, 166, 61, 0.18);
+    --glow-secondary: rgba(244, 215, 147, 0.12);
 }
 
 /* Global Styles */
@@ -32,14 +32,14 @@ html {
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
 }
 
-/* Animated Background */
+/* Ambient Background */
 body::before {
     content: '';
     position: fixed;
@@ -55,7 +55,7 @@ body::before {
     z-index: -1;
 }
 
-/* Glassmorphism Base */
+/* Surface System */
 .glass {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
@@ -65,7 +65,7 @@ body::before {
 }
 
 .glass-card {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -84,7 +84,7 @@ body::before {
 
 /* Navbar Glass */
 .navbar-glass {
-    background: rgba(10, 10, 15, 0.8);
+    background: rgba(6, 11, 22, 0.82);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -231,6 +231,49 @@ body::before {
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px var(--glow-primary);
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    padding: 0.5rem 0.9rem;
+    background: rgba(255, 255, 255, 0.04);
+    color: #d9e0ea;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.eyebrow::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--accent-secondary);
+    box-shadow: 0 0 12px var(--glow-primary);
+}
+
+.hero-proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.hero-proof span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 600;
 }
 
 .btn-secondary {

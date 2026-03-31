@@ -1,59 +1,90 @@
-# cltxpj.app.br — Landing page and web simulator for the CLT x PJ Calculator app
+# cltxpj.app.br — CLT x PJ Calculator
 
-Marketing website for the CLT x PJ Calculator, a Brazilian tool that helps professionals compare take-home pay between CLT (formal employment) and CNPJ/PJ (independent contractor) regimes. Features a real-time salary simulator, blog content, and app store links.
+Marketing website and admin dashboard for the CLT x PJ Calculator, a Brazilian tool that helps professionals compare take-home pay between CLT (formal employment) and CNPJ/PJ (independent contractor) regimes.
 
 ## Features
 
 - Interactive CLT vs CNPJ salary simulator with live annual net income comparison
-- Comparative bar chart visualization
-- AI-powered comparative reading (mock mode)
+- Admin dashboard at `/admin` for reviewing waitlist submissions and telemetry
+- Netlify serverless functions for data collection and dashboard API
 - Blog with articles on career, finance, and tax law
 - iOS App Store link and Android waitlist page
 - Mobile-first responsive design with glassmorphism dark theme (Navy + Gold)
-- Scroll-triggered animations with `prefers-reduced-motion` support
-- Privacy policy and terms of use pages
 
 ## Tech Stack
 
-- HTML5 with semantic markup
-- TailwindCSS (CDN)
-- Custom CSS with glassmorphism effects
-- Vanilla JavaScript
-- Inter font via Google Fonts
-
-## Screenshots
-
-The site uses a dark navy background with gold accent colors. The hero section features an interactive simulator card where users input CLT salary and PJ proposal to see estimated annual net income side by side.
+- Static HTML5 landing page with TailwindCSS (CDN) and vanilla JavaScript
+- React + Vite admin dashboard
+- Netlify serverless functions (JS)
+- Netlify Forms / Brevo for waitlist collection
 
 ## Project Structure
 
 ```
-├── index.html                  # Main landing page with simulator
-├── css/styles.css              # Custom styles
-├── js/app.js                   # Calculator logic
-├── blog/                       # Blog articles (HTML pages)
-├── privacy.html                # Privacy policy
-├── terms.html                  # Terms of use
-├── android-waitlist.html       # Android waitlist signup
-├── android-waitlist-success.html # Waitlist confirmation
-├── logo.jpg                    # App logo
-└── tests/                      # JavaScript tests
+├── index.html                      # Main landing page with simulator
+├── css/styles.css                  # Custom styles
+├── js/app.js                       # Calculator logic
+├── blog/                           # Blog articles
+├── admin/                          # React admin dashboard (source)
+├── admin-dist/                     # Built admin app (generated)
+├── netlify/functions/              # Serverless functions
+│   ├── dashboard.js                # GET submissions + telemetry summary
+│   ├── submit.js                   # POST new waitlist submission
+│   ├── telemetry.js                # POST telemetry event
+│   └── health.js                   # GET health check
+├── privacy.html
+├── terms.html
+├── android-waitlist.html
+├── android-waitlist-success.html
+├── netlify.toml
+└── .github/workflows/deploy.yml
 ```
 
 ## Getting Started
 
+### Landing page
+
 ```bash
 # Serve locally
 python -m http.server 8000
-
-# Or with Node
+# Or
 npx serve .
-
-# Run tests
-npm test
 ```
 
-Open http://localhost:8000
+### Admin dashboard
+
+```bash
+cd admin
+npm install
+npm run dev        # dev server at http://localhost:5173/admin/
+npm run build      # outputs to ../admin-dist/
+```
+
+### Environment variables
+
+| Variable | Description | Required |
+|---|---|---|
+| `VITE_ADMIN_PASSWORD` | Password for admin dashboard access | Yes (deploy) |
+| `NETLIFY_AUTH_TOKEN` | Netlify personal access token | Yes (CI/CD) |
+| `NETLIFY_SITE_ID` | Netlify site ID | Yes (CI/CD) |
+
+## Deployment
+
+Push to `main` — GitHub Actions builds the admin app and deploys everything to Netlify.
+
+Required repository secrets:
+- `NETLIFY_AUTH_TOKEN`
+- `NETLIFY_SITE_ID`
+- `VITE_ADMIN_PASSWORD`
+
+## Admin Dashboard
+
+Access at `https://cltxpj.app.br/admin`. Protected by password auth (`VITE_ADMIN_PASSWORD`).
+
+Features:
+- Submissions table with name, email, role, challenge, source, date, activation status
+- Event summary with counts by type
+- CSV export of all submissions
 
 ## Links
 

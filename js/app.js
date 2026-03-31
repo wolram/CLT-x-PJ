@@ -60,7 +60,7 @@ function calculate() {
 
     if (pjTotal > cltTotal) {
         const diff = pjTotal - cltTotal;
-        verdict.innerHTML = `CNPJ rende aprox. <span class="text-amber-400 font-bold">+${formatMoney(diff)}</span> por ano`;
+        verdict.innerHTML = `PJ rende aprox. <span class="text-amber-400 font-bold">+${formatMoney(diff)}</span> por ano`;
         resPj.className = "font-bold text-amber-400 text-lg";
         barPj.className = "bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-400 h-2 rounded-full transition-all duration-500";
     } else {
