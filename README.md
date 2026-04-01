@@ -5,38 +5,51 @@ Plataforma de comparacao de propostas CLT x PJ. Marketing website com simulador 
 ## Features
 
 - Interactive CLT vs PJ salary simulator with live annual net income comparison
+- Full comparison wizard with step-by-step flow and detailed breakdowns
 - Admin dashboard at `/admin` for reviewing waitlist submissions and telemetry
-- Supabase backend for data collection and dashboard API
-- Blog with articles on career, finance, and tax law
+- Blog with 53 articles on career, finance, and tax law
 - iOS App Store link and Android waitlist page
 - Mobile-first responsive design with glassmorphism dark theme (Navy + Gold)
-- Brand-aligned copy: decision clarity over calculator framing
+- LGPD-compliant cookie consent
+- Analytics funnel tracking (GA4-ready)
 
 ## Tech Stack
 
 - Static HTML5 landing page with TailwindCSS (CDN) and vanilla JavaScript
 - React + Vite admin dashboard
-- Supabase (PostgreSQL) for backend API and database
-- Brevo for waitlist email collection
+- Express API server (MySQL) for submissions and telemetry
 - Hostinger shared hosting (hPanel)
 
 ## Project Structure
 
 ```
 ├── index.html                      # Main landing page with simulator
-├── css/styles.css                  # Custom styles
-├── js/app.js                       # Calculator logic
-├── blog/                           # Blog articles
+├── comparar.html                   # Full comparison wizard
+├── css/
+│   ├── styles.css                  # Global styles
+│   ├── comparar.css                # Comparison page styles
+│   └── cookie-consent.css          # Cookie banner styles
+├── js/
+│   ├── app.js                      # Landing page logic
+│   ├── tax-engine.js               # CLT tax engine (INSS, IRRF, FGTS, 13th, vacation)
+│   ├── pj-tax-engine.js            # PJ tax engine (Simples Nacional, MEI, Lucro Presumido)
+│   ├── comparar.js                 # Comparison wizard logic
+│   ├── analytics.js                # Funnel tracking
+│   ├── cookie-consent.js           # LGPD consent
+│   └── api-client.js               # API client for admin dashboard
+├── blog/                           # 53 blog articles
 ├── admin/                          # React admin dashboard (source)
 │   └── src/
-│       ├── App.jsx                 # Dashboard UI with Supabase client
-│       └── lib/supabase.js         # Supabase client configuration
+│       └── App.jsx                 # Dashboard UI
 ├── admin-dist/                     # Built admin app (generated)
+├── api/                            # Express API server (separate deployment)
+│   └── src/
+│       ├── server.js               # Express app
+│       ├── db/                     # MySQL connection pool
+│       ├── middleware/             # Auth middleware
+│       └── routes/                 # API routes
+├── tests/                          # Unit tests (74 passing)
 ├── .htaccess                       # Hostinger routing + security headers
-├── privacy.html
-├── terms.html
-├── android-waitlist.html
-├── android-waitlist-success.html
 └── .github/workflows/deploy.yml    # CI/CD → Hostinger via SFTP
 ```
 
@@ -60,81 +73,70 @@ npm run dev        # dev server at http://localhost:5173/admin/
 npm run build      # outputs to ../admin-dist/
 ```
 
+### API server
+
+```bash
+cd api
+npm install
+cp .env.example .env   # configure DATABASE_URL, ADMIN_PASSWORD
+npm start              # server at http://localhost:3001
+```
+
+### Tests
+
+```bash
+npm test
+```
+
 ### Environment variables
 
 | Variable | Description | Required |
 |---|---|---|
 | `VITE_ADMIN_PASSWORD` | Password for admin dashboard access | Yes (deploy) |
-| `VITE_SUPABASE_URL` | Supabase project URL | Yes (deploy) |
-| `VITE_SUPABASE_ANON_KEY` | Supabase anon/public key | Yes (deploy) |
 | `FTP_SERVER` | Hostinger SFTP host | Yes (CI/CD) |
 | `FTP_USERNAME` | Hostinger SFTP username | Yes (CI/CD) |
 | `FTP_PASSWORD` | Hostinger SFTP password | Yes (CI/CD) |
+| `DATABASE_URL` | MySQL connection string | Yes (API server) |
+| `ADMIN_PASSWORD` | API admin password | Yes (API server) |
 
 ## Deployment
 
-Push to `main` — GitHub Actions builds the admin app and deploys everything to Hostinger via SFTP.
+### Frontend (Hostinger)
+
+Push to `main` — GitHub Actions runs tests, builds the admin app, and deploys to Hostinger via SFTP.
 
 Required repository secrets:
 - `FTP_SERVER` — Hostinger SFTP host (from hPanel → Files → FTP Accounts)
 - `FTP_USERNAME` — Hostinger SFTP username
 - `FTP_PASSWORD` — Hostinger SFTP password
 - `VITE_ADMIN_PASSWORD` — Admin dashboard password
-- `VITE_SUPABASE_URL` — Supabase project URL
-- `VITE_SUPABASE_ANON_KEY` — Supabase anon key
 
-## Supabase Setup
+### API Server (separate)
 
-### Required tables
+The Express API server (`api/`) needs a separate deployment target (Railway, Render, Fly.io, or similar). It is excluded from the Hostinger deploy.
 
-```sql
--- Waitlist submissions
-create table waitlist_submissions (
-  id uuid default gen_random_uuid() primary key,
-  name text,
-  email text not null,
-  role text,
-  challenge text,
-  source text,
-  activation_status text default 'pending',
-  created_at timestamptz default now()
-);
+## Database Setup
 
--- Telemetry events
-create table telemetry_events (
-  id uuid default gen_random_uuid() primary key,
-  event_type text not null,
-  event_data jsonb,
-  created_at timestamptz default now()
-);
-```
-
-### Row Level Security (RLS)
+The API server uses MySQL. Required tables:
 
 ```sql
--- Enable RLS
-alter table waitlist_submissions enable row level security;
-alter table telemetry_events enable row level security;
+CREATE TABLE waitlist_submissions (
+  id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+  name TEXT,
+  email TEXT NOT NULL,
+  role TEXT,
+  challenge TEXT,
+  source TEXT,
+  activation_status TEXT DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
--- Allow public inserts for waitlist
-create policy "Public can insert waitlist submissions"
-  on waitlist_submissions for insert with check (true);
-
--- Allow public inserts for telemetry
-create policy "Public can insert telemetry events"
-  on telemetry_events for insert with check (true);
-
--- Admin reads require authentication (handled via service role key in production)
--- For MVP, allow anon reads on dashboard (password gate is at app level)
-create policy "Anon can read waitlist submissions"
-  on waitlist_submissions for select using (true);
-
--- Allow admin to update status (password gate is at app level)
-create policy "Admin can update waitlist submissions"
-  on waitlist_submissions for update using (true);
-
-create policy "Anon can read telemetry events"
-  on telemetry_events for select using (true);
+CREATE TABLE telemetry_events (
+  id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+  event_type TEXT NOT NULL,
+  event_data JSON,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ## Admin Dashboard
@@ -149,5 +151,5 @@ Features:
 
 ## Links
 
-- **Website**: https://calculadoracltpj.com.br
+- **Website**: https://cltxpj.app.br
 - **iOS App**: https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441
