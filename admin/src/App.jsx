@@ -1,57 +1,56 @@
 import { useState, useEffect, useCallback } from 'react'
 import './App.css'
-import { supabase } from './lib/supabase'
+import {
+  adminLogin,
+  adminGetSubmissions,
+  adminUpdateSubmissionStatus,
+  adminGetTelemetrySummary,
+} from '../../js/api-client.js'
 
+const ADMIN_USERNAME = import.meta.env.VITE_ADMIN_USERNAME || 'admin'
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || ''
+const STATUS_OPTIONS = ['pending', 'contacted', 'scheduled', 'onboarded', 'not_interested']
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false)
+  const [usernameInput, setUsernameInput] = useState('')
   const [passwordInput, setPasswordInput] = useState('')
   const [authError, setAuthError] = useState('')
   const [submissions, setSubmissions] = useState([])
   const [telemetry, setTelemetry] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [updating, setUpdating] = useState({})
+  const [authHeader, setAuthHeader] = useState('')
 
   const handleLogin = useCallback((e) => {
     e.preventDefault()
-    if (ADMIN_PASSWORD && passwordInput === ADMIN_PASSWORD) {
-      setAuthenticated(true)
-      setAuthError('')
-    } else if (!ADMIN_PASSWORD) {
-      setAuthenticated(true)
-      setAuthError('')
-    } else {
-      setAuthError('Senha incorreta')
+    setAuthError('')
+    
+    const username = usernameInput || ADMIN_USERNAME
+    const password = passwordInput || ADMIN_PASSWORD
+    
+    if (!password && !ADMIN_PASSWORD) {
+      setAuthError('Password required')
+      return
     }
-  }, [passwordInput])
+
+    const { authHeader: header } = adminLogin(username, password)
+    setAuthHeader(header)
+    setAuthenticated(true)
+  }, [usernameInput, passwordInput])
 
   const fetchData = useCallback(async () => {
+    if (!authHeader) return
+    
     setLoading(true)
     setError('')
     try {
-      const { data: submissionsData, error: submissionsError } = await supabase
-        .from('waitlist_submissions')
-        .select('*')
-        .order('created_at', { ascending: false })
-
-      if (submissionsError) throw submissionsError
-
-      const { data: telemetryData, error: telemetryError } = await supabase
-        .from('telemetry_events')
-        .select('event_type')
-
-      if (telemetryError) throw telemetryError
-
-      const eventCounts = {}
-      if (telemetryData) {
-        telemetryData.forEach(event => {
-          eventCounts[event.event_type] = (eventCounts[event.event_type] || 0) + 1
-        })
-      }
+      const submissionsData = await adminGetSubmissions(authHeader)
+      const telemetryData = await adminGetTelemetrySummary(authHeader)
 
       setSubmissions(submissionsData || [])
-      setTelemetry({ eventCounts, totalEvents: telemetryData?.length || 0 })
+      setTelemetry(telemetryData || { eventCounts: {}, totalEvents: 0 })
     } catch (err) {
       setError(`Failed to load data: ${err.message}`)
       setSubmissions([])
@@ -59,7 +58,7 @@ function App() {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [authHeader])
 
   const exportCSV = useCallback(() => {
     if (!submissions.length) return
@@ -70,7 +69,7 @@ function App() {
       s.role || '',
       s.challenge || '',
       s.source || '',
-      s.date || '',
+      s.created_at || '',
       s.activation_status || ''
     ].map(v => `"${v.replace(/"/g, '""')}"`).join(','))
     const csv = [headers.join(','), ...rows].join('\n')
@@ -83,6 +82,20 @@ function App() {
     URL.revokeObjectURL(url)
   }, [submissions])
 
+  const updateStatus = useCallback(async (id, newStatus) => {
+    setUpdating(prev => ({ ...prev, [id]: true }))
+    try {
+      await adminUpdateSubmissionStatus(authHeader, id, newStatus)
+      setSubmissions(prev => prev.map(s => 
+        s.id === id ? { ...s, activation_status: newStatus } : s
+      ))
+    } catch (err) {
+      setError(`Failed to update status: ${err.message}`)
+    } finally {
+      setUpdating(prev => ({ ...prev, [id]: false }))
+    }
+  }, [authHeader])
+
   useEffect(() => {
     if (authenticated) fetchData()
   }, [authenticated, fetchData])
@@ -94,11 +107,17 @@ function App() {
           <h1>Admin — cltxpj.app.br</h1>
           <form onSubmit={handleLogin}>
             <input
+              type="text"
+              placeholder="Username"
+              value={usernameInput}
+              onChange={(e) => setUsernameInput(e.target.value)}
+              autoFocus
+            />
+            <input
               type="password"
-              placeholder="Senha de acesso"
+              placeholder="Password"
               value={passwordInput}
               onChange={(e) => setPasswordInput(e.target.value)}
-              autoFocus
             />
             <button type="submit">Entrar</button>
             {authError && <p className="error">{authError}</p>}
@@ -165,11 +184,20 @@ function App() {
                     <td>{s.role || '—'}</td>
                     <td className="cell-challenge">{s.challenge || '—'}</td>
                     <td>{s.source || '—'}</td>
-                    <td>{s.date ? new Date(s.date).toLocaleDateString('pt-BR') : '—'}</td>
+                    <td>{s.created_at ? new Date(s.created_at).toLocaleDateString('pt-BR') : '—'}</td>
                     <td>
-                      <span className={`status-badge status-${(s.activation_status || 'unknown').toLowerCase()}`}>
-                        {s.activation_status || 'unknown'}
-                      </span>
+                      <select
+                        className={`status-select status-${(s.activation_status || 'unknown').toLowerCase()}`}
+                        value={s.activation_status || 'pending'}
+                        onChange={(e) => updateStatus(s.id, e.target.value)}
+                        disabled={updating[s.id]}
+                      >
+                        {STATUS_OPTIONS.map(opt => (
+                          <option key={opt} value={opt}>
+                            {opt.replace('_', ' ')}
+                          </option>
+                        ))}
+                      </select>
                     </td>
                   </tr>
                 ))}

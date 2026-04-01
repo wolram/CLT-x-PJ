@@ -129,6 +129,10 @@ create policy "Public can insert telemetry events"
 create policy "Anon can read waitlist submissions"
   on waitlist_submissions for select using (true);
 
+-- Allow admin to update status (password gate is at app level)
+create policy "Admin can update waitlist submissions"
+  on waitlist_submissions for update using (true);
+
 create policy "Anon can read telemetry events"
   on telemetry_events for select using (true);
 ```
@@ -139,6 +143,7 @@ Access at `https://cltxpj.app.br/admin`. Protected by password auth (`VITE_ADMIN
 
 Features:
 - Submissions table with name, email, role, challenge, source, date, activation status
+- Inline status dropdown to update outreach status (pending, contacted, scheduled, onboarded, not_interested)
 - Event summary with counts by type
 - CSV export of all submissions
 

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Comparar CLT x PJ | Descubra qual proposta vale mais</title>
+    <meta name="description" content="Compare propostas CLT e PJ lado a lado. Impostos, beneficios, FGTS, ferias — tudo calculado automaticamente.">
+    <meta name="robots" content="noindex">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/comparar.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            bg: '#0a0a0f',
+                            bgSecondary: '#14141a',
+                            bgTertiary: '#1e1e28',
+                            gold: '#d4a853',
+                            goldLight: '#e8c878',
+                            goldDark: '#b8923f',
+                            textPrimary: '#ffffff',
+                            textSecondary: '#b0b0bc',
+                            textMuted: '#6e6e7a',
+                            success: '#34d399',
+                            warning: '#fbbf24',
+                            error: '#f87171',
+                            border: '#2a2a36',
+                            borderLight: '#3a3a48',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="antialiased">
+
+    <!-- Navbar -->
+    <nav class="navbar-glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="logo.jpg" alt="CLT x PJ Logo" class="w-10 h-10 rounded-xl shadow-lg shadow-amber-500/25 object-cover">
+                    <span class="font-bold text-white text-lg tracking-tight">CLT x PJ</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <a href="index.html" class="text-slate-400 hover:text-white font-medium transition text-sm hidden sm:inline">Voltar</a>
+                    <a href="https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441" target="_blank" class="bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-400 text-slate-900 px-4 py-2 rounded-full font-semibold text-sm hover:shadow-lg hover:shadow-amber-500/30 transition">
+                        Baixar App
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Comparison Page -->
+    <div class="comparison-page">
+        <div class="comparison-container">
+
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl lg:text-4xl font-extrabold text-white mb-3">Compare suas propostas</h1>
+                <p class="text-slate-400 text-lg max-w-xl mx-auto">Preencha os dados de cada proposta e veja o valor real lado a lado.</p>
+            </div>
+
+            <!-- Step Indicator -->
+            <div class="step-indicator" id="step-indicator">
+                <div class="step-dot active" data-step="1"></div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="2"></div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="3"></div>
+            </div>
+
+            <!-- Step 1: CLT Input -->
+            <div id="step-clt" class="glass-card p-6 lg:p-8 mb-6">
+                <div class="form-section-title">
+                    <div class="icon clt">
+                        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    Proposta CLT
+                </div>
+
+                <div class="input-group">
+                    <label>Salario bruto mensal <span class="hint">(antes dos descontos)</span></label>
+                    <input type="text" id="clt-salary" class="input-field w-full pl-4 pr-4 py-3.5 rounded-xl text-white font-medium text-lg" placeholder="R$ 0,00">
+                </div>
+
+                <div class="toggle-section">
+                    <div class="toggle-header" onclick="toggleSection('clt-benefits')">
+                        <h4>Beneficios</h4>
+                        <svg class="toggle-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="toggle-content" id="clt-benefits">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>VR <span class="hint">(mensal)</span></label>
+                                <input type="text" id="clt-vr" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="R$ 0" value="R$ 700,00">
+                            </div>
+                            <div class="input-group">
+                                <label>VT <span class="hint">(mensal)</span></label>
+                                <input type="text" id="clt-vt" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="R$ 0" value="R$ 280,00">
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>Plano de saude <span class="hint">(mensal)</span></label>
+                                <input type="text" id="clt-health" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="R$ 0" value="R$ 500,00">
+                            </div>
+                            <div class="input-group">
+                                <label>Plano odontologico <span class="hint">(mensal)</span></label>
+                                <input type="text" id="clt-dental" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="R$ 0" value="R$ 50,00">
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>Bonus / PLR <span class="hint">(anual)</span></label>
+                                <input type="text" id="clt-bonus" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="R$ 0" value="R$ 0,00">
+                            </div>
+                            <div class="input-group">
+                                <label>Dependentes <span class="hint">(IRRF)</span></label>
+                                <select id="clt-dependents" class="select-field">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4+</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="goToStep(2)" class="btn-compare mt-4">
+                    Proximo: Proposta PJ
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Step 2: PJ Input -->
+            <div id="step-pj" class="glass-card p-6 lg:p-8 mb-6 hidden">
+                <div class="form-section-title">
+                    <div class="icon pj">
+                        <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    Proposta PJ
+                </div>
+
+                <div class="input-group">
+                    <label>Faturamento bruto mensal <span class="hint">(valor da nota fiscal)</span></label>
+                    <input type="text" id="pj-revenue" class="input-field w-full pl-4 pr-4 py-3.5 rounded-xl text-white font-medium text-lg" placeholder="R$ 0,00">
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Regime tributario</label>
+                        <select id="pj-regime" class="select-field" onchange="onRegimeChange()">
+                            <option value="simples">Simples Nacional</option>
+                            <option value="mei">MEI</option>
+                            <option value="lucroPresumido">Lucro Presumido</option>
+                        </select>
+                    </div>
+                    <div class="input-group" id="pj-anexo-group">
+                        <label>Anexo <span class="hint">(Simples Nacional)</span></label>
+                        <select id="pj-anexo" class="select-field">
+                            <option value="anexo3">Anexo III — Servicos</option>
+                            <option value="anexo5" selected>Anexo V — TI/Consultoria</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="toggle-section">
+                    <div class="toggle-header" onclick="toggleSection('pj-expenses')">
+                        <h4>Custos operacionais</h4>
+                        <svg class="toggle-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="toggle-content" id="pj-expenses">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>Contador <span class="hint">(mensal)</span></label>
+                                <input type="text" id="pj-accountant" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="R$ 0" value="R$ 400,00">
+                            </div>
+                            <div class="input-group">
+                                <label>Outras despesas <span class="hint">(mensal)</span></label>
+                                <input type="text" id="pj-expenses" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="R$ 0" value="R$ 0,00">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 mt-4">
+                    <button onclick="goToStep(1)" class="btn-secondary-outline flex-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
+                        </svg>
+                        Voltar
+                    </button>
+                    <button onclick="goToStep(3)" class="btn-compare flex-1">
+                        Ver resultado
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Results -->
+            <div id="step-results" class="hidden">
+                <div class="flex gap-3 mb-6">
+                    <button onclick="goToStep(1)" class="btn-secondary-outline flex-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
+                        </svg>
+                        Editar valores
+                    </button>
+                    <button onclick="resetComparison()" class="btn-secondary-outline">
+                        Nova comparacao
+                    </button>
+                </div>
+
+                <!-- Winner Banner -->
+                <div class="winner-banner" id="winner-banner">
+                    <div class="winner-label">Proposta mais vantajosa</div>
+                    <div class="winner-name" id="winner-name">—</div>
+                    <div class="winner-diff" id="winner-diff"></div>
+                </div>
+
+                <!-- Comparison Bar -->
+                <div class="comparison-bar-container">
+                    <div class="comparison-bar-label">
+                        <span class="text-green-400">CLT</span>
+                        <span class="text-amber-400">PJ</span>
+                    </div>
+                    <div class="comparison-bar">
+                        <div class="clt-bar" id="bar-clt" style="width: 50%">CLT</div>
+                        <div class="pj-bar" id="bar-pj" style="width: 50%">PJ</div>
+                    </div>
+                </div>
+
+                <!-- Result Cards -->
+                <div class="two-col mb-6">
+                    <div class="result-card clt">
+                        <div class="result-label">CLT — Liquido anual</div>
+                        <div class="result-value" id="res-clt-annual">R$ 0</div>
+                        <div class="result-sub" id="res-clt-monthly">≈ R$ 0/mes</div>
+                    </div>
+                    <div class="result-card pj">
+                        <div class="result-label">PJ — Liquido anual</div>
+                        <div class="result-value" id="res-pj-annual">R$ 0</div>
+                        <div class="result-sub" id="res-pj-monthly">≈ R$ 0/mes</div>
+                    </div>
+                </div>
+
+                <!-- Detailed Breakdown -->
+                <div class="glass-card p-6 lg:p-8 mb-6">
+                    <h3 class="text-lg font-bold text-white mb-4">Detalhamento</h3>
+                    <div class="two-col">
+                        <div>
+                            <h4 class="text-sm font-semibold text-green-400 mb-3">CLT</h4>
+                            <table class="breakdown-table" id="clt-breakdown">
+                                <thead>
+                                    <tr><th>Item</th><th>Valor anual</th></tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-amber-400 mb-3">PJ</h4>
+                            <table class="breakdown-table" id="pj-breakdown">
+                                <thead>
+                                    <tr><th>Item</th><th>Valor anual</th></tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="text-center">
+                    <a href="https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441" target="_blank" class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-400 text-slate-900 font-bold rounded-xl hover:shadow-lg hover:shadow-amber-500/30 transition">
+                        Aprofundar no app
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </a>
+                    <p class="text-xs text-slate-500 mt-3">O app inclui cenarios avancados, exportacao e historico.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-glass py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
+                <p>&copy; 2025 CLT x PJ. Todos os direitos reservados.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="privacy.html" class="hover:text-white transition">Privacidade</a>
+                    <a href="terms.html" class="hover:text-white transition">Termos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Save Indicator -->
+    <div class="save-indicator" id="save-indicator">Salvo automaticamente</div>
+
+    <!-- Analytics -->
+    <script>
+        window.ANALYTICS_ID = '';
+        window.ANALYTICS_DEBUG = false;
+        window.CUSTOM_ANALYTICS_URL = '';
+    </script>
+    <script src="js/cookie-consent.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/tax-engine.js"></script>
+    <script src="js/pj-tax-engine.js"></script>
+    <script src="js/comparar.js"></script>
+</body>
+
+</html>

@@ -251,6 +251,52 @@ tr:hover td {
   text-transform: uppercase;
 }
 
+.status-select {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  border: 1px solid var(--border);
+  background: var(--bg-primary);
+  cursor: pointer;
+}
+
+.status-select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.status-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.status-select.status-pending {
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+.status-select.status-contacted {
+  border-color: #3498db;
+  color: #3498db;
+}
+
+.status-select.status-scheduled {
+  border-color: #9b59b6;
+  color: #9b59b6;
+}
+
+.status-select.status-onboarded {
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.status-select.status-not_interested {
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
 .status-activated {
   background: rgba(46, 204, 113, 0.15);
   color: var(--success);
