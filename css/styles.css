@@ -2,24 +2,24 @@
    BRAND SYSTEM - CLARITY + CONFIDENCE
    ============================================ */
 
-/* CSS Variables - INK + GOLD THEME */
+/* CSS Variables - CLT x PJ BRAND */
 :root {
-    --bg-primary: #08111f;
-    --bg-secondary: #101b2e;
-    --bg-tertiary: #17253a;
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #14141a;
+    --bg-tertiary: #1e1e28;
     --glass-bg: rgba(255, 255, 255, 0.035);
     --glass-border: rgba(255, 255, 255, 0.08);
     --glass-hover: rgba(255, 255, 255, 0.06);
-    --accent-primary: #d3a63d;
-    --accent-secondary: #e0b85f;
-    --accent-tertiary: #f4d793;
-    --accent-cyan: #d3a63d;
-    --accent-gradient: linear-gradient(135deg, #f4d793, #e0b85f, #d3a63d);
-    --text-primary: #f5f7fb;
-    --text-secondary: #b8c2d3;
-    --text-muted: #7d8ba1;
-    --glow-primary: rgba(211, 166, 61, 0.18);
-    --glow-secondary: rgba(244, 215, 147, 0.12);
+    --accent-primary: #d4a853;
+    --accent-secondary: #e8c878;
+    --accent-tertiary: #b8923f;
+    --accent-cyan: #d4a853;
+    --accent-gradient: linear-gradient(135deg, #e8c878, #d4a853, #b8923f);
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0bc;
+    --text-muted: #6e6e7a;
+    --glow-primary: rgba(212, 168, 83, 0.18);
+    --glow-secondary: rgba(232, 200, 120, 0.12);
 }
 
 /* Global Styles */
@@ -32,7 +32,7 @@ html {
 }
 
 body {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;

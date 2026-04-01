@@ -24,23 +24,18 @@ function formatCurrencyInput(value) {
 // --- CORE LOGIC ---
 
 function calculate() {
-    // Busca valores crus dos inputs
     const cltInput = document.getElementById('input-clt');
     const pjInput = document.getElementById('input-pj');
     
-    // Obtém valores numéricos limpos (data-value ou parse direto se não tiver máscara ainda)
-    // Se estivermos usando máscara, o value visual é "R$ 6.000,00", então precisamos limpar
     const cltVal = parseCurrency(cltInput.value) || 0;
     const pjVal = parseCurrency(pjInput.value) || 0;
 
-    // Simulação Simplificada
-    // CLT: (Salário * 13.33 meses) - ~18% descontos médios (INSS+IR) simplificado
-    const cltTotal = (cltVal * 13.33) * 0.82; 
-    
-    // PJ: (Faturamento * 12) - ~10% impostos (Simples Nacional Anexo III/V médio)
-    const pjTotal = (pjVal * 12) * 0.90;
+    const cltResult = calcularCLTAnual(cltVal, getBeneficiosPadrao('mid'));
+    const pjResult = calcularPJAnual(pjVal, { regime: 'simples', anexo: 'anexo3' });
 
-    // Atualiza DOM
+    const cltTotal = cltResult.totalAnualComBeneficios;
+    const pjTotal = pjResult.liquidoAnual;
+
     const resClt = document.getElementById('res-clt');
     const resPj = document.getElementById('res-pj');
     const verdict = document.getElementById('verdict');
@@ -50,8 +45,7 @@ function calculate() {
     resClt.innerText = formatMoney(cltTotal);
     resPj.innerText = formatMoney(pjTotal);
 
-    // Animação das barras
-    const max = Math.max(cltTotal, pjTotal) * 1.1 || 1; // Evita divisão por zero
+    const max = Math.max(cltTotal, pjTotal) * 1.1 || 1;
     const cltPercent = (cltTotal / max) * 100;
     const pjPercent = (pjTotal / max) * 100;
 
@@ -63,11 +57,17 @@ function calculate() {
         verdict.innerHTML = `PJ rende aprox. <span class="text-amber-400 font-bold">+${formatMoney(diff)}</span> por ano`;
         resPj.className = "font-bold text-amber-400 text-lg";
         barPj.className = "bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-400 h-2 rounded-full transition-all duration-500";
+        if (window.CLTxPJAnalytics) {
+            window.CLTxPJAnalytics.funnel.simulationComplete('PJ', cltVal, pjVal);
+        }
     } else {
         const diff = cltTotal - pjTotal;
         verdict.innerHTML = `CLT rende aprox. <span class="text-amber-300 font-bold">+${formatMoney(diff)}</span> por ano`;
         resPj.className = "font-bold text-slate-400 text-lg";
         barPj.className = "bg-slate-500 h-2 rounded-full transition-all duration-500";
+        if (window.CLTxPJAnalytics) {
+            window.CLTxPJAnalytics.funnel.simulationComplete('CLT', cltVal, pjVal);
+        }
     }
 }
 
@@ -129,6 +129,10 @@ async function handleAnalysisClick() {
     const resultDiv = document.getElementById('ia-result');
     const cltInput = document.getElementById('input-clt');
     const pjInput = document.getElementById('input-pj');
+
+    if (window.CLTxPJAnalytics) {
+        window.CLTxPJAnalytics.funnel.analysisRequest();
+    }
 
     // Estado de loading
     const originalText = btn.innerHTML;
@@ -193,31 +197,31 @@ function buildAnalysisPreview(cltVal, pjVal) {
     const diffLabel = formatMoney(Math.abs(diff));
 
     const ranges = [
-        { max: -0.60, msg: "CLT muito superior. A proposta PJ esta fortemente abaixo do piso de mercado para migracao." },
-        { max: -0.50, msg: "CLT claramente mais forte. PJ exigiria renegociacao ampla para cobrir impostos e risco." },
+        { max: -0.60, msg: "CLT muito superior. A proposta PJ está fortemente abaixo do piso de mercado para migração." },
+        { max: -0.50, msg: "CLT claramente mais forte. PJ exigiria renegociação ampla para cobrir impostos e risco." },
         { max: -0.40, msg: "CLT segue bem acima. Considere PJ apenas com ajuste substancial do valor." },
-        { max: -0.35, msg: "CLT ainda vence com folga. Beneficios e estabilidade ampliam essa vantagem." },
-        { max: -0.30, msg: "CLT mais vantajosa. PJ nao compensa perda de beneficios diretos." },
-        { max: -0.25, msg: "CLT melhor no agregado. Um aumento no PJ seria necessario para empatar." },
-        { max: -0.20, msg: "CLT ligeiramente melhor. PJ pode fazer sentido so com ganhos adicionais." },
-        { max: -0.15, msg: "CLT esta na frente. Avalie PJ apenas com custo reduzido e reserva formada." },
+        { max: -0.35, msg: "CLT ainda vence com folga. Benefícios e estabilidade ampliam essa vantagem." },
+        { max: -0.30, msg: "CLT mais vantajosa. PJ não compensa perda de benefícios diretos." },
+        { max: -0.25, msg: "CLT melhor no agregado. Um aumento no PJ seria necessário para empatar." },
+        { max: -0.20, msg: "CLT ligeiramente melhor. PJ pode fazer sentido só com ganhos adicionais." },
+        { max: -0.15, msg: "CLT está na frente. Avalie PJ apenas com custo reduzido e reserva formada." },
         { max: -0.10, msg: "CLT superior em pequena margem. Negocie PJ com folga para impostos." },
-        { max: -0.07, msg: "CLT levemente melhor. PJ precisa incluir estabilidade minima em contrato." },
-        { max: -0.05, msg: "CLT ainda vence. PJ so vale com beneficios equivalentes e aumento." },
-        { max: -0.02, msg: "CLT por pouco. O risco do PJ pode nao compensar sem reajuste." },
-        { max: 0.02, msg: "Cenarios muito proximos. A decisao deve considerar estabilidade e perfil de risco." },
+        { max: -0.07, msg: "CLT levemente melhor. PJ precisa incluir estabilidade mínima em contrato." },
+        { max: -0.05, msg: "CLT ainda vence. PJ só vale com benefícios equivalentes e aumento." },
+        { max: -0.02, msg: "CLT por pouco. O risco do PJ pode não compensar sem reajuste." },
+        { max: 0.02, msg: "Cenários muito próximos. A decisão deve considerar estabilidade e perfil de risco." },
         { max: 0.05, msg: "PJ levemente superior. Verifique custos fixos e impostos antes de decidir." },
         { max: 0.07, msg: "PJ um pouco melhor. Considere formar reserva e revisar contrato." },
-        { max: 0.10, msg: "PJ com vantagem moderada. A troca pode fazer sentido com boa organizacao financeira." },
-        { max: 0.15, msg: "PJ em boa vantagem. Estruture pro-labore, impostos e previsao de caixa." },
-        { max: 0.20, msg: "PJ ganha com consistencia. Garanta contrato com prazo e reajuste." },
-        { max: 0.25, msg: "PJ atrativo. Diferenca tende a cobrir impostos e custos fixos." },
-        { max: 0.30, msg: "PJ bem superior. Priorize protecoes contratuais e reserva robusta." },
-        { max: 0.35, msg: "PJ muito competitivo. Bom momento para negociar clausulas favoraveis." },
-        { max: 0.40, msg: "PJ com folga. A migracao faz sentido se a operacao estiver organizada." },
-        { max: 0.50, msg: "PJ altamente vantajoso. Ainda assim, cuide de impostos e previdencia." },
-        { max: 0.60, msg: "PJ extremamente superior. Reforce governanca, contabilidade e planejamento." },
-        { max: Infinity, msg: "PJ fora do padrao. Revise o contrato e valide custos antes de aceitar." }
+        { max: 0.10, msg: "PJ com vantagem moderada. A troca pode fazer sentido com boa organização financeira." },
+        { max: 0.15, msg: "PJ em boa vantagem. Estruture pro-labore, impostos e previsão de caixa." },
+        { max: 0.20, msg: "PJ ganha com consistência. Garanta contrato com prazo e reajuste." },
+        { max: 0.25, msg: "PJ atrativo. Diferença tende a cobrir impostos e custos fixos." },
+        { max: 0.30, msg: "PJ bem superior. Priorize proteções contratuais e reserva robusta." },
+        { max: 0.35, msg: "PJ muito competitivo. Bom momento para negociar cláusulas favoráveis." },
+        { max: 0.40, msg: "PJ com folga. A migração faz sentido se a operação estiver organizada." },
+        { max: 0.50, msg: "PJ altamente vantajoso. Ainda assim, cuide de impostos e previdência." },
+        { max: 0.60, msg: "PJ extremamente superior. Reforce governança, contabilidade e planejamento." },
+        { max: Infinity, msg: "PJ fora do padrão. Revise o contrato e valide custos antes de aceitar." }
     ];
 
     const selected = ranges.find(range => pct <= range.max) || ranges[ranges.length - 1];
@@ -238,8 +242,43 @@ if (typeof document !== 'undefined') {
         if (proBtn && proOptions) {
             proBtn.addEventListener('click', () => {
                 proOptions.classList.toggle('hidden');
+                if (!proOptions.classList.contains('hidden') && window.CLTxPJAnalytics) {
+                    window.CLTxPJAnalytics.funnel.negotiationSupport();
+                }
             });
         }
+
+        // Track CTA clicks
+        document.querySelectorAll('a[href*="apps.apple.com"]').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.CLTxPJAnalytics) {
+                    const source = link.closest('nav') ? 'navbar' : link.closest('footer') ? 'footer' : 'hero';
+                    window.CLTxPJAnalytics.funnel.ctaClick('download_ios', source);
+                }
+            });
+        });
+
+        document.querySelectorAll('a[href*="android-waitlist"]').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.CLTxPJAnalytics) {
+                    window.CLTxPJAnalytics.funnel.ctaClick('download_android', 'hero');
+                }
+            });
+        });
+
+        // Track simulation on first input interaction
+        let simulationTracked = false;
+        ['input-clt', 'input-pj'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('focus', () => {
+                    if (!simulationTracked && window.CLTxPJAnalytics) {
+                        simulationTracked = true;
+                        window.CLTxPJAnalytics.funnel.simulation('manual', 0, 0);
+                    }
+                }, { once: true });
+            }
+        });
 
         // Configura botão android
         const androidBtn = document.querySelector('button disabled') || document.querySelectorAll('button')[1]; // Fallback selector

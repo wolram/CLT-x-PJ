@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Me avise quando estiver disponivel | CLT x PJ</title>
+    <title>Me avise quando estiver disponível | CLT x PJ</title>
     <meta name="description" content="Receba um aviso quando o app Android estiver disponível.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
@@ -69,15 +69,61 @@
             <p class="text-slate-400 mb-8">Estamos finalizando a versão Android. Deixe seu email e avisaremos quando o
                 app estiver pronto.</p>
 
-            <div class="rounded-2xl glass overflow-hidden">
+            <!-- API-powered waitlist form -->
+            <div id="waitlist-form-container" class="space-y-4">
+                <form id="waitlist-form" class="space-y-4" novalidate>
+                    <div>
+                        <label for="wl-name" class="block text-sm font-medium text-slate-300 mb-1">Nome (opcional)</label>
+                        <input type="text" id="wl-name" name="name" 
+                            class="input-field w-full px-4 py-3 rounded-xl text-white font-medium"
+                            placeholder="Seu nome">
+                    </div>
+                    <div>
+                        <label for="wl-email" class="block text-sm font-medium text-slate-300 mb-1">Email *</label>
+                        <input type="email" id="wl-email" name="email" required
+                            class="input-field w-full px-4 py-3 rounded-xl text-white font-medium"
+                            placeholder="seu@email.com"
+                            autocomplete="email">
+                        <p id="wl-email-error" class="hidden text-xs text-red-400 mt-1"></p>
+                    </div>
+                    <div>
+                        <label for="wl-role" class="block text-sm font-medium text-slate-300 mb-1">Perfil (opcional)</label>
+                        <select id="wl-role" name="role" 
+                            class="input-field w-full px-4 py-3 rounded-xl text-white font-medium">
+                            <option value="">Selecione...</option>
+                            <option value="tecnologia">Tecnologia</option>
+                            <option value="design">Design</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="produto">Produto</option>
+                            <option value="engenharia">Engenharia</option>
+                            <option value="consultoria">Consultoria</option>
+                            <option value="saude">Saúde</option>
+                            <option value="juridico">Jurídico</option>
+                            <option value="arquitetura">Arquitetura</option>
+                            <option value="educacao">Educação</option>
+                            <option value="financas">Finanças</option>
+                            <option value="audiovisual">Audiovisual</option>
+                            <option value="vendas">Vendas</option>
+                            <option value="rh">RH</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="wl-submit"
+                        class="w-full bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-400 text-slate-900 font-bold py-4 rounded-xl hover:shadow-lg hover:shadow-amber-500/30 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                        Entrar na Lista de Espera
+                    </button>
+                </form>
+                <div id="wl-message" class="hidden text-center p-4 rounded-xl glass"></div>
+            </div>
+
+            <!-- Fallback: Brevo form if API is unavailable -->
+            <div id="brevo-fallback" class="hidden rounded-2xl glass overflow-hidden">
                 <iframe title="Formulário Brevo"
                     src="https://a0957706.sibforms.com/serve/MUIFAPsNrBYs7ztsJzOkYT5VH67XdeaRdZk1ssfUyvUcJgxML0Kx0bApVj7puOwC_cYvyG8GyLw5OghGTQ89ENDVUo7699PdVXUF_q4bnp7-xmZ2y2AgYP9SABuysRjIk0lTWSPXmKqCe-cE8X2RxWDxGFOhjitRe1DHES8P78DSUDpzsRS6R8n52mGXFBDYSpoNE8yITUHaIEjm8A=="
                     class="w-full bg-transparent" height="440" frameborder="0" scrolling="no" allowfullscreen
                     style="background: transparent;"></iframe>
             </div>
-            <p class="text-xs text-slate-500 mt-4">Configure o redirect de sucesso no Brevo para
-                /android-waitlist-success.html.</p>
-            <p class="text-xs text-slate-500 mt-2">Se o formulário não carregar, acesse: <a
+            <p class="text-xs text-slate-500 mt-4">Se o formulário não carregar, acesse: <a
                     class="text-amber-400 hover:text-amber-300 transition"
                     href="https://a0957706.sibforms.com/serve/MUIFAPsNrBYs7ztsJzOkYT5VH67XdeaRdZk1ssfUyvUcJgxML0Kx0bApVj7puOwC_cYvyG8GyLw5OghGTQ89ENDVUo7699PdVXUF_q4bnp7-xmZ2y2AgYP9SABuysRjIk0lTWSPXmKqCe-cE8X2RxWDxGFOhjitRe1DHES8P78DSUDpzsRS6R8n52mGXFBDYSpoNE8yITUHaIEjm8A=="
                     target="_blank" rel="noreferrer">Abrir formulário</a>.</p>
@@ -141,6 +187,96 @@
                 });
             }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
             animatedElements.forEach(el => observer.observe(el));
+        });
+    </script>
+
+    <!-- Waitlist Form Handler -->
+    <script type="module">
+        const API_BASE = window.API_BASE_URL || '/api';
+        
+        const form = document.getElementById('waitlist-form');
+        const messageDiv = document.getElementById('wl-message');
+        const submitBtn = document.getElementById('wl-submit');
+        const brevoFallback = document.getElementById('brevo-fallback');
+        const formContainer = document.getElementById('waitlist-form-container');
+        const emailInput = document.getElementById('wl-email');
+        const emailError = document.getElementById('wl-email-error');
+
+        // Real-time email validation
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        emailInput.addEventListener('blur', function() {
+            var val = emailInput.value.trim();
+            if (val && !emailRegex.test(val)) {
+                emailError.textContent = 'Por favor, insira um email válido.';
+                emailError.classList.remove('hidden');
+                emailInput.classList.add('border-red-500');
+            } else {
+                emailError.classList.add('hidden');
+                emailInput.classList.remove('border-red-500');
+            }
+        });
+        emailInput.addEventListener('input', function() {
+            emailError.classList.add('hidden');
+            emailInput.classList.remove('border-red-500');
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validate email
+            var email = emailInput.value.trim();
+            if (!email || !emailRegex.test(email)) {
+                emailError.textContent = !email ? 'Email é obrigatório.' : 'Por favor, insira um email válido.';
+                emailError.classList.remove('hidden');
+                emailInput.classList.add('border-red-500');
+                emailInput.focus();
+                return;
+            }
+
+            const formData = {
+                name: document.getElementById('wl-name').value.trim(),
+                email: email,
+                role: document.getElementById('wl-role').value || null,
+                source: 'android-waitlist',
+            };
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="inline-flex items-center"><svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-slate-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Enviando...</span>';
+            messageDiv.classList.add('hidden');
+
+            try {
+                const response = await fetch(`${API_BASE}/submissions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Falha ao enviar');
+                }
+
+                // Success
+                formContainer.classList.add('hidden');
+                messageDiv.classList.remove('hidden');
+                messageDiv.innerHTML = `
+                    <p class="text-green-400 font-semibold text-lg">Obrigado!</p>
+                    <p class="text-slate-400 mt-2">Você foi adicionado à lista de espera. Avisaremos quando o app Android estiver pronto.</p>
+                `;
+                if (window.CLTxPJAnalytics) {
+                    window.CLTxPJAnalytics.funnel.waitlistComplete('android');
+                }
+            } catch (error) {
+                console.error('Waitlist submission error:', error);
+                // Show Brevo fallback
+                formContainer.classList.add('hidden');
+                brevoFallback.classList.remove('hidden');
+                if (window.CLTxPJAnalytics) {
+                    window.CLTxPJAnalytics.funnel.error('waitlist_submit', error.message);
+                }
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Entrar na Lista de Espera';
+            }
         });
     </script>
 </body>

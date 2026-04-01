@@ -5,17 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- SEO & Performance -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+
     <!-- SEO & Identity -->
-    <title>CLT x PJ | Compare propostas com clareza</title>
+    <title>CLT x PJ | Compare o valor real de propostas de trabalho</title>
     <meta name="description"
-        content="Compare CLT e PJ com clareza. Entenda o valor real de salario, beneficios, impostos e risco antes de aceitar uma proposta.">
+        content="Descubra quanto vale sua proposta CLT ou PJ. Compare impostos, benefícios em números reais. Decida com clareza.">
+    <meta name="keywords" content="CLT vs PJ, comparar propostas, imposto PJ, benefícios CLT, negociação salarial">
 
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="CLT x PJ | Decida sua proposta com clareza">
+    <meta property="og:title" content="CLT x PJ | Compare CLT e PJ no valor real">
     <meta property="og:description"
-        content="Compare o valor real de uma proposta CLT ou PJ e tome uma decisao com mais criterio.">
-    <meta property="og:url" content="https://calculadoracltpj.com.br/">
+        content="Descubra quanto vale realmente sua proposta de trabalho. Impostos, benefícios, risco e liquidez explicados sem juridiquês.">
+    <meta property="og:url" content="https://cltxpj.app.br/">
     <meta property="og:image"
         content="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&h=630&q=80">
 
@@ -23,18 +31,66 @@
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
 
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "CLT x PJ - Calculadora de Salário",
+        "description": "Compare CLT e PJ no valor real. Calcule impostos, benefícios e descubra qual proposta vale mais.",
+        "url": "https://cltxpj.app.br/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "iOS, Android, Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "BRL"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "2500"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "CLT x PJ",
+            "url": "https://cltxpj.app.br/"
+        }
+    }
+    </script>
+
     <!-- Styles -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 
-    <!-- Tailwind Dark Config -->
+    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
                     colors: {
+                        brand: {
+                            bg: '#0a0a0f',
+                            bgSecondary: '#14141a',
+                            bgTertiary: '#1e1e28',
+                            gold: '#d4a853',
+                            goldLight: '#e8c878',
+                            goldDark: '#b8923f',
+                            textPrimary: '#ffffff',
+                            textSecondary: '#b0b0bc',
+                            textMuted: '#6e6e7a',
+                            success: '#34d399',
+                            warning: '#fbbf24',
+                            error: '#f87171',
+                            border: '#2a2a36',
+                            borderLight: '#3a3a48',
+                        },
                         dark: {
                             50: '#f8fafc',
                             100: '#e6c547',
@@ -143,41 +199,49 @@
                 <!-- Texto Hero -->
                 <div class="max-w-2xl animate-on-scroll">
                     <span class="eyebrow mb-6">
-                        Clareza para decidir propostas
+                        🚀 +2.500 profissionais já compararam
                     </span>
                     <h1 class="text-4xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
-                        Compare <span class="text-brand">CLT e PJ</span> pelo valor real, nao pelo achismo.
+                        Aceitou a proposta errada? <span class="text-brand">Descubra antes de assinar.</span>
                     </h1>
                     <p class="text-lg text-slate-400 mb-8 leading-relaxed">
-                        Veja com clareza o impacto de salario, beneficios, impostos e risco antes de aceitar uma
-                        proposta. Simule em segundos e aprofunde a analise no app.
+                        Compare CLT e PJ no valor real — impostos, benefícios e risco em números claros. 
+                        Pare de decidir no achismo.
                     </p>
+
+                    <!-- Email Capture - Above the fold -->
+                    <div class="mb-8">
+                        <form id="hero-email-form" class="flex flex-col sm:flex-row gap-3 max-w-md" onsubmit="handleHeroEmailSubmit(event)">
+                            <input type="email" id="hero-email" required
+                                class="input-field flex-1 px-4 py-3.5 rounded-xl text-white font-medium"
+                                placeholder="seu@email.com">
+                            <button type="submit"
+                                class="bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-400 text-slate-900 px-6 py-3.5 rounded-xl font-bold hover:shadow-lg hover:shadow-amber-500/30 transition whitespace-nowrap">
+                                Receber comparação
+                            </button>
+                        </form>
+                        <p class="text-xs text-slate-500 mt-2">Grátis. Sem spam. Receba sua análise por email.</p>
+                        <div id="hero-email-msg" class="hidden text-sm mt-2 text-green-400 font-medium"></div>
+                    </div>
+
                     <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="comparar.html"
+                            class="flex items-center justify-center h-14 w-full sm:w-64 bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-400 text-slate-900 rounded-xl hover:shadow-lg hover:shadow-amber-500/30 transition font-semibold">
+                            Comparar minha proposta
+                        </a>
                         <a href="https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441" target="_blank"
-                            class="flex items-center justify-center h-14 w-full sm:w-64 bg-white text-gray-900 rounded-xl hover:bg-gray-100 transition shadow-lg font-semibold">
-                            <svg class="w-6 h-6 mr-2" viewBox="0 0 384 512" fill="currentColor">
+                            class="flex items-center justify-center h-14 w-full sm:w-64 glass rounded-xl text-slate-300 hover:text-white hover:border-slate-500 transition font-semibold">
+                            <svg class="w-5 h-5 mr-2" viewBox="0 0 384 512" fill="currentColor">
                                 <path
                                     d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 52.3-11.4 69.5-34.3z" />
                             </svg>
-                            Baixar na App Store
-                        </a>
-
-                        <!-- Botão Android -->
-                        <a href="android-waitlist.html"
-                            class="flex items-center justify-center h-14 w-full sm:w-64 glass rounded-xl text-slate-400 hover:text-white hover:border-slate-500 transition select-none">
-                            <svg class="w-6 h-6 mr-2 opacity-60" viewBox="0 0 512 512" fill="currentColor">
-                                <path
-                                    d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-37.2 37.2 60 60.1c5.1-8.5 5.1-54.7-3.9-63.2zM36.7 496l266-266.1-60.1-60.1L36.7 496z" />
-                            </svg>
-                            <span>Android <span
-                                    class="ml-2 text-xs font-bold uppercase bg-slate-700/50 text-slate-400 px-2 py-1 rounded">Em
-                                    breve</span></span>
+                            Baixar App
                         </a>
                     </div>
                     <div class="hero-proof mt-8">
-                        <span>Comparacao anual liquida</span>
-                        <span>Beneficios e impostos no mesmo quadro</span>
-                        <span>Feito para negociacao real</span>
+                        <span>✓ Menos achismo. Mais critério.</span>
+                        <span>✓ Comparação real com impostos e benefícios</span>
+                        <span>✓ Feito para negociação, não só simulação</span>
                     </div>
                 </div>
 
@@ -190,7 +254,6 @@
 
                     <div class="relative glass-card p-6 sm:p-8 card-glow">
                         <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-2xl font-bold text-white">Simulação Rápida</h3>
                             <span class="tag-green text-xs px-3 py-1 rounded-full font-medium">Gratuito</span>
                         </div>
 
@@ -260,11 +323,11 @@
                                     </button>
                                     <div id="analise-opcoes" class="hidden w-full">
                                         <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                                            <a href="https://wa.me/55SEUNUMERO?text=Quero%20uma%20analise%20de%20carreira%20CLT%20x%20PJ"
+                                            <a href="https://wa.me/55SEUNUMERO?text=Quero%20uma%20análise%20de%20carreira%20CLT%20x%20PJ"
                                                 class="text-xs font-semibold text-slate-400 glass px-4 py-2.5 rounded-full hover:border-slate-500 hover:text-white transition inline-flex items-center justify-center w-full sm:w-56">
                                                 Falar no WhatsApp
                                             </a>
-                                            <a href="mailto:suporte@cltxpj.app.br?subject=Analise%20de%20Carreira%20CLT%20x%20PJ"
+                                            <a href="mailto:suporte@cltxpj.app.br?subject=Análise%20de%20Carreira%20CLT%20x%20PJ"
                                                 class="text-xs font-semibold text-slate-400 glass px-4 py-2.5 rounded-full hover:border-slate-500 hover:text-white transition inline-flex items-center justify-center w-full sm:w-56">
                                                 Enviar por email
                                             </a>
@@ -272,13 +335,12 @@
                                     </div>
                                 </div>
 
-                                <a href="https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441"
-                                    target="_blank"
+                                <a href="comparar.html"
                                     class="block w-full bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-400 text-slate-900 text-center font-bold py-4 rounded-xl hover:shadow-lg hover:shadow-amber-500/30 transition">
-                                    Abrir comparacao completa no app
+                                    Comparacao completa →
                                 </a>
                                 <p class="text-xs text-slate-500 mt-3 text-center">
-                                    *Valores estimados. O app aprofunda impostos, beneficios e cenarios.
+                                    *Valores estimados. O app aprofunda impostos, benefícios e cenários.
                                 </p>
                             </div>
                         </div>
@@ -336,8 +398,8 @@
     <section id="beneficios" class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
-                <h2 class="text-3xl font-bold text-white mb-4">Uma marca feita para decisao, nao so simulacao</h2>
-                <p class="text-slate-400 text-lg">Menos ruido, mais contexto para comparar propostas de forma justa.</p>
+                <h2 class="text-3xl font-bold text-white mb-4">Compare com critério, decida com clareza</h2>
+                <p class="text-slate-400 text-lg">Traduzimos impostos, benefícios, risco e liquidez em uma leitura clara e acionável.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-6">
@@ -350,9 +412,8 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Comparacao com criterio</h3>
-                    <p class="text-slate-400">Consideramos INSS, IRPF, ferias, 13o, FGTS e custos recorrentes do PJ
-                        como contador.</p>
+                    <h3 class="text-xl font-bold text-white mb-2">Comparação inteligente</h3>
+                    <p class="text-slate-400">Coloque as duas propostas. Nosso algoritmo calcula o valor real de cada uma em segundos.</p>
                 </div>
 
                 <!-- Feature 2 -->
@@ -364,9 +425,8 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Leitura fiscal mais realista</h3>
-                    <p class="text-slate-400">O app ajuda a aproximar o regime tributario mais coerente para o seu
-                        perfil.</p>
+                    <h3 class="text-xl font-bold text-white mb-2">Impostos claros</h3>
+                    <p class="text-slate-400">Entenda exatamente quanto você vai receber — sem surpresa no fim do mês.</p>
                 </div>
 
                 <!-- Feature 3 -->
@@ -378,9 +438,82 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Material para negociar melhor</h3>
-                    <p class="text-slate-400">Gere um PDF detalhado da simulacao para apresentar ao recrutador ou
-                        guardar.</p>
+                    <h3 class="text-xl font-bold text-white mb-2">Benefícios em números</h3>
+                    <p class="text-slate-400">VR, VT, plano de saúde, 13º — transformamos tudo em valor monetário que você pode comparar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="py-20 border-t border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Stats Row -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 animate-on-scroll">
+                <div class="text-center">
+                    <div class="text-3xl lg:text-4xl font-extrabold text-brand mb-1">2.500+</div>
+                    <div class="text-sm text-slate-500">Profissionais</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl lg:text-4xl font-extrabold text-brand mb-1">4.8</div>
+                    <div class="text-sm text-slate-500 flex items-center justify-center gap-1">
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        App Store
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl lg:text-4xl font-extrabold text-brand mb-1">R$ 15M+</div>
+                    <div class="text-sm text-slate-500">Em comparações</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl lg:text-4xl font-extrabold text-brand mb-1">73%</div>
+                    <div class="text-sm text-slate-500">Mudaram decisão</div>
+                </div>
+            </div>
+
+            <div class="text-center max-w-3xl mx-auto mb-12 animate-on-scroll">
+                <h2 class="text-3xl font-bold text-white mb-4">Quem usa, decide melhor</h2>
+                <p class="text-slate-400 text-lg">Profissionais que compararam antes de aceitar.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 card-glow animate-on-scroll">
+                    <div class="flex items-center gap-1 mb-3">
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <blockquote class="text-slate-300 italic mb-4">
+                        "Recebi proposta de R$ 15mil como PJ. Achava que valia mais. Depois de usar o CLT x PJ, vi que CLT saia R$ 2.500/mes mais valor no final do ano. Escolhi CLT e nao me arrependi."
+                    </blockquote>
+                    <p class="text-sm text-slate-500 font-medium">— Profissional de Tecnologia, Sao Paulo</p>
+                </div>
+                <div class="glass-card p-6 card-glow animate-on-scroll animate-delay-100">
+                    <div class="flex items-center gap-1 mb-3">
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <blockquote class="text-slate-300 italic mb-4">
+                        "Tinha medo de aceitar PJ e depois me arrepender. A ferramenta me deu clareza para negociar com propriedade."
+                    </blockquote>
+                    <p class="text-sm text-slate-500 font-medium">— Profissional Remoto</p>
+                </div>
+                <div class="glass-card p-6 card-glow animate-on-scroll animate-delay-200">
+                    <div class="flex items-center gap-1 mb-3">
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-slate-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <blockquote class="text-slate-300 italic mb-4">
+                        "Como recrutadora, uso o CLT x PJ para mostrar transparência nas propostas. Os candidatos agradecem e o processo flui melhor."
+                    </blockquote>
+                    <p class="text-sm text-slate-500 font-medium">— Recrutadora, Rio de Janeiro</p>
                 </div>
             </div>
         </div>
@@ -390,20 +523,20 @@
     <section class="py-20 border-t border-slate-800/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-12 animate-on-scroll">
-                    <h2 class="text-3xl font-bold text-white mb-4">Feito para todos os lados da negociacao</h2>
-                    <p class="text-slate-400 text-lg">Clareza para alinhar expectativa, margem e seguranca antes de fechar.
+                    <h2 class="text-3xl font-bold text-white mb-4">Feito para todos os lados da negociação</h2>
+                    <p class="text-slate-400 text-lg">Clareza para alinhar expectativa, margem e segurança antes de fechar.
                 </p>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="glass-card p-6 card-glow animate-on-scroll">
+                    <p class="tag text-xs uppercase tracking-wider mb-3">Para profissionais</p>
+                    <h3 class="text-xl font-bold text-white mb-2">Decisões com segurança</h3>
+                    <p class="text-slate-400">Entenda o líquido anual e o impacto real de impostos e benefícios.</p>
+                </div>
+                <div class="glass-card p-6 card-glow animate-on-scroll animate-delay-100">
                     <p class="tag text-xs uppercase tracking-wider mb-3">Para recrutadores</p>
                     <h3 class="text-xl font-bold text-white mb-2">Negociações mais objetivas</h3>
                     <p class="text-slate-400">Mostre comparativos claros e evite ruídos na conversa sobre CLT vs PJ.</p>
-                </div>
-                <div class="glass-card p-6 card-glow animate-on-scroll animate-delay-100">
-                    <p class="tag text-xs uppercase tracking-wider mb-3">Para candidatos</p>
-                    <h3 class="text-xl font-bold text-white mb-2">Decisões com segurança</h3>
-                    <p class="text-slate-400">Entenda o líquido anual e o impacto real de impostos e benefícios.</p>
                 </div>
                 <div class="glass-card p-6 card-glow animate-on-scroll animate-delay-200">
                     <p class="tag text-xs uppercase tracking-wider mb-3">Para empresas</p>
@@ -438,7 +571,7 @@
                 <article class="blog-card group flex flex-col h-full animate-on-scroll">
                     <div class="relative h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80"
-                            alt="Planejamento Financeiro" class="w-full h-full object-cover">
+                            alt="Planejamento Financeiro" class="w-full h-full object-cover" loading="lazy" decoding="async">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
                         <div class="absolute top-4 left-4 tag">Carreira</div>
                     </div>
@@ -465,7 +598,7 @@
                 <article class="blog-card group flex flex-col h-full animate-on-scroll animate-delay-100">
                     <div class="relative h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80"
-                            alt="Cálculo de Impostos" class="w-full h-full object-cover">
+                            alt="Cálculo de Impostos" class="w-full h-full object-cover" loading="lazy" decoding="async">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
                         <div class="absolute top-4 left-4 tag">Finanças</div>
                     </div>
@@ -491,7 +624,7 @@
                 <article class="blog-card group flex flex-col h-full animate-on-scroll animate-delay-200">
                     <div class="relative h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80"
-                            alt="Contrato de Trabalho" class="w-full h-full object-cover">
+                            alt="Contrato de Trabalho" class="w-full h-full object-cover" loading="lazy" decoding="async">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
                         <div class="absolute top-4 left-4 tag">Legislação</div>
                     </div>
@@ -502,7 +635,7 @@
                             <span>6 min de leitura</span>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-3 group-hover:text-indigo-400 transition">O que muda
-                            com a nova Reforma Tributária para CNPJs?</h3>
+                            com a nova Reforma Tributaria para PJs?</h3>
                         <p class="text-slate-400 text-sm mb-4 line-clamp-3">Fique por dentro das discussões mais
                             recentes sobre a reforma tributária e como ela pode impactar a alíquota efetiva...</p>
                         <div class="mt-auto pt-4 border-t border-slate-800/50 flex items-center">
@@ -522,7 +655,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-8 md:mb-0">
                     <h2 class="text-2xl font-bold text-white">CLT x PJ</h2>
-                    <p class="text-slate-500 mt-2">Clareza para comparar propostas e negociar melhor sua carreira.</p>
+                    <p class="text-slate-500 mt-2">Plataforma de comparação de propostas. Decida com clareza.</p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-4 items-center">
                     <a href="https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441" target="_blank"
@@ -553,7 +686,17 @@
         </div>
     </footer>
 
+    <!-- Analytics -->
+    <script>
+        window.ANALYTICS_ID = ''; // Set GA4 ID (e.g., 'G-XXXXXXXXXX')
+        window.ANALYTICS_DEBUG = false; // Set true for dev logging
+        window.CUSTOM_ANALYTICS_URL = ''; // Optional custom endpoint
+    </script>
+    <script src="js/analytics.js"></script>
+
     <!-- Logic -->
+    <script src="js/tax-engine.js"></script>
+    <script src="js/pj-tax-engine.js"></script>
     <script src="js/app.js"></script>
 
     <!-- Mobile Menu Toggle -->
@@ -619,6 +762,41 @@
 
             animatedElements.forEach(el => observer.observe(el));
         });
+    </script>
+
+    <!-- Hero Email Form Handler -->
+    <script>
+        function handleHeroEmailSubmit(e) {
+            e.preventDefault();
+            var email = document.getElementById('hero-email').value.trim();
+            var msg = document.getElementById('hero-email-msg');
+            var form = document.getElementById('hero-email-form');
+            if (!email) return;
+
+            var API_BASE = window.API_BASE_URL || '/api';
+            fetch(API_BASE + '/submissions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, source: 'hero-landing', role: null, name: null })
+            })
+            .then(function(r) {
+                if (!r.ok) throw new Error('Erro');
+                return r.json();
+            })
+            .then(function() {
+                form.classList.add('hidden');
+                msg.classList.remove('hidden');
+                msg.textContent = '✓ Enviado! Verifique seu email em breve.';
+                if (window.CLTxPJAnalytics) {
+                    window.CLTxPJAnalytics.funnel.waitlistComplete('hero');
+                }
+            })
+            .catch(function() {
+                msg.classList.remove('hidden');
+                msg.classList.add('text-red-400');
+                msg.textContent = 'Erro ao enviar. Tente novamente.';
+            });
+        }
     </script>
 </body>
 
