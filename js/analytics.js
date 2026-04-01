@@ -61,6 +61,30 @@
             window.gtag('event', name, params);
         }
 
+        // Netlify Functions telemetry (built-in)
+        try {
+            navigator.sendBeacon && navigator.sendBeacon('/api/telemetry', JSON.stringify({
+                event_type: name,
+                event_data: Object.assign({}, params || {}, {
+                    url: window.location.href,
+                    timestamp: Date.now()
+                })
+            }));
+        } catch (e) {
+            fetch('/api/telemetry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    event_type: name,
+                    event_data: Object.assign({}, params || {}, {
+                        url: window.location.href,
+                        timestamp: Date.now()
+                    })
+                }),
+                keepalive: true
+            }).catch(function () {});
+        }
+
         // Custom analytics endpoint (if configured)
         if (window.CUSTOM_ANALYTICS_URL) {
             try {

@@ -14,6 +14,7 @@ const DB_CONFIG = {
   queueLimit: 0,
   enableKeepAlive: true,
   keepAliveInitialDelay: 0,
+  multipleStatements: true,
 };
 
 export async function createPool() {
