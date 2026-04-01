@@ -8,6 +8,27 @@
   status = 200
 
 [[redirects]]
+  from = "/admin/submissions"
+  to = "/.netlify/functions/admin-submissions"
+  status = 200
+
+[[redirects]]
+  from = "/admin/submissions/:id/status"
+  to = "/.netlify/functions/admin-submissions"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/admin/telemetry/summary"
+  to = "/.netlify/functions/admin-telemetry"
+  status = 200
+
+[[redirects]]
+  from = "/admin/telemetry"
+  to = "/.netlify/functions/admin-telemetry"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
