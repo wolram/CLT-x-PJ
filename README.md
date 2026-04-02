@@ -12,13 +12,15 @@ Plataforma de comparacao de propostas CLT x PJ. Marketing website com simulador 
 - Mobile-first responsive design with glassmorphism dark theme (Navy + Gold)
 - LGPD-compliant cookie consent
 - Analytics funnel tracking (GA4-ready)
+- Serverless API via Netlify Functions with persistent blob storage
 
 ## Tech Stack
 
 - Static HTML5 landing page with TailwindCSS (CDN) and vanilla JavaScript
 - React + Vite admin dashboard
-- Express API server (MySQL) for submissions and telemetry
-- Hostinger shared hosting (hPanel)
+- Netlify Functions (serverless) for submissions, telemetry, and health
+- Netlify Blobs for persistent data storage (no database required)
+- Netlify for hosting, CI/CD, and functions
 
 ## Project Structure
 
@@ -42,14 +44,16 @@ Plataforma de comparacao de propostas CLT x PJ. Marketing website com simulador 
 │   └── src/
 │       └── App.jsx                 # Dashboard UI
 ├── admin-dist/                     # Built admin app (generated)
-├── api/                            # Express API server (separate deployment)
-│   └── src/
-│       ├── server.js               # Express app
-│       ├── db/                     # MySQL connection pool
-│       ├── middleware/             # Auth middleware
-│       └── routes/                 # API routes
+├── netlify/
+│   ├── functions/
+│   │   ├── telemetry.js            # Telemetry events (POST/GET)
+│   │   ├── submissions.js          # Waitlist submissions (POST/GET)
+│   │   ├── admin-submissions.js    # Admin submissions with auth (GET/PATCH)
+│   │   ├── admin-telemetry.js      # Admin telemetry with auth (GET)
+│   │   └── health.js               # Health check endpoint
+│   └── package.json                # Netlify Functions dependencies
 ├── tests/                          # Unit tests (74 passing)
-├── .htaccess                       # Hostinger routing + security headers
+├── netlify.toml                    # Netlify config: redirects, functions
 └── .github/workflows/deploy.yml    # CI/CD → Hostinger via SFTP
 ```
 
@@ -73,15 +77,6 @@ npm run dev        # dev server at http://localhost:5173/admin/
 npm run build      # outputs to ../admin-dist/
 ```
 
-### API server
-
-```bash
-cd api
-npm install
-cp .env.example .env   # configure DATABASE_URL, ADMIN_PASSWORD
-npm start              # server at http://localhost:3001
-```
-
 ### Tests
 
 ```bash
@@ -93,51 +88,33 @@ npm test
 | Variable | Description | Required |
 |---|---|---|
 | `VITE_ADMIN_PASSWORD` | Password for admin dashboard access | Yes (deploy) |
-| `FTP_SERVER` | Hostinger SFTP host | Yes (CI/CD) |
-| `FTP_USERNAME` | Hostinger SFTP username | Yes (CI/CD) |
-| `FTP_PASSWORD` | Hostinger SFTP password | Yes (CI/CD) |
-| `DATABASE_URL` | MySQL connection string | Yes (API server) |
-| `ADMIN_PASSWORD` | API admin password | Yes (API server) |
+| `ADMIN_USERNAME` | Admin API username (default: admin) | No |
+| `ADMIN_PASSWORD` | Admin API password | No (functions work without auth in dev) |
 
 ## Deployment
 
-### Frontend (Hostinger)
+### Netlify (recommended)
+
+Connect your GitHub repo to Netlify. Push to `main` to trigger a deploy.
+
+Required environment variables (Netlify → Site settings → Environment variables):
+- `ADMIN_USERNAME` — Admin dashboard username (default: `admin`)
+- `ADMIN_PASSWORD` — Admin API password for protecting submissions/telemetry
+- `VITE_ADMIN_PASSWORD` — Admin dashboard frontend password (build variable)
+
+Netlify Blobs are automatically provisioned — no database setup needed.
+
+### Hostinger (legacy)
 
 Push to `main` — GitHub Actions runs tests, builds the admin app, and deploys to Hostinger via SFTP.
 
 Required repository secrets:
-- `FTP_SERVER` — Hostinger SFTP host (from hPanel → Files → FTP Accounts)
+- `FTP_SERVER` — Hostinger SFTP host
 - `FTP_USERNAME` — Hostinger SFTP username
 - `FTP_PASSWORD` — Hostinger SFTP password
 - `VITE_ADMIN_PASSWORD` — Admin dashboard password
 
-### API Server (separate)
-
-The Express API server (`api/`) needs a separate deployment target (Railway, Render, Fly.io, or similar). It is excluded from the Hostinger deploy.
-
-## Database Setup
-
-The API server uses MySQL. Required tables:
-
-```sql
-CREATE TABLE waitlist_submissions (
-  id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
-  name TEXT,
-  email TEXT NOT NULL,
-  role TEXT,
-  challenge TEXT,
-  source TEXT,
-  activation_status TEXT DEFAULT 'pending',
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE telemetry_events (
-  id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
-  event_type TEXT NOT NULL,
-  event_data JSON,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
+Note: Hostinger deployment does not include Netlify Functions. Use the Express API server (`api/`) separately.
 
 ## Admin Dashboard
 
@@ -148,6 +125,20 @@ Features:
 - Inline status dropdown to update outreach status (pending, contacted, scheduled, onboarded, not_interested)
 - Event summary with counts by type
 - CSV export of all submissions
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/submissions` | Create waitlist submission |
+| GET | `/api/submissions` | List submissions |
+| POST | `/api/telemetry` | Record analytics event |
+| GET | `/api/telemetry` | Get recent events |
+| GET | `/api/telemetry?summary=true` | Get event counts summary |
+| GET | `/api/health` | Health check |
+| GET | `/admin/submissions` | List submissions (auth required) |
+| PATCH | `/admin/submissions/:id/status` | Update submission status (auth required) |
+| GET | `/admin/telemetry/summary` | Get telemetry summary (auth required) |
 
 ## Links
 
