@@ -343,6 +343,16 @@
     <script src="js/tax-engine.js"></script>
     <script src="js/pj-tax-engine.js"></script>
     <script src="js/comparar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.CLTxPJAnalytics) {
+                window.CLTxPJAnalytics.funnel.pageLoad();
+                setTimeout(function() {
+                    window.CLTxPJAnalytics.track('comparison_page_view', { page: 'comparar' });
+                }, 500);
+            }
+        });
+    </script>
 </body>
 
 </html>

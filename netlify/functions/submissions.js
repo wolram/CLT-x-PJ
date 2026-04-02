@@ -2,35 +2,9 @@
 // POST /.netlify/functions/submissions — create waitlist submission
 // GET  /.netlify/functions/submissions — list submissions (admin)
 
-import { promises as fs } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { getStore } from '@netlify/blobs';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_FILE = join(__dirname, '..', 'data', 'submissions.json');
-
-async function ensureDataDir() {
-  const dir = join(__dirname, '..', 'data');
-  try {
-    await fs.mkdir(dir, { recursive: true });
-  } catch {
-    // already exists
-  }
-}
-
-async function getSubmissions() {
-  try {
-    const raw = await fs.readFile(DATA_FILE, 'utf-8');
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
-
-async function saveSubmissions(submissions) {
-  await ensureDataDir();
-  await fs.writeFile(DATA_FILE, JSON.stringify(submissions, null, 0), 'utf-8');
-}
+const SUBMISSIONS_STORE = 'submissions';
 
 export const handler = async (event) => {
   if (event.httpMethod === 'POST') {
@@ -62,8 +36,11 @@ async function handlePost(event) {
       };
     }
 
+    const store = getStore(SUBMISSIONS_STORE);
+    const id = crypto.randomUUID();
+
     const submission = {
-      id: crypto.randomUUID(),
+      id,
       name: name || null,
       email,
       role: role || null,
@@ -73,9 +50,7 @@ async function handlePost(event) {
       created_at: new Date().toISOString(),
     };
 
-    const submissions = await getSubmissions();
-    submissions.push(submission);
-    await saveSubmissions(submissions);
+    await store.setJSON(`submissions/${id}`, submission);
 
     return {
       statusCode: 201,
@@ -92,18 +67,33 @@ async function handlePost(event) {
 
 async function handleGet(event) {
   try {
-    const submissions = await getSubmissions();
+    const store = getStore(SUBMISSIONS_STORE);
+    const { blobs } = await store.list({ prefix: 'submissions/' });
+
+    const submissions = await Promise.all(
+      blobs.map(async (b) => {
+        try {
+          return await store.get(b.key, { type: 'json' });
+        } catch {
+          return null;
+        }
+      })
+    );
+
+    const validSubmissions = submissions.filter(Boolean);
 
     const limit = parseInt(event.queryStringParameters?.limit || '100', 10);
     const offset = parseInt(event.queryStringParameters?.offset || '0', 10);
     const status = event.queryStringParameters?.status;
 
-    let filtered = submissions;
+    let filtered = validSubmissions;
     if (status) {
       filtered = filtered.filter((s) => s.activation_status === status);
     }
 
-    const paginated = filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(offset, offset + limit);
+    const paginated = filtered
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .slice(offset, offset + limit);
 
     return {
       statusCode: 200,

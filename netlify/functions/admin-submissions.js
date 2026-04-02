@@ -2,41 +2,15 @@
 // GET  /admin/submissions — list submissions
 // PATCH /admin/submissions/:id/status — update submission status (via redirect)
 
-import { promises as fs } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { getStore } from '@netlify/blobs';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_FILE = join(__dirname, '..', 'data', 'submissions.json');
+const SUBMISSIONS_STORE = 'submissions';
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
 
-async function ensureDataDir() {
-  const dir = join(__dirname, '..', 'data');
-  try {
-    await fs.mkdir(dir, { recursive: true });
-  } catch {
-    // already exists
-  }
-}
-
-async function getSubmissions() {
-  try {
-    const raw = await fs.readFile(DATA_FILE, 'utf-8');
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
-
-async function saveSubmissions(submissions) {
-  await ensureDataDir();
-  await fs.writeFile(DATA_FILE, JSON.stringify(submissions, null, 0), 'utf-8');
-}
-
 function verifyAuth(event) {
-  if (!ADMIN_PASSWORD) return true; // No password set, allow all (dev mode)
+  if (!ADMIN_PASSWORD) return true;
 
   const authHeader = event.headers?.authorization || event.headers?.Authorization;
   if (!authHeader) return false;
@@ -70,13 +44,26 @@ export const handler = async (event) => {
 
 async function handleGet(event) {
   try {
-    const submissions = await getSubmissions();
+    const store = getStore(SUBMISSIONS_STORE);
+    const { blobs } = await store.list({ prefix: 'submissions/' });
+
+    const submissions = await Promise.all(
+      blobs.map(async (b) => {
+        try {
+          return await store.get(b.key, { type: 'json' });
+        } catch {
+          return null;
+        }
+      })
+    );
+
+    const validSubmissions = submissions.filter(Boolean);
 
     const limit = parseInt(event.queryStringParameters?.limit || '100', 10);
     const offset = parseInt(event.queryStringParameters?.offset || '0', 10);
     const status = event.queryStringParameters?.status;
 
-    let filtered = submissions;
+    let filtered = validSubmissions;
     if (status) {
       filtered = filtered.filter((s) => s.activation_status === status);
     }
@@ -100,7 +87,6 @@ async function handleGet(event) {
 
 async function handlePatch(event) {
   try {
-    // Extract ID from path (Netlify redirect passes it through)
     const pathParts = event.path.split('/');
     const idIndex = pathParts.indexOf('submissions');
     const id = idIndex >= 0 ? pathParts[idIndex + 1] : null;
@@ -122,8 +108,9 @@ async function handlePatch(event) {
       };
     }
 
-    const submissions = await getSubmissions();
-    const submission = submissions.find((s) => s.id === id);
+    const store = getStore(SUBMISSIONS_STORE);
+    const key = `submissions/${id}`;
+    const submission = await store.get(key, { type: 'json' });
 
     if (!submission) {
       return {
@@ -133,7 +120,7 @@ async function handlePatch(event) {
     }
 
     submission.activation_status = activation_status;
-    await saveSubmissions(submissions);
+    await store.setJSON(key, submission);
 
     return {
       statusCode: 200,

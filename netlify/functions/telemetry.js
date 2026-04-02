@@ -2,35 +2,9 @@
 // POST /.netlify/functions/telemetry — record event
 // GET  /.netlify/functions/telemetry — get events (admin)
 
-import { promises as fs } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { getStore } from '@netlify/blobs';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_FILE = join(__dirname, '..', 'data', 'telemetry.json');
-
-async function ensureDataDir() {
-  const dir = join(__dirname, '..', 'data');
-  try {
-    await fs.mkdir(dir, { recursive: true });
-  } catch {
-    // already exists
-  }
-}
-
-async function getEvents() {
-  try {
-    const raw = await fs.readFile(DATA_FILE, 'utf-8');
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
-
-async function saveEvents(events) {
-  await ensureDataDir();
-  await fs.writeFile(DATA_FILE, JSON.stringify(events, null, 0), 'utf-8');
-}
+const TELEMETRY_STORE = 'telemetry';
 
 export const handler = async (event) => {
   if (event.httpMethod === 'POST') {
@@ -54,8 +28,11 @@ async function handlePost(event) {
       };
     }
 
+    const store = getStore(TELEMETRY_STORE);
+    const id = crypto.randomUUID();
+
     const record = {
-      id: crypto.randomUUID(),
+      id,
       event_type,
       event_data: event_data || {},
       ip_address: event.headers?.['x-nf-client-connection-ip'] || event.headers?.['client-ip'] || null,
@@ -63,19 +40,11 @@ async function handlePost(event) {
       created_at: new Date().toISOString(),
     };
 
-    const events = await getEvents();
-    events.push(record);
-
-    // Keep last 10000 events to avoid file size limits
-    if (events.length > 10000) {
-      events.splice(0, events.length - 10000);
-    }
-
-    await saveEvents(events);
+    await store.setJSON(`events/${id}`, record);
 
     return {
       statusCode: 201,
-      body: JSON.stringify({ id: record.id }),
+      body: JSON.stringify({ id }),
     };
   } catch (error) {
     console.error('Error recording telemetry:', error);
@@ -88,23 +57,35 @@ async function handlePost(event) {
 
 async function handleGet(event) {
   try {
-    const events = await getEvents();
+    const store = getStore(TELEMETRY_STORE);
+    const { blobs } = await store.list({ prefix: 'events/' });
 
-    // Summary mode
+    const events = await Promise.all(
+      blobs.map(async (b) => {
+        try {
+          return await store.get(b.key, { type: 'json' });
+        } catch {
+          return null;
+        }
+      })
+    );
+
+    const validEvents = events.filter(Boolean);
+
     if (event.queryStringParameters?.summary === 'true') {
       const counts = {};
-      events.forEach((e) => {
+      validEvents.forEach((e) => {
         counts[e.event_type] = (counts[e.event_type] || 0) + 1;
       });
       return {
         statusCode: 200,
-        body: JSON.stringify({ eventCounts: counts, totalEvents: events.length }),
+        body: JSON.stringify({ eventCounts: counts, totalEvents: validEvents.length }),
       };
     }
 
-    // Recent events (default 100)
     const limit = parseInt(event.queryStringParameters?.limit || '100', 10);
-    const recent = events.slice(-limit).reverse();
+    const sorted = validEvents.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    const recent = sorted.slice(0, limit);
 
     return {
       statusCode: 200,
