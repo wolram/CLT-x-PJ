@@ -29,6 +29,16 @@
   status = 200
 
 [[redirects]]
+  from = "/admin/*"
+  to = "/admin-dist/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin-dist/index.html"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
