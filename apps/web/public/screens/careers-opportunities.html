@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Oportunidades | Fiscal Architect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-variant": "#313539", "on-primary": "#003915", "error-container": "#93000a", "on-secondary-container": "#b6b7ca", background: "#0f1417", "on-background": "#dfe3e7", "inverse-on-surface": "#2c3134", "on-tertiary-fixed-variant": "#3b4859", "inverse-surface": "#dfe3e7", "surface-tint": "#4ae176", "on-error-container": "#ffdad6", "primary-container": "#22c55e", "on-surface-variant": "#bccbb9", "outline-variant": "#3d4a3d", "on-primary-container": "#004b1e", "on-tertiary-fixed": "#0f1c2c", "on-surface": "#dfe3e7", "surface-container-highest": "#313539", "surface-bright": "#353a3d", "surface-container-low": "#171c1f", "surface-container-lowest": "#0a0f12", error: "#ffb4ab", "tertiary-fixed": "#d6e3fa", "surface-container": "#1b2023", "on-tertiary-container": "#344152", "surface-container-high": "#262b2e", "secondary-fixed": "#e1e1f5", "tertiary-fixed-dim": "#bac7dd", "secondary-fixed-dim": "#c4c5d8", "on-secondary-fixed": "#191b29", "on-primary-fixed-variant": "#005321", "primary-fixed": "#6bff8f", surface: "#0f1417", "inverse-primary": "#006e2f", "on-primary-fixed": "#002109", "tertiary-container": "#9fadc2", outline: "#869585", "on-secondary-fixed-variant": "#444655", "primary-fixed-dim": "#4ae176", primary: "#4be277", tertiary: "#bbc8de", "on-error": "#690005", "on-tertiary": "#243142", "surface-dim": "#0f1417", "on-secondary": "#2d2f3e", secondary: "#c4c5d8", "secondary-container": "#464858"}, borderRadius: {DEFAULT: "1rem", lg: "2rem", xl: "3rem", full: "9999px"}, fontFamily: {headline: ["Manrope"], body: ["Inter"], label: ["Inter"], display: "Manrope"}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tabular-nums {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest font-body text-on-background min-h-screen">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-slate-950/60 backdrop-blur-xl no-border bg-slate-900/10">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-6 h-20">
+<div class="text-xl font-bold tracking-tighter text-slate-50 dark:text-slate-50">Calculadora CLT x CNPJ</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-slate-400 hover:text-slate-100 transition-colors font-sans tracking-tight" href="#">Calculadora</a>
+<a class="text-amber-500 font-semibold border-b-2 border-amber-600 pb-1 font-sans tracking-tight" href="#">Oportunidades</a>
+<a class="text-slate-400 hover:text-slate-100 transition-colors font-sans tracking-tight" href="#">Blog</a>
+<a class="text-slate-400 hover:text-slate-100 transition-colors font-sans tracking-tight" href="#">Recursos</a>
+</div>
+<button class="bg-gradient-to-br from-secondary to-secondary-container text-on-secondary px-6 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all duration-300 hover:scale-95">
+                Entrar
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+<!-- Header Section -->
+<header class="mb-16">
+<h1 class="text-5xl font-extrabold tracking-tight mb-4 text-on-background">Curadoria de Carreira</h1>
+<p class="text-on-surface-variant text-lg max-w-2xl leading-relaxed">
+                Explore oportunidades selecionadas para profissionais de alta performance. Analise cada proposta sob a ótica da eficiência fiscal e arquitetura financeira.
+            </p>
+</header>
+<!-- Filters & Controls -->
+<section class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+<div class="flex flex-col gap-4">
+<label class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">Filtrar por Contrato</label>
+<div class="inline-flex p-1 bg-surface-container-high rounded-full w-fit">
+<button class="px-8 py-2 rounded-full text-sm font-semibold bg-surface-container-lowest text-on-surface shadow-sm">Todos</button>
+<button class="px-8 py-2 rounded-full text-sm font-semibold text-on-surface-variant hover:text-on-surface transition-all">CLT</button>
+<button class="px-8 py-2 rounded-full text-sm font-semibold text-on-surface-variant hover:text-on-surface transition-all">PJ / CNPJ</button>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-low px-4 py-3 rounded-xl border-b-2 border-secondary/20">
+<span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-64 placeholder:text-outline" placeholder="Buscar cargo ou empresa..." type="text"/>
+</div>
+</section>
+<!-- Job Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Job Card 1: Senior Software Architect -->
+<div class="group bg-surface-container-low rounded-xl p-8 hover:bg-surface-container transition-colors duration-300 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<div>
+<div class="flex justify-between items-start mb-6">
+<div class="flex gap-4">
+<div class="w-14 h-14 bg-surface-container-highest rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="architecture">architecture</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-surface">Arquiteto de Soluções Senior</h3>
+<p class="text-on-surface-variant text-sm">Fintech Nexus • Remoto</p>
+</div>
+</div>
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Híbrido CLT/PJ</span>
+</div>
+<div class="mb-8">
+<p class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">Remuneração Estimada</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-black tracking-tighter tabular-nums text-on-surface">R$ 18.500</span>
+<span class="text-on-surface-variant font-medium">/ mês</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="bg-surface-container-lowest p-4 rounded-lg">
+<p class="text-[10px] font-bold uppercase text-on-primary-fixed-variant mb-2">Vantagens CLT</p>
+<ul class="text-xs text-on-surface-variant space-y-1">
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span> 13º Salário e Férias + 1/3</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span> FGTS (R$ 1.480/mês)</li>
+</ul>
+</div>
+<div class="bg-secondary-fixed p-4 rounded-lg">
+<p class="text-[10px] font-bold uppercase text-on-secondary-fixed-variant mb-2">Projeção PJ</p>
+<ul class="text-xs text-on-secondary-fixed-variant space-y-1">
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span> R$ 24.200 valor bruto</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span> Maior liquidez imediata</li>
+</ul>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary-container text-on-primary py-4 rounded-xl font-bold text-xs uppercase tracking-[0.1em] transition-all hover:bg-black">
+                    Analisar Oportunidade
+                </button>
+</div>
+<!-- Job Card 2: Financial Director -->
+<div class="group bg-surface-container-low rounded-xl p-8 hover:bg-surface-container transition-colors duration-300 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-tertiary"></div>
+<div>
+<div class="flex justify-between items-start mb-6">
+<div class="flex gap-4">
+<div class="w-14 h-14 bg-surface-container-highest rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-3xl" data-icon="account_balance">account_balance</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-surface">Diretor Financeiro (CFO)</h3>
+<p class="text-on-surface-variant text-sm">Venture Capital Lab • São Paulo</p>
+</div>
+</div>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Apenas PJ</span>
+</div>
+<div class="mb-8">
+<p class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">Pro labore sugerido</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-black tracking-tighter tabular-nums text-on-surface">R$ 32.000</span>
+<span class="text-on-surface-variant font-medium">/ mês</span>
+</div>
+</div>
+<div class="bg-surface-container-highest p-6 rounded-lg mb-8">
+<h4 class="text-xs font-bold uppercase mb-4 tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="verified">verified</span> Diferenciais da Posição
+                        </h4>
+<div class="grid grid-cols-2 gap-x-8 gap-y-3">
+<p class="text-xs text-on-surface-variant flex items-center gap-2 italic">Equity &amp; Stock Options</p>
+<p class="text-xs text-on-surface-variant flex items-center gap-2 italic">Bônus por Performance</p>
+<p class="text-xs text-on-surface-variant flex items-center gap-2 italic">Flexibilidade Total</p>
+<p class="text-xs text-on-surface-variant flex items-center gap-2 italic">Consultoria In-House</p>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary-container text-on-primary py-4 rounded-xl font-bold text-xs uppercase tracking-[0.1em] transition-all hover:bg-black">
+                    Analisar Oportunidade
+                </button>
+</div>
+<!-- Job Card 3: Product Designer -->
+<div class="group bg-surface-container-low rounded-xl p-8 hover:bg-surface-container transition-colors duration-300 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<div>
+<div class="flex justify-between items-start mb-6">
+<div class="flex gap-4">
+<div class="w-14 h-14 bg-surface-container-highest rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="palette">palette</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-surface">Product Designer Specialist</h3>
+<p class="text-on-surface-variant text-sm">Glow Tech • Florianópolis</p>
+</div>
+</div>
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">CLT</span>
+</div>
+<div class="mb-8">
+<p class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">Salário Base</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-black tracking-tighter tabular-nums text-on-surface">R$ 12.400</span>
+<span class="text-on-surface-variant font-medium">/ mês</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="bg-surface-container-lowest p-4 rounded-lg">
+<p class="text-[10px] font-bold uppercase text-on-primary-fixed-variant mb-2">Benefícios Diretos</p>
+<ul class="text-xs text-on-surface-variant space-y-1">
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span> VA/VR R$ 1.200</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span> Plano de Saúde Premium</li>
+</ul>
+</div>
+<div class="bg-surface-container-high p-4 rounded-lg">
+<p class="text-[10px] font-bold uppercase text-on-surface-variant mb-2">Custo Empresa</p>
+<p class="text-sm font-bold text-on-surface tabular-nums">R$ 21.800</p>
+<p class="text-[9px] text-on-surface-variant italic">Valor investido mensalmente</p>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary-container text-on-primary py-4 rounded-xl font-bold text-xs uppercase tracking-[0.1em] transition-all hover:bg-black">
+                    Analisar Oportunidade
+                </button>
+</div>
+<!-- Job Card 4: Business Analyst -->
+<div class="group bg-surface-container-low rounded-xl p-8 hover:bg-surface-container transition-colors duration-300 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<div>
+<div class="flex justify-between items-start mb-6">
+<div class="flex gap-4">
+<div class="w-14 h-14 bg-surface-container-highest rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="analytics">analytics</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-surface">Business Intelligence Lead</h3>
+<p class="text-on-surface-variant text-sm">DataFlow Co. • Remoto</p>
+</div>
+</div>
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Híbrido CLT/PJ</span>
+</div>
+<div class="mb-8">
+<p class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">Remuneração Estimada</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-black tracking-tighter tabular-nums text-on-surface">R$ 15.200</span>
+<span class="text-on-surface-variant font-medium">/ mês</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="bg-surface-container-lowest p-4 rounded-lg border-l-2 border-secondary/10">
+<p class="text-[10px] font-bold uppercase text-on-primary-fixed-variant mb-2">Vantagens CLT</p>
+<ul class="text-xs text-on-surface-variant space-y-1">
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span> Auxílio Home Office</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span> Seguro de Vida</li>
+</ul>
+</div>
+<div class="bg-secondary-fixed p-4 rounded-lg">
+<p class="text-[10px] font-bold uppercase text-on-secondary-fixed-variant mb-2">Vantagens PJ</p>
+<ul class="text-xs text-on-secondary-fixed-variant space-y-1">
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span> Redução IR (Simples)</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span> Férias Remuneradas</li>
+</ul>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary-container text-on-primary py-4 rounded-xl font-bold text-xs uppercase tracking-[0.1em] transition-all hover:bg-black">
+                    Analisar Oportunidade
+                </button>
+</div>
+</div>
+<!-- CTA Section -->
+<section class="mt-24 rounded-2xl overflow-hidden relative p-12 flex flex-col items-center text-center bg-surface-container-low">
+<div class="absolute inset-0 z-0 opacity-10">
+<img class="w-full h-full object-cover" data-alt="architectural building with repetitive geometric patterns and high contrast shadows in a modern urban environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXwqeWZMH99kHoWCZzJoijn94k75Bo9xsIr7kfBbilBN0NXZlhVwktcQgdiYY8fRTeh5paQn819lImryYJmTAsPWb8UcMxanz6iBbAP91ltYkGx7TBam-OkTb4sdJmIDylyRoG9Ncg_ZkeXCfz16OoUQHkZTEqqWkBKREvxHzpIB0Hyn7HG3dMK2Re_Xr3hJvWKPr1wptxh0os93Z_iQ6tbKYwYpw92CtjkWfdL9eXJk_9y5EBFOhldP6F3WnnK-8auqPxA7n7E4U"/>
+</div>
+<div class="relative z-10 max-w-2xl">
+<h2 class="text-3xl font-bold mb-6 tracking-tight">Não encontrou a vaga ideal?</h2>
+<p class="text-on-surface-variant mb-8">Receba alertas personalizados baseados no seu perfil fiscal e pretensão salarial. Nossa IA filtra as melhores oportunidades para você.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="bg-gradient-to-br from-secondary to-secondary-container text-on-secondary px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest transition-all hover:scale-95">Criar Alerta de Vagas</button>
+<button class="bg-surface-container-lowest text-on-surface px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest border border-outline-variant transition-all hover:bg-surface-container-low">Falar com Consultor</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-950 tonal-shift bg-slate-900 w-full py-12 px-6 border-t-0">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 max-w-7xl mx-auto">
+<div class="text-sm font-bold text-slate-300">Fiscal Architect</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-slate-500 hover:text-slate-300 transition-colors font-sans text-xs leading-relaxed" href="#">Calculadora</a>
+<a class="text-amber-500 underline font-sans text-xs leading-relaxed" href="#">Oportunidades</a>
+<a class="text-slate-500 hover:text-slate-300 transition-colors font-sans text-xs leading-relaxed" href="#">Blog</a>
+<a class="text-slate-500 hover:text-slate-300 transition-colors font-sans text-xs leading-relaxed" href="#">Recursos</a>
+<a class="text-slate-500 hover:text-slate-300 transition-colors font-sans text-xs leading-relaxed" href="#">Privacidade</a>
+<a class="text-slate-500 hover:text-slate-300 transition-colors font-sans text-xs leading-relaxed" href="#">Termos</a>
+</div>
+<div class="text-slate-500 font-sans text-xs leading-relaxed">© 2024 The Fiscal Architect. Todos os direitos reservados.</div>
+</div>
+</footer>
+</body></html>
