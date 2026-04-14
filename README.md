@@ -1,44 +1,63 @@
-# CLT x PJ Product Workspace
+<div align="center">
 
-Este workspace agora esta organizado por area de produto para facilitar a criacao de um GitHub mais limpo no futuro.
+# CLTX — PJ Contractor Management Platform
 
-## Estrutura Canonica
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Swift](https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white)](https://swift.org/)
+[![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com/)
 
-```text
+**Full-stack SaaS monorepo for PJ (Pessoa Jurídica) contractor management**
+
+[Live →](https://cltxpj.app.br)
+
+</div>
+
+---
+
+## Overview
+
+CLTX is a multi-platform SaaS that covers the full lifecycle of PJ contractor management for Brazilian companies — from onboarding and documentation to CLT vs PJ financial calculations.
+
+## Monorepo Structure
+
+```
 apps/
-  ios/CalcCLTPJ                  # App iOS principal
-  android/app-android-cltxcnpj   # App Android/WebView atual
-
+  ios/CalcCLTPJ          # iOS app (SwiftUI)
+  android/               # Android app
 web/
-  cltxpj.app.br                  # Site/landing page principal
-
+  cltxpj.app.br          # Landing page + web app (React · Node.js)
 creative/
-  social-media/current           # Atalho para os criativos atuais
-
-archive/
-  web-legacy/05_CLTxPJ_Website   # Versao antiga/duplicada do site
-  web-legacy/CalcCLTxCNPJ        # Versao conceitual/rascunho do site
-  experiments/cltxcnpjv2         # Experimento antigo
+  social-media/          # Marketing assets
+archive/                 # Legacy experiments
 ```
 
-## O Que Usar Como Base
+## Key Features
 
-- Site principal: `web/cltxpj.app.br`
-- App iOS principal: `apps/ios/CalcCLTPJ`
-- App Android principal: `apps/android/app-android-cltxcnpj`
-- Criativos: `creative/social-media/current`
+- ✅ CLT × PJ financial comparison engine
+- ✅ AI-assisted onboarding and document workflows
+- ✅ iOS native app (SwiftUI)
+- ✅ Android app
+- ✅ Multi-tenant web platform
+- ✅ Contractor lifecycle management
 
-## Recomendacao Para O Novo GitHub
+## Tech Stack
 
-Se a ideia e ter um GitHub so do produto, a melhor base hoje e:
+| Layer | Technology |
+|---|---|
+| Web Frontend | React · TypeScript · Tailwind CSS |
+| Backend | Node.js · TypeScript |
+| iOS | Swift · SwiftUI · XcodeGen |
+| Android | Android · WebView |
+| CI/CD | GitHub Actions |
+| Infra | Docker · Vercel |
 
-1. Criar um novo repositorio chamado algo como `cltxpj-product`.
-2. Importar primeiro `web/cltxpj.app.br`, `apps/ios/CalcCLTPJ` e `apps/android/app-android-cltxcnpj`.
-3. Manter `archive/` fora do novo repo principal ou migrar depois apenas como referencia historica.
-4. Usar `creative/` como pasta de apoio de marketing, sem misturar com codigo do app.
+## Architecture
 
-## Observacoes
+Multi-platform monorepo — shared business logic across web, iOS, and Android surfaces with a common Node.js API layer.
 
-- Existem duplicacoes do site em `archive/web-legacy/`.
-- Os criativos atuais continuam fisicamente dentro do repo iOS para preservar o historico ja versionado, e `creative/social-media/current` aponta para esse material.
-- Esta pasta raiz ainda nao e um repositorio Git unico. Ela funciona como um hub local para organizar os repos existentes.
+---
+
+*Part of [Marlow Sousa's portfolio](https://marlow.dev.br) · Built with Claude Code + Cursor*
