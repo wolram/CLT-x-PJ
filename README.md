@@ -11,8 +11,8 @@
 
 **Full-stack SaaS monorepo for PJ (Pessoa Jurídica) contractor management**
 
-[Live →](https://cltxpj.app.br)
-
+[Link site →](https://cltxpj.app.br)
+[Link App iOS →](https://apps.apple.com/br/app/calculadora-clt-x-pj/id6755878441)
 </div>
 
 ---
