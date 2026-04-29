@@ -1,0 +1,6 @@
+Provider	Provider Country	SKU	Developer	Title	Version	Product Type Identifier	Units	Developer Proceeds	Begin Date	End Date	Customer Currency	Country Code	Currency of Proceeds	Apple Identifier	Customer Price	Promo Code	Parent Identifier	Subscription	Period	Category	CMB	Device	Supported Platforms	Proceeds Reason	Preserved Pricing	Client	Order Type
+APPLE	US	com.calccltpj.app	MARLOW SOUSA	Calculadora CLT x PJ	2.1	1F	1	0.00	01/01/2025	12/31/2025	BRL	BR	BRL	6755878441	0.00	CR-RW	 	 	 	Finance		iPad	iOS	 	 	 	 
+APPLE	US	com.calccltpj.app	MARLOW SOUSA	Calculadora CLT x PJ	2.1	3F	2	0.00	01/01/2025	12/31/2025	BRL	BR	BRL	6755878441	0.00	 	 	 	 	Finance		Desktop	iOS	 	 	 	 
+APPLE	US	com.calccltpj.app	MARLOW SOUSA	Calculadora CLT x PJ	2.1	3F	1	0.00	01/01/2025	12/31/2025	BRL	BR	BRL	6755878441	0.00	 	 	 	 	Finance		iPhone	iOS	 	 	 	 
+APPLE	US	com.calccltpj.app	MARLOW SOUSA	Calculadora CLT x PJ	2.1	1F	1	23.57	01/01/2025	12/31/2025	BRL	BR	BRL	6755878441	34.90	 	 	 	 	Finance		iPhone	iOS	 	 	 	 
+APPLE	US	com.calccltpj.app	MARLOW SOUSA	Calculadora CLT x PJ	2.1	1F	1	0.00	01/01/2025	12/31/2025	BRL	BR	BRL	6755878441	0.00	CR-RW	 	 	 	Finance		iPhone	iOS	 	 	 	 

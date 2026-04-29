@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitter/X Card</title>
+  <link rel="stylesheet" href="templates.css">
+  <style>
+    body { margin: 0; padding: 0; background: #000; }
+    .scaled { transform: scale(0.25); transform-origin: top left; width: 400%; height: 400%; }
+  </style>
+</head>
+<body>
+  <div class="scaled">
+    <!-- Twitter card variant: Split layout -->
+    <div class="template-twitter-card social-template" style="display:grid; grid-template-columns:1fr 1fr; gap:0; text-align:left; padding:0;">
+      <div style="display:flex; flex-direction:column; justify-content:center; padding:60px;">
+        <div style="font-size:16px; color:var(--clt-x-pj-gold); font-weight:600; letter-spacing:2px; margin-bottom:16px;">THREAD</div>
+        <div class="headline" style="font-size:48px; line-height:1.15; margin-bottom:20px;">Quanto você perde<br>aceitando PJ?</div>
+        <div class="body" style="font-size:22px; color:var(--clt-x-pj-text-secondary); line-height:1.5;">Impostos, benefícios, risco... nós calculamos tudo para você decidir com clareza.</div>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:center; background:var(--clt-x-pj-tertiary-bg); border-left:2px solid var(--clt-x-pj-border);">
+        <div style="text-align:center;">
+          <div style="font-size:72px; font-weight:700; color:var(--clt-x-pj-gold);">R$ 15k</div>
+          <div style="font-size:22px; color:var(--clt-x-pj-text-secondary); margin-top:12px;">por ano de diferença</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

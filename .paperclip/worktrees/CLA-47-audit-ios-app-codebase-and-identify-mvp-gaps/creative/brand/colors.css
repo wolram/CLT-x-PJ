@@ -1,0 +1,45 @@
+:root {
+  --clt-x-pj-primary-bg: #0a0a0f;
+  --clt-x-pj-secondary-bg: #14141a;
+  --clt-x-pj-tertiary-bg: #1e1e28;
+
+  --clt-x-pj-gold: #d4a853;
+  --clt-x-pj-gold-light: #e8c878;
+  --clt-x-pj-gold-dark: #b8923f;
+
+  --clt-x-pj-text-primary: #ffffff;
+  --clt-x-pj-text-secondary: #b0b0bc;
+  --clt-x-pj-text-muted: #6e6e7a;
+
+  --clt-x-pj-accent-success: #34d399;
+  --clt-x-pj-accent-warning: #fbbf24;
+  --clt-x-pj-accent-error: #f87171;
+
+  --clt-x-pj-border: #2a2a36;
+  --clt-x-pj-border-light: #3a3a48;
+}
+
+.color-palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+}
+
+.color-swatch {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.color-swatch-preview {
+  height: 60px;
+  border-radius: 8px 8px 0 0;
+}
+
+.color-swatch-info {
+  padding: 8px 12px;
+  background: var(--clt-x-pj-secondary-bg);
+  border-radius: 0 0 8px 8px;
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--clt-x-pj-text-secondary);
+}

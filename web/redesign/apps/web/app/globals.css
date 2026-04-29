@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --secondary: #904d00;
+  --tertiary-fixed-dim: #b9c8de;
+  --outline-variant: #c6c6cd;
+  --on-primary-fixed: #141b2b;
+  --secondary-container: #fe932c;
+  --surface-bright: #f8f9ff;
+  --on-secondary-fixed-variant: #6e3900;
+  --primary-container: #141b2b;
+  --on-secondary-fixed: #2f1500;
+  --on-error-container: #93000a;
+  --on-tertiary: #ffffff;
+  --surface-container-highest: #d4e4fa;
+  --surface-variant: #d4e4fa;
+  --inverse-on-surface: #e9f1ff;
+  --on-surface-variant: #45464c;
+  --outline: #76777d;
+  --on-tertiary-fixed: #0d1c2d;
+  --error-container: #ffdad6;
+  --tertiary-container: #0d1c2d;
+  --surface-dim: #ccdbf2;
+  --surface-container-lowest: #ffffff;
+  --tertiary-fixed: #d4e4fa;
+  --primary-fixed-dim: #c0c6db;
+  --on-secondary: #ffffff;
+  --on-background: #0d1c2d;
+  --on-primary-fixed-variant: #404758;
+  --secondary-fixed: #ffdcc3;
+  --on-tertiary-container: #768599;
+  --error: #ba1a1a;
+  --on-primary: #ffffff;
+  --tertiary: #000000;
+  --on-secondary-container: #663500;
+  --surface-container-high: #dbe9ff;
+  --primary-fixed: #dce2f7;
+  --on-tertiary-fixed-variant: #39485a;
+  --inverse-surface: #233143;
+  --surface-tint: #575e70;
+  --surface-container-low: #eef4ff;
+  --on-primary-container: #7d8497;
+  --surface-container: #e5efff;
+  --on-surface: #0d1c2d;
+  --on-error: #ffffff;
+  --primary: #000000;
+  --surface: #f8f9ff;
+  --secondary-fixed-dim: #ffb77d;
+  --background: #f8f9ff;
+  --inverse-primary: #c0c6db;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--surface-container-lowest);
+  color: var(--on-surface);
+}
+
+@layer utilities {
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+  
+  .glass-nav {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(20px);
+  }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-widest shadow-2xl shadow-primary/20 flex items-center gap-2;
+  }
+  
+  .btn-secondary {
+    @apply px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-widest text-on-surface border-2 border-outline-variant/15 hover:bg-surface-container-low transition-colors;
+  }
+  
+  .card-surface {
+    @apply bg-surface-container-low rounded-xl p-8;
+  }
+  
+  .input-field {
+    @apply bg-surface-container-high rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-secondary/50 transition-all border-none outline-none;
+  }
+}
