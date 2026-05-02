@@ -72,7 +72,7 @@ export default function CalculatorPage() {
                   </div>
                   <Slider 
                     value={[grossSalary]}
-                    onValueChange={(val) => setGrossSalary(val[0])}
+                    onValueChange={(val) => setGrossSalary(Array.isArray(val) ? val[0] : val)}
                     min={2000}
                     max={50000}
                     step={500}
@@ -88,7 +88,7 @@ export default function CalculatorPage() {
                   </div>
                   <Slider 
                     value={[benefits]}
-                    onValueChange={(val) => setBenefits(val[0])}
+                    onValueChange={(val) => setBenefits(Array.isArray(val) ? val[0] : val)}
                     min={0}
                     max={5000}
                     step={100}
@@ -104,7 +104,7 @@ export default function CalculatorPage() {
                   </div>
                   <Slider 
                     value={[taxRate]}
-                    onValueChange={(val) => setTaxRate(val[0])}
+                    onValueChange={(val) => setTaxRate(Array.isArray(val) ? val[0] : val)}
                     min={6}
                     max={15.5}
                     step={0.5}

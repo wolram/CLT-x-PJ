@@ -6,6 +6,14 @@ import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { MaterialSymbol } from './MaterialSymbol'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { 
+  Sheet, 
+  SheetContent, 
+  SheetHeader, 
+  SheetTitle, 
+  SheetTrigger 
+} from '@/components/ui/sheet'
 
 const routes = [
   { label: 'Calculadora', href: '/calculator' },
@@ -64,32 +72,32 @@ export function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden sm:flex items-center gap-4">
-            <Link href="/dashboard">
-              <Button
-                variant="ghost"
-                className="text-on-surface/40 hover:text-on-surface"
-              >
-                Entrar
-              </Button>
-            </Link>
-            <Link href="/calculator">
-              <Button
-                className="bg-secondary hover:bg-secondary/90 text-on-secondary font-black uppercase tracking-widest text-[10px] shadow-xl shadow-secondary/20"
-              >
-                Simulação Grátis
-              </Button>
-            </Link>
+            <Button
+              render={<Link href="/dashboard" />}
+              variant="ghost"
+              className="text-on-surface/40 hover:text-on-surface"
+            >
+              Entrar
+            </Button>
+            <Button
+              render={<Link href="/calculator" />}
+              className="bg-secondary hover:bg-secondary/90 text-on-secondary font-black uppercase tracking-widest text-[10px] shadow-xl shadow-secondary/20"
+            >
+              Simulação Grátis
+            </Button>
           </div>
 
           {/* Mobile Menu */}
           <div className="md:hidden">
             <Sheet>
-              <SheetTrigger>
-                <Button variant="ghost" size="icon-sm">
-                  <MaterialSymbol name="menu" className="h-5 w-5" />
-                  <span className="sr-only">Toggle menu</span>
-                </Button>
-              </SheetTrigger>
+              <SheetTrigger
+                render={
+                  <Button variant="ghost" size="icon-sm">
+                    <MaterialSymbol name="menu" className="h-5 w-5" />
+                    <span className="sr-only">Toggle menu</span>
+                  </Button>
+                }
+              />
               <SheetContent side="right" className="w-72">
                 <SheetHeader>
                   <SheetTitle>Menu</SheetTitle>
@@ -110,21 +118,19 @@ export function Navbar() {
                     </Link>
                   ))}
                   <div className="mt-4 flex flex-col gap-2 border-t border-outline/10 pt-4">
-                    <Link href="/dashboard" className="w-full">
-                      <Button
-                        variant="outline"
-                        className="w-full"
-                      >
-                        Entrar
-                      </Button>
-                    </Link>
-                    <Link href="/calculator" className="w-full">
-                      <Button
-                        className="w-full bg-secondary hover:bg-secondary/90 text-on-secondary font-black uppercase tracking-widest text-xs"
-                      >
-                        Simulação Grátis
-                      </Button>
-                    </Link>
+                    <Button
+                      render={<Link href="/dashboard" />}
+                      variant="outline"
+                      className="w-full"
+                    >
+                      Entrar
+                    </Button>
+                    <Button
+                      render={<Link href="/calculator" />}
+                      className="w-full bg-secondary hover:bg-secondary/90 text-on-secondary font-black uppercase tracking-widest text-xs"
+                    >
+                      Simulação Grátis
+                    </Button>
                   </div>
                 </nav>
               </SheetContent>

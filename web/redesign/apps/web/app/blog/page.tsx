@@ -70,7 +70,7 @@ export default function BlogPage() {
                 <p className="text-slate-100 font-black text-sm">Marlow Sousa</p>
                 <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Architect Sênior</p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </motion.div>
       </section>
