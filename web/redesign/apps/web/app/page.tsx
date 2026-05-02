@@ -1,169 +1,226 @@
+'use client'
+
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { MaterialSymbol } from '@/components/MaterialSymbol'
+import { Navbar } from '@/components/Navbar'
+import { calculateSimulation } from '@/lib/simulation'
 
 export default function HomePage() {
+  const [grossSalary, setGrossSalary] = useState(15000)
+  const results = useMemo(() => calculateSimulation(grossSalary), [grossSalary])
+
+  const formatCurrency = (val: number) => 
+    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(val)
+
   return (
-    <main className="pt-20">
+    <main className="bg-surface-container-lowest overflow-x-hidden">
+      <Navbar />
+      
       {/* Hero Section */}
-      <section className="relative min-h-[921px] flex items-center overflow-hidden bg-surface-container-lowest">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="relative min-h-screen flex items-center pt-32 pb-20">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+          
           {/* Hero Content */}
-          <div className="lg:col-span-7 space-y-8 py-20">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-secondary-fixed text-on-secondary-fixed text-xs font-bold uppercase tracking-widest rounded-full">
-              <span className="w-2 h-2 rounded-full bg-secondary"></span>
-              Atualizado 2024
-            </div>
-            <h1 className="text-6xl md:text-8xl font-black text-on-surface leading-[0.95] tracking-tighter">
-              A clareza que seu <span className="text-secondary">patrimônio</span> exige.
-            </h1>
-            <p className="text-on-surface-variant text-xl leading-relaxed max-w-xl">
-              Deixe de lado as planilhas confusas. Projetamos uma arquitetura fiscal premium para você decidir entre CLT e PJ com a autoridade de um especialista.
-            </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link href="/calculator" className="bg-primary text-on-primary px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-widest bg-gradient-to-br from-primary to-primary-container shadow-2xl shadow-primary/20 flex items-center gap-2 hover:opacity-90 transition-all">
-                Começar Simulação Completa
-                <MaterialSymbol name="arrow_forward" className="text-xl" />
+          <div className="lg:col-span-7 space-y-10 relative z-10">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-3 px-4 py-2 bg-secondary/10 text-secondary text-[10px] font-black uppercase tracking-[0.2em] rounded-full border border-secondary/10"
+            >
+              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+              Algoritmo Fiscal 2024
+            </motion.div>
+            
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-6xl md:text-9xl font-black text-on-surface leading-[1.1] tracking-tighter"
+            >
+              Arquitetura de <span className="text-secondary">Liberdade.</span>
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-on-surface-variant text-xl leading-relaxed max-w-xl font-medium"
+            >
+              Deixe de lado as planilhas confusas. Projetamos uma plataforma premium para você decidir entre CLT e PJ com a autoridade de um especialista.
+            </motion.p>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-wrap gap-6 pt-6"
+            >
+              <Link href="/calculator" className="bg-primary text-on-primary px-10 py-5 rounded-[2rem] text-xs font-black uppercase tracking-[0.2em] premium-gradient shadow-2xl shadow-primary/20 flex items-center gap-3 hover:scale-105 transition-all">
+                Começar Simulação
+                <MaterialSymbol name="arrow_forward" />
               </Link>
-              <button className="px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-widest text-on-surface border-2 border-outline-variant/15 hover:bg-surface-container-low transition-colors">
+              <button className="px-10 py-5 rounded-[2rem] text-xs font-black uppercase tracking-[0.2em] text-on-surface border-2 border-outline-variant/30 hover:bg-surface-container transition-all">
                 Ver Metodologia
               </button>
-            </div>
+            </motion.div>
           </div>
-          {/* Quick Simulation Widget */}
+
+          {/* Interactive Widget */}
           <div className="lg:col-span-5 relative">
-            <div className="bg-surface-container-low p-8 rounded-full shadow-2xl shadow-on-surface/5 relative z-10">
-              <div className="flex items-center justify-between mb-8">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Simulação Rápida</h3>
-                <MaterialSymbol name="speed" className="text-secondary text-2xl" />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ delay: 0.4, type: 'spring' }}
+              className="bg-white p-10 rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border border-slate-100 relative z-10"
+            >
+              <div className="flex items-center justify-between mb-10">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/40">Simulação Rápida</span>
+                <MaterialSymbol name="bolt" className="text-secondary text-2xl" />
               </div>
-              <div className="space-y-6">
+
+              <div className="space-y-8">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Salário Mensal Bruto (R$)</label>
-                  <div className="bg-surface-container-high rounded-xl p-4 transition-all focus-within:bg-surface-bright group relative">
-                    <input className="no-border-input bg-transparent w-full text-2xl font-black text-on-surface tabular-nums" type="text" defaultValue="15.000,00" />
-                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-secondary group-focus-within:w-full transition-all duration-300"></div>
+                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-secondary mb-4">Salário Mensal Bruto</label>
+                  <div className="bg-surface-container-low rounded-3xl p-6 group transition-all focus-within:ring-2 focus-within:ring-secondary/20">
+                    <div className="flex items-center gap-4">
+                      <span className="text-2xl font-black text-on-surface/20">R$</span>
+                      <input 
+                        className="no-border-input bg-transparent w-full text-4xl font-black text-on-surface tabular-nums" 
+                        type="number" 
+                        value={grossSalary}
+                        onChange={(e) => setGrossSalary(Number(e.target.value))}
+                      />
+                    </div>
                   </div>
                 </div>
+
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-6 bg-primary-fixed rounded-xl border-l-4 border-primary">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-on-primary-fixed-variant block mb-1">Líquido CLT</span>
-                    <span className="text-xl font-black text-on-primary-fixed tabular-nums">R$ 11.240</span>
+                  <div className="p-6 bg-surface-container-high rounded-3xl">
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-on-surface/40 block mb-2">Líquido CLT</span>
+                    <span className="text-xl font-black text-on-surface tabular-nums">{formatCurrency(results.clt.net)}</span>
                   </div>
-                  <div className="p-6 bg-secondary-fixed rounded-xl border-l-4 border-secondary">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-on-secondary-fixed-variant block mb-1">Líquido PJ</span>
-                    <span className="text-xl font-black text-on-secondary-fixed tabular-nums">R$ 13.820</span>
+                  <div className="p-6 bg-secondary-fixed rounded-3xl">
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-on-secondary-fixed-variant block mb-2">Líquido PJ</span>
+                    <span className="text-xl font-black text-on-secondary-fixed tabular-nums">{formatCurrency(results.pj.net)}</span>
                   </div>
                 </div>
-                <div className="bg-surface-container-highest p-6 rounded-xl relative overflow-hidden">
+
+                <div className="bg-primary text-on-primary p-8 rounded-3xl relative overflow-hidden group">
                   <div className="relative z-10 flex justify-between items-center">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-secondary block">Diferença Anual</span>
-                      <span className="text-3xl font-black text-on-surface tabular-nums">R$ 30.960</span>
+                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-secondary block mb-1">Diferença Anual</span>
+                      <span className="text-4xl font-black tabular-nums">{formatCurrency(results.comparison.annualDiff)}</span>
                     </div>
                     <div className="text-right">
-                      <span className="text-xs font-bold text-secondary">+23%</span>
-                      <span className="block text-[10px] uppercase text-on-surface-variant">em PJ</span>
+                      <span className="bg-secondary text-on-secondary px-3 py-1 rounded-full text-[10px] font-black">
+                        +{results.comparison.percentageGain.toFixed(1)}%
+                      </span>
                     </div>
                   </div>
+                  {/* Decorative shimmer */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 </div>
               </div>
-            </div>
+            </motion.div>
+            
+            {/* Background elements */}
+            <div className="absolute -top-10 -right-10 w-64 h-64 bg-secondary/10 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
           </div>
-          {/* Decorative back element */}
-          <div className="absolute -top-6 -right-6 w-full h-full bg-secondary/5 rounded-full -z-0 rotate-3"></div>
         </div>
       </section>
 
-      {/* Social Proof Section */}
-      <section className="py-24 bg-surface-container-low">
+      {/* Social Proof */}
+      <section className="py-24 border-y border-outline-variant/10">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-xs font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-12">Utilizado por profissionais das maiores Techs do Brasil</p>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
+          <p className="text-center text-[10px] font-black uppercase tracking-[0.3em] text-on-surface/30 mb-16">Arquitetando o futuro de profissionais em</p>
+          <div className="flex flex-wrap justify-center items-center gap-16 md:gap-32 opacity-20 grayscale hover:grayscale-0 transition-all duration-700">
             {['NUBANK', 'IFOOD', 'Loggi', 'QUITO', 'HOTMART'].map((company) => (
-              <div key={company} className="h-8 w-32 flex items-center justify-center font-black text-2xl text-on-surface italic">
-                {company}
-              </div>
+              <span key={company} className="font-black text-3xl tracking-tighter">{company}</span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Bento Grid Insights */}
-      <section className="py-32 bg-surface-container-lowest">
+      {/* Features Grid */}
+      <section className="py-40 bg-surface-container-lowest">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-20 space-y-4">
-            <h2 className="text-xs font-bold uppercase tracking-[0.3em] text-secondary">Inteligência Fiscal</h2>
-            <p className="text-4xl md:text-5xl font-black text-on-surface tracking-tight max-w-2xl">Mais do que números. Estratégia de carreira.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
-            {/* Large Card */}
-            <div className="md:col-span-8 bg-surface-container-low rounded-full p-12 flex flex-col justify-between relative overflow-hidden group">
-              <div className="relative z-10">
-                <h3 className="text-3xl font-bold mb-4">Metodologia &quot;Architect&quot;</h3>
-                <p className="text-on-surface-variant text-lg max-w-md leading-relaxed">
-                  Consideramos décimo terceiro, férias, benefícios, impostos municipais (ISS), DAS e contabilidade. Nada fica de fora da nossa análise.
-                </p>
-              </div>
-              <div className="relative z-10 mt-8">
-                <button className="flex items-center gap-2 font-bold text-sm uppercase tracking-widest text-secondary group-hover:gap-4 transition-all">
-                  Explorar Algoritmo
-                  <MaterialSymbol name="chevron_right" />
-                </button>
-              </div>
-            </div>
-            {/* Small Card 1 */}
-            <div className="md:col-span-4 bg-secondary-fixed rounded-full p-12 flex flex-col justify-center gap-6">
-              <MaterialSymbol name="account_balance" className="text-4xl text-secondary" />
-              <div>
-                <h3 className="text-xl font-black text-on-secondary-fixed mb-2">Segurança Jurídica</h3>
-                <p className="text-on-secondary-fixed-variant text-sm leading-relaxed">
-                  Orientações baseadas nas leis vigentes para evitar riscos de pejotização indevida.
-                </p>
-              </div>
-            </div>
-            {/* Small Card 2 */}
-            <div className="md:col-span-4 bg-primary-container rounded-full p-12 text-on-primary-fixed-variant flex flex-col justify-center gap-6">
-              <MaterialSymbol name="monitoring" className="text-4xl text-on-primary-fixed" />
-              <div>
-                <h3 className="text-xl font-black text-on-primary-fixed mb-2">Simulação de Gastos</h3>
-                <p className="text-sm leading-relaxed">
-                  Projete gastos com plano de saúde e previdência privada para uma comparação real de poder de compra.
-                </p>
-              </div>
-            </div>
-            {/* Medium Card */}
-            <div className="md:col-span-8 bg-surface-container-highest rounded-full p-12 flex items-center justify-between">
-              <div className="max-w-sm">
-                <h3 className="text-2xl font-bold mb-4">Exportação Premium</h3>
-                <p className="text-on-surface-variant text-sm">
-                  Gere um PDF executivo para apresentar em sua negociação salarial, detalhando cada centavo economizado.
-                </p>
-              </div>
-              <div className="hidden md:block">
-                <MaterialSymbol name="picture_as_pdf" className="text-6xl text-on-surface/20" />
-              </div>
-            </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-24 space-y-4 text-center"
+          >
+            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-secondary">Estratégia Pura</h2>
+            <p className="text-5xl md:text-7xl font-black text-on-surface tracking-tighter">Onde sua carreira performa melhor.</p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="bg-surface-container-low p-12 rounded-[3rem] space-y-6 hover:scale-[1.02] transition-transform"
+            >
+              <MaterialSymbol name="gavel" className="text-4xl text-secondary" />
+              <h3 className="text-2xl font-black">Segurança Jurídica</h3>
+              <p className="text-on-surface-variant font-medium leading-relaxed">
+                Análise completa de riscos de pejotização e conformidade com a legislação brasileira.
+              </p>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-primary text-on-primary p-12 rounded-[3rem] space-y-6 premium-gradient shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-transform"
+            >
+              <MaterialSymbol name="monitoring" className="text-4xl text-secondary" />
+              <h3 className="text-2xl font-black">Simulação Real</h3>
+              <p className="text-on-primary/60 font-medium leading-relaxed">
+                Consideramos cada centavo: do décimo terceiro ao custo variável de contabilidade e impostos.
+              </p>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="bg-surface-container-low p-12 rounded-[3rem] space-y-6 hover:scale-[1.02] transition-transform"
+            >
+              <MaterialSymbol name="picture_as_pdf" className="text-4xl text-secondary" />
+              <h3 className="text-2xl font-black">Relatórios PDF</h3>
+              <p className="text-on-surface-variant font-medium leading-relaxed">
+                Gere um dossiê executivo para apresentar em sua próxima negociação salarial.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-surface-container-low overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 text-center space-y-12 relative">
-          <div className="relative z-10">
-            <h2 className="text-5xl md:text-7xl font-black text-on-surface tracking-tighter">Pronto para<br/>assumir o controle?</h2>
-            <p className="text-on-surface-variant text-xl max-w-2xl mx-auto mt-6">Inicie sua transição com dados, não com suposições.</p>
-            <div className="pt-10">
-              <Link href="/calculator" className="bg-primary text-on-primary px-12 py-6 rounded-xl text-md font-bold uppercase tracking-widest bg-gradient-to-br from-primary to-primary-container shadow-2xl shadow-primary/20">
-                Fazer Simulação Completa
+      <section className="py-40">
+        <div className="max-w-5xl mx-auto px-6 text-center bg-slate-950 rounded-[4rem] p-24 relative overflow-hidden">
+          <div className="relative z-10 space-y-10">
+            <h2 className="text-5xl md:text-8xl font-black text-white tracking-tighter">Pronto para<br/>assumir o controle?</h2>
+            <p className="text-slate-400 text-xl max-w-2xl mx-auto font-medium">Inicie sua transição com dados, não com suposições.</p>
+            <div className="pt-6">
+              <Link href="/calculator" className="bg-secondary-gradient text-on-secondary px-16 py-7 rounded-[2.5rem] text-sm font-black uppercase tracking-[0.2em] shadow-2xl shadow-secondary/30 inline-block hover:scale-105 transition-all">
+                Acessar Calculadora
               </Link>
             </div>
           </div>
-          {/* Backdrop icon */}
-          <MaterialSymbol name="calculate" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[30rem] text-on-surface/[0.02] pointer-events-none" />
+          {/* Abstract background icon */}
+          <MaterialSymbol name="calculate" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[40rem] text-white/[0.02] pointer-events-none" />
         </div>
       </section>
+      
+      <footer className="py-20 text-center border-t border-outline-variant/10">
+        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-on-surface/20">© 2024 The Fiscal Architect. Inteligência que transforma burocracia em patrimônio.</p>
+      </footer>
     </main>
   )
 }

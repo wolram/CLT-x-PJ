@@ -2,19 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "tw-animate-css";
+
 :root {
-  --secondary: #904d00;
-  --tertiary-fixed-dim: #b9c8de;
-  --outline-variant: #c6c6cd;
-  --on-primary-fixed: #141b2b;
-  --secondary-container: #fe932c;
-  --surface-bright: #f8f9ff;
-  --on-secondary-fixed-variant: #6e3900;
-  --primary-container: #141b2b;
-  --on-secondary-fixed: #2f1500;
-  --on-error-container: #93000a;
-  --on-tertiary: #ffffff;
+  /* Surface & Background */
+  --on-background: #0d1c2d;
+  --surface: #f8f9ff;
+  --on-surface: #0d1c2d;
+
+  /* Surface Containers */
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #eef4ff;
+  --surface-container: #e5efff;
+  --surface-container-high: #dbe9ff;
   --surface-container-highest: #d4e4fa;
+
+  /* Primary - Professional Slate/Navy */
+  --primary: #000000;
+  --on-primary: #ffffff;
+  --primary-container: #141b2b;
+  --on-primary-container: #dce2f7;
+
+  /* Secondary - Premium Amber/Gold */
+  --secondary: #904d00;
+  --on-secondary: #ffffff;
+  --secondary-container: #fe932c;
   --surface-variant: #d4e4fa;
   --inverse-on-surface: #e9f1ff;
   --on-surface-variant: #45464c;
@@ -48,8 +60,50 @@
   --primary: #000000;
   --surface: #f8f9ff;
   --secondary-fixed-dim: #ffb77d;
-  --background: #f8f9ff;
   --inverse-primary: #c0c6db;
+
+  /* shadcn/ui OKLCH CSS Variables */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 8%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 8%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 8%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 32 95% 44%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 37%;
+  --accent: 0 0% 96%;
+  --accent-foreground: 0 0% 8%;
+  --destructive: 0 84.7% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% 89%;
+  --input: 0 0% 89%;
+  --ring: 0 0% 44%;
+}
+
+.dark {
+  --background: 0 0% 8%;
+  --foreground: 0 0% 100%;
+  --card: 0 0% 13%;
+  --card-foreground: 0 0% 100%;
+  --popover: 0 0% 13%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 0 0% 97%;
+  --primary-foreground: 0 0% 8%;
+  --secondary: 32 81% 54%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 63%;
+  --accent: 0 0% 15%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 63.7% 53.7%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% / 10%;
+  --input: 0 0% / 15%;
+  --ring: 0 0% 37%;
 }
 
 body {
@@ -62,32 +116,57 @@ body {
   .tabular-nums {
     font-variant-numeric: tabular-nums;
   }
-  
+
   .glass-nav {
     background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(20px);
   }
+
+  .no-border-input {
+    border: 0;
+    outline: none;
+    background-color: transparent;
+  }
+
+  .secondary-gradient {
+    background: linear-gradient(to bottom right, #904d00, #fe932c);
+  }
+
+  .premium-gradient {
+    background: linear-gradient(to bottom right, #000000, #141b2b);
+  }
 }
 
 .material-symbols-outlined {
+  font-family: var(--font-material-symbols);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1em;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   vertical-align: middle;
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-widest shadow-2xl shadow-primary/20 flex items-center gap-2;
+    @apply bg-gradient-to-br text-on-primary px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2;
   }
-  
+
   .btn-secondary {
-    @apply px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-widest text-on-surface border-2 border-outline-variant/15 hover:bg-surface-container-low transition-colors;
+    @apply px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-widest text-on-surface border-2 hover:bg-surface-container-low transition-colors;
   }
-  
+
   .card-surface {
     @apply bg-surface-container-low rounded-xl p-8;
   }
-  
+
   .input-field {
-    @apply bg-surface-container-high rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-secondary/50 transition-all border-none outline-none;
+    @apply bg-surface-container-high rounded-xl px-4 py-3 text-on-surface transition-all border-none outline-none;
   }
 }

@@ -1,144 +1,246 @@
-import Link from 'next/link'
-import Image from 'next/image'
+'use client'
+
+import { useState, useMemo } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { MaterialSymbol } from '@/components/MaterialSymbol'
+import { Navbar } from '@/components/Navbar'
+import { FiscalCard } from '@/components/FiscalCard'
+import { Label } from '@/components/ui/label'
+import { Slider } from '@/components/ui/slider'
+import { Input } from '@/components/ui/input'
+import { calculateSimulation } from '@/lib/simulation'
+import { cn } from '@/lib/utils'
 
 export default function CalculatorPage() {
+  const [grossSalary, setGrossSalary] = useState(15000)
+  const [benefits, setBenefits] = useState(1800)
+  const [taxRate, setTaxRate] = useState(6)
+
+  const results = useMemo(() => 
+    calculateSimulation(grossSalary, benefits, taxRate), 
+    [grossSalary, benefits, taxRate]
+  )
+
+  const formatCurrency = (val: number) =>
+    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val)
+
   return (
-    <main className="pt-32 pb-24 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
-        {/* Article Content */}
-        <article className="lg:col-span-8">
-          {/* Hero Header */}
-          <header className="mb-12">
-            <div className="flex items-center gap-4 mb-6">
-              <span className="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Carreira & PJ</span>
-              <span className="text-on-surface-variant text-sm flex items-center gap-2">
-                <MaterialSymbol name="calendar_today" className="text-sm" />
-                14 de Outubro, 2024
-              </span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tighter text-on-surface mb-8 leading-[1.1]">
-              Como negociar seu primeiro contrato PJ
-            </h1>
-            <p className="text-xl text-on-surface-variant leading-relaxed mb-10 border-l-4 border-secondary pl-6">
-              A transição de CLT para PJ exige mais do que apenas uma mudança de contrato; exige uma mentalidade de arquiteto financeiro para garantir que sua liberdade venha acompanhada de segurança.
-            </p>
-            <div className="aspect-[21/9] rounded-full overflow-hidden mb-12 relative">
-              <img alt="Professional negotiation" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmEa_-CUonOjPeMEFj2yDaWSpHd1HdfnHv4WHExSFRZNP9hGSedqJbjdZU69dvSV8T4QQJt9O-EjG9av9BW8EhJVWZoXGSMd_KJSRkN9ImTOv_O8FumwcSxbJzay-7dOHD0ToE9rU82kWSWCp8N2EL2YkQ19y9dCfBqOjnClg-qZHxr3be6XNWUhQ26OVTKZic_z5lS9RCDlLx-NnAqTR0K6JhlVreoColXWosIC1dvdOZ3NQk6Si8qc3xjgA25_9KQmUJKpXc8x4" />
-            </div>
-          </header>
-          {/* Body Text */}
-          <div className="space-y-8 text-lg leading-relaxed text-on-surface-variant">
-            <p>
-              A primeira proposta de contrato PJ costuma ser um misto de empolgação e medo. Para muitos profissionais, o valor bruto parece astronômico comparado ao salário CLT, mas sem o suporte de um &quot;arquiteto fiscal&quot;, é fácil cair em armadilhas de fluxo de caixa e impostos mal calculados.
-            </p>
-            <h2 className="text-3xl font-bold text-on-surface tracking-tight pt-4">1. O Valor da Hora não é o seu Salário</h2>
-            <p>
-              Diferente do CLT, onde o custo do seu trabalho é diluído em benefícios e encargos pagos pela empresa, no PJ você é a sua própria empresa. Ao negociar, você deve considerar o custo de férias, 13º salário, FGTS e, principalmente, a sua previdência privada. 
-            </p>
-            <div className="bg-surface-container-low p-8 rounded-full border-l-4 border-secondary my-10">
-              <p className="text-on-surface italic font-medium">
-                &quot;Uma regra de ouro no mercado brasileiro: seu faturamento bruto PJ deve ser, no mínimo, 60% a 70% superior ao seu antigo salário líquido CLT para manter o mesmo padrão de vida e segurança.&quot;
-              </p>
-            </div>
-            <h2 className="text-3xl font-bold text-on-surface tracking-tight pt-4">2. Flexibilidade como Moeda de Troca</h2>
-            <p>
-              Se a empresa não consegue chegar no valor financeiro que você arquitetou, use a natureza do contrato PJ a seu favor. Você pode negociar menos horas semanais, entregas por projeto ou a possibilidade de atender outros clientes simultaneamente.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-12">
-              <div className="bg-surface-container-high p-8 rounded-xl">
-                <MaterialSymbol name="gavel" className="text-secondary text-4xl mb-4" />
-                <h3 className="text-xl font-bold text-on-surface mb-2">Cláusulas de Rescisão</h3>
-                <p className="text-sm">Sempre negocie um aviso prévio de 30 a 60 dias. Sem a proteção do FGTS, o tempo é seu único seguro-desemprego.</p>
+    <main className="bg-surface-container-lowest min-h-screen">
+      <Navbar />
+
+      <div className="pt-40 pb-24 px-6 max-w-7xl mx-auto">
+        {/* Editorial Header */}
+        <header className="mb-20">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="inline-flex items-center gap-3 px-4 py-2 bg-secondary/10 text-secondary text-[10px] font-black uppercase tracking-[0.2em] rounded-full mb-8"
+          >
+            <MaterialSymbol name="analytics" className="text-sm" />
+            Simulador de Precisão
+          </motion.div>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-5xl md:text-8xl font-black text-on-surface leading-[1.1] tracking-tighter max-w-4xl"
+          >
+            A Matemática da sua <span className="text-secondary">Liberdade.</span>
+          </motion.h1>
+        </header>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          {/* Input Panel */}
+          <section className="lg:col-span-5 space-y-10">
+            <div className="bg-white p-10 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.05)] border border-slate-100">
+              <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface/40 mb-10">Parâmetros Base</h2>
+              
+              <div className="space-y-12">
+                {/* Gross Salary Input */}
+                <div>
+                  <Label className="block text-[10px] font-black uppercase tracking-[0.2em] text-secondary mb-4">Salário Mensal Bruto (CLT)</Label>
+                  <div className="bg-surface-container-low rounded-3xl p-8 group transition-all focus-within:ring-2 focus-within:ring-secondary/20">
+                    <div className="flex items-center gap-4">
+                      <span className="text-2xl font-black text-on-surface/20">R$</span>
+                      <Input 
+                        className="no-border-input bg-transparent w-full text-4xl font-black text-on-surface tabular-nums border-none focus-visible:ring-0 p-0" 
+                        type="number" 
+                        value={grossSalary}
+                        onChange={(e) => setGrossSalary(Number(e.target.value))}
+                      />
+                    </div>
+                  </div>
+                  <Slider 
+                    value={[grossSalary]}
+                    onValueChange={(val) => setGrossSalary(val[0])}
+                    min={2000}
+                    max={50000}
+                    step={500}
+                    className="mt-6"
+                  />
+                </div>
+
+                {/* Benefits Input */}
+                <div>
+                  <Label className="block text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60 mb-4">Pacote de Benefícios (VR + Saúde)</Label>
+                  <div className="flex justify-between items-end mb-4">
+                    <span className="text-2xl font-black text-on-surface">{formatCurrency(benefits)}</span>
+                  </div>
+                  <Slider 
+                    value={[benefits]}
+                    onValueChange={(val) => setBenefits(val[0])}
+                    min={0}
+                    max={5000}
+                    step={100}
+                  />
+                </div>
+
+                {/* Tax Rate Input */}
+                <div>
+                  <Label className="block text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60 mb-4">Alíquota PJ (Simples Nacional)</Label>
+                  <div className="flex justify-between items-end mb-4">
+                    <span className="text-2xl font-black text-on-surface">{taxRate}%</span>
+                    <span className="text-[10px] font-bold text-on-surface/40 uppercase">Anexo III</span>
+                  </div>
+                  <Slider 
+                    value={[taxRate]}
+                    onValueChange={(val) => setTaxRate(val[0])}
+                    min={6}
+                    max={15.5}
+                    step={0.5}
+                  />
+                </div>
               </div>
-              <div className="bg-surface-container-high p-8 rounded-xl">
-                <MaterialSymbol name="payments" className="text-secondary text-4xl mb-4" />
-                <h3 className="text-xl font-bold text-on-surface mb-2">Reajustes Anuais</h3>
-                <p className="text-sm">Garanta que o contrato preveja reajuste automático por índices como IPCA ou IGPM para proteger seu poder de compra.</p>
+            </div>
+
+            <div className="bg-primary text-on-primary p-10 rounded-[3rem] relative overflow-hidden group premium-gradient">
+              <div className="relative z-10">
+                <MaterialSymbol name="verified_user" className="text-secondary text-4xl mb-6" />
+                <h3 className="text-xl font-bold mb-4">Por que confiar?</h3>
+                <p className="text-on-primary/60 text-sm leading-relaxed">
+                  Nossa calculadora utiliza as tabelas oficiais de 2024 para INSS, IRRF e Simples Nacional, garantindo uma precisão arquitetônica para sua decisão.
+                </p>
+              </div>
+              <div className="absolute top-0 right-0 p-10 opacity-5">
+                <MaterialSymbol name="gavel" className="text-[12rem]" />
               </div>
             </div>
-            <h2 className="text-3xl font-bold text-on-surface tracking-tight pt-4">3. A Anatomia do Contrato Perfeito</h2>
-            <p>
-              Não aceite contratos genéricos. Cada detalhe deve ser desenhado para sua proteção. Verifique se o escopo de trabalho está bem definido para evitar o &quot;escopo creeping&quot; (quando pedem mais do que o contratado sem pagar extra).
-            </p>
-            <div className="my-12">
-              <img alt="Document and pen" className="w-full h-80 object-cover rounded-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJeBByGwkQNadv6XK-CMhenVfCLnNXcLK1UQIGBhYpwmGD7r_zy1NwCt5sUEv9Mnn-OK3EblXMaCaKpDyWGSqDyGnyeyHsEp_oF3R8iP8yFWOl_JPXjNc35MuNghKFqD6tXTmlRS1e44ng-pxMFhtbe2qmQLiGcYEzCFOlKQDHb3UUcuaEOlr2CtaGbNLlpoM8SzTb_lp9pPMPcJViS4JKyNa921-W8Nzv066Si4XYU44bsPLV7xuofGOtpL5FNOdTu5VbZlq4s_4" />
+          </section>
+
+          {/* Results Panel */}
+          <section className="lg:col-span-7 space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FiscalCard 
+                title="Líquido Mensal CLT"
+                value={formatCurrency(results.clt.net)}
+                subtitle="Bruto - Impostos + Benefícios"
+                icon="account_balance"
+                variant="surface"
+              />
+              <FiscalCard 
+                title="Líquido Mensal PJ"
+                value={formatCurrency(results.pj.net)}
+                subtitle="Bruto - Simples - Contabilidade"
+                icon="rocket_launch"
+                variant="secondary"
+                trend={{ 
+                  value: `+${results.comparison.percentageGain.toFixed(1)}%`, 
+                  positive: results.comparison.percentageGain > 0 
+                }}
+              />
             </div>
-            <p>
-              Lembre-se: em uma negociação PJ, você não é um funcionário pedindo um favor, mas um prestador de serviço oferecendo uma solução estratégica. O tom deve ser de parceria comercial, não de subordinação.
-            </p>
-          </div>
-          {/* Tags & Share */}
-          <footer className="mt-16 pt-8 border-t border-outline-variant flex flex-wrap justify-between items-center gap-4">
-            <div className="flex gap-2">
-              <span className="text-xs bg-surface-container text-on-tertiary-container px-3 py-1 rounded-full">#Negociação</span>
-              <span className="text-xs bg-surface-container text-on-tertiary-container px-3 py-1 rounded-full">#CarreiraPJ</span>
-              <span className="text-xs bg-surface-container text-on-tertiary-container px-3 py-1 rounded-full">#Finanças</span>
-            </div>
-            <div className="flex gap-4">
-              <button className="text-on-surface-variant hover:text-secondary transition-colors">
-                <MaterialSymbol name="share" />
-              </button>
-              <button className="text-on-surface-variant hover:text-secondary transition-colors">
-                <MaterialSymbol name="bookmark" />
-              </button>
-            </div>
-          </footer>
-        </article>
-        {/* Sidebar CTA & Extras */}
-        <aside className="lg:col-span-4 space-y-8">
-          {/* Calculator CTA */}
-          <div className="sticky top-28 bg-primary-container text-on-primary rounded-xl p-8 overflow-hidden relative">
-            <div className="relative z-10">
-              <h3 className="text-2xl font-bold text-slate-50 mb-4 tracking-tight">Não negocie no escuro.</h3>
-              <p className="text-on-primary-container mb-8 text-sm leading-relaxed">
-                Use nossa calculadora exclusiva para descobrir exatamente quanto você deve pedir no seu contrato PJ para superar seu salário atual.
-              </p>
-              <Link href="/calculator" className="block w-full bg-gradient-to-br from-secondary to-secondary-container text-on-secondary text-center py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-[1.02] transition-transform">
-                Acessar Calculadora
-              </Link>
-            </div>
-            {/* Abstract Background Shape */}
-            <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-secondary opacity-20 rounded-full blur-3xl"></div>
-          </div>
-          {/* Related Posts */}
-          <div className="bg-surface-container-low p-8 rounded-xl">
-            <h4 className="text-lg font-bold text-on-surface mb-6 flex items-center gap-2">
-              <MaterialSymbol name="trending_up" className="text-secondary" />
-              Mais Lidos
-            </h4>
-            <ul className="space-y-6">
-              <li className="group cursor-pointer">
-                <Link href="#" className="block">
-                  <span className="text-xs text-secondary font-bold uppercase tracking-widest mb-1 block">Impostos</span>
-                  <h5 className="font-bold text-on-surface group-hover:text-secondary transition-colors leading-tight">Como escolher o CNAE correto para pagar menos impostos</h5>
-                </Link>
-              </li>
-              <li className="group cursor-pointer">
-                <Link href="#" className="block">
-                  <span className="text-xs text-secondary font-bold uppercase tracking-widest mb-1 block">Planejamento</span>
-                  <h5 className="font-bold text-on-surface group-hover:text-secondary transition-colors leading-tight">A reserva de emergência ideal para quem é PJ</h5>
-                </Link>
-              </li>
-              <li className="group cursor-pointer">
-                <Link href="#" className="block">
-                  <span className="text-xs text-secondary font-bold uppercase tracking-widest mb-1 block">Direito</span>
-                  <h5 className="font-bold text-on-surface group-hover:text-secondary transition-colors leading-tight">O que não pode faltar no seu contrato de prestação de serviços</h5>
-                </Link>
-              </li>
-            </ul>
-          </div>
-          {/* Newsletter */}
-          <div className="bg-surface-container-highest p-8 rounded-xl border border-white/20">
-            <h4 className="text-lg font-bold text-on-surface mb-2">Newsletter</h4>
-            <p className="text-sm text-on-surface-variant mb-6">Receba pílulas de inteligência fiscal toda segunda-feira.</p>
-            <div className="space-y-3">
-              <input className="w-full bg-surface-bright border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-secondary/50" placeholder="seu@email.com" type="email" />
-              <button className="w-full bg-on-surface text-surface-container-lowest py-3 rounded-xl text-sm font-bold uppercase tracking-widest">Inscrever-se</button>
-            </div>
-          </div>
-        </aside>
+
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={grossSalary}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="bg-surface-container-low p-12 rounded-[3.5rem] border border-outline-variant/15"
+              >
+                <div className="flex justify-between items-center mb-12">
+                  <h3 className="text-2xl font-black tracking-tighter">Detalhamento Comparativo</h3>
+                  <div className="flex gap-2">
+                    <span className="px-3 py-1 bg-primary/5 text-primary text-[10px] font-black uppercase rounded-full">Mensal</span>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  {/* Row: Gross */}
+                  <div className="flex justify-between items-center py-4 border-b border-outline-variant/5">
+                    <span className="text-sm font-bold text-on-surface/60">Bruto Base</span>
+                    <div className="flex gap-12">
+                      <div className="text-right">
+                        <span className="text-[9px] font-black text-primary uppercase block">CLT</span>
+                        <span className="text-lg font-black">{formatCurrency(results.clt.gross)}</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-[9px] font-black text-secondary uppercase block">PJ</span>
+                        <span className="text-lg font-black">{formatCurrency(results.pj.gross)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Row: Taxes */}
+                  <div className="flex justify-between items-center py-4 border-b border-outline-variant/5">
+                    <span className="text-sm font-bold text-on-surface/60">Impostos & Deduções</span>
+                    <div className="flex gap-12">
+                      <div className="text-right">
+                        <span className="text-lg font-black text-error/60">-{formatCurrency(results.clt.inss + results.clt.irrf)}</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-lg font-black text-error/60">-{formatCurrency(results.pj.tax)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Row: Costs/Benefits */}
+                  <div className="flex justify-between items-center py-4 border-b border-outline-variant/5">
+                    <span className="text-sm font-bold text-on-surface/60">Benefícios / Custos Fixos</span>
+                    <div className="flex gap-12">
+                      <div className="text-right">
+                        <span className="text-lg font-black text-secondary">+{formatCurrency(results.clt.benefits)}</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-lg font-black text-on-surface-variant">-{formatCurrency(results.pj.accounting)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Row: Final Net */}
+                  <div className="flex justify-between items-center pt-8">
+                    <span className="text-xl font-black tracking-tighter">Líquido Final</span>
+                    <div className="flex gap-12">
+                      <div className="text-right">
+                        <span className="text-2xl font-black text-on-surface">{formatCurrency(results.clt.net)}</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-2xl font-black text-secondary">{formatCurrency(results.pj.net)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-12 p-8 bg-slate-950 rounded-3xl text-slate-50 flex items-center justify-between overflow-hidden relative">
+                  <div className="relative z-10">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary mb-2 block">Vantagem PJ Anual</span>
+                    <p className="text-3xl font-black tabular-nums">{formatCurrency(results.comparison.annualDiff)}</p>
+                  </div>
+                  <div className="text-right relative z-10">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 block">ROI da Transição</span>
+                    <p className="text-3xl font-black text-secondary">{results.comparison.roi.toFixed(1)}%</p>
+                  </div>
+                  <MaterialSymbol name="trending_up" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10rem] text-white/[0.03]" />
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </section>
+        </div>
       </div>
+      
+      <footer className="py-20 text-center border-t border-outline-variant/10">
+        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-on-surface/20">© 2024 The Fiscal Architect. Inteligência que transforma burocracia em patrimônio.</p>
+      </footer>
     </main>
   )
 }

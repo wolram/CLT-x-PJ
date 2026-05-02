@@ -1,142 +1,205 @@
+'use client'
+
 import Link from 'next/link'
-import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { MaterialSymbol } from '@/components/MaterialSymbol'
 
 export default function BlogPage() {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  }
+
   return (
-    <main className="pt-24 pb-20">
+    <main className="pt-40 pb-20 bg-surface-container-lowest">
       {/* Hero Section: Featured Article */}
-      <section className="max-w-7xl mx-auto px-6 mb-16">
-        <div className="relative group overflow-hidden rounded-xl bg-surface-container-low min-h-[500px] flex items-end">
-          <img alt="Financial Planning" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYjRmIu3al10-JB3m5zt6ZFXLxHPoCEm3WTekvEYBDRBPIOsvwTH1jJr5W--_FQzGyY7X8hOd34kd1sTo6BwT1gvqi7uuy1Y2Ey46EjeGwZWBnOKd_iE7rsV8ry7bsI8xwVOvrR1n6zTCCTNUkdmbZks9wGJlSs96h3ZQBszJHLScNQL-gF0rs_nVOwkNtBU2i-6bwQ5jMkuWG0LYEXzu8qKt4gbNMFJjASWohu0lDVdMG8w_A7lW6GYoicJq24F7I7-BYaZ_9MUc" />
+      <section className="max-w-7xl mx-auto px-6 mb-24">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="relative group overflow-hidden rounded-[3rem] bg-surface-container-low min-h-[600px] flex items-end shadow-2xl"
+        >
+          <img alt="Financial Planning" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=2000" />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-          <div className="relative p-8 md:p-16 max-w-3xl">
-            <div className="inline-block px-3 py-1 mb-6 rounded-full bg-secondary-container text-on-secondary-fixed text-xs font-bold tracking-widest uppercase">
-              Featured Analysis
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black text-slate-50 leading-tight tracking-tighter mb-6">
-              A Grande Migração: Transição de CLT para PJ em 2024.
-            </h1>
-            <p className="text-slate-300 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl font-light">
-              Uma análise profunda sobre a viabilidade fiscal, benefícios ocultos e os riscos contratuais que você precisa considerar antes de assinar seu próximo contrato.
-            </p>
-            <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-600">
-                <img alt="Author" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4Ewg7Pnw4r5lVyTPYjxogjmxTMrJ4wA1iVeHrtGV7l1EUi1Y3K1xfvwOmetElJqOgFRpTEpdI0NUtAVGChmfv8BpdL1Mg1G_ram5P4W_sH9DpBwyyO-1Y_sAj_YXLztH03NpJKq6fIdBrPqazUZ0F8UNb2uGwHMXd6ATnZ63PEpddJ0YIx9tTUfHcQRmrsjUM_yAb6dXL94BsnnT_BMYbbSxEaGz8KFhH8NWolEpOEdjGzJJbOqh1WNEsF3BPPd6Ua8TAf8CONG4" />
+          <div className="relative p-12 md:p-24 max-w-4xl">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="inline-block px-4 py-2 mb-8 rounded-full bg-secondary text-on-secondary text-[10px] font-black tracking-[0.3em] uppercase"
+            >
+              Featured Analysis 2024
+            </motion.div>
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="text-5xl md:text-8xl font-black text-slate-50 leading-[1.1] tracking-tighter mb-8"
+            >
+              A Grande Migração: CLT para PJ.
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-slate-300 text-xl leading-relaxed mb-10 max-w-2xl font-medium"
+            >
+              Uma análise profunda sobre a viabilidade fiscal, benefícios ocultos e os riscos contratuais que você precisa considerar.
+            </motion.p>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="flex items-center gap-4"
+            >
+              <div className="h-14 w-14 rounded-full overflow-hidden border-2 border-secondary shadow-xl">
+                <div className="w-full h-full bg-secondary-gradient flex items-center justify-center text-white font-black">MS</div>
               </div>
               <div>
-                <p className="text-slate-100 font-bold text-sm">Ricardo S. Architect</p>
-                <p className="text-slate-400 text-xs">Sócio Sênior de Estratégia Fiscal</p>
+                <p className="text-slate-100 font-black text-sm">Marlow Sousa</p>
+                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Architect Sênior</p>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
-      {/* Categories & Filter Navigation */}
-      <section className="max-w-7xl mx-auto px-6 mb-12">
-        <div className="flex flex-wrap items-center gap-4 py-4 overflow-x-auto border-b border-outline-variant/10">
-          <button className="px-6 py-2 rounded-full bg-primary text-on-primary font-bold text-sm tracking-wide">Tudo</button>
-          <button className="px-6 py-2 rounded-full bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface-variant font-medium text-sm tracking-wide">CLT vs PJ</button>
-          <button className="px-6 py-2 rounded-full bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface-variant font-medium text-sm tracking-wide">Impostos</button>
-          <button className="px-6 py-2 rounded-full bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface-variant font-medium text-sm tracking-wide">Carreira</button>
-          <button className="px-6 py-2 rounded-full bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface-variant font-medium text-sm tracking-wide">Planejamento</button>
-          <button className="px-6 py-2 rounded-full bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface-variant font-medium text-sm tracking-wide">Jurisprudência</button>
-        </div>
-      </section>
+
       {/* Editorial Grid Layout (Bento Style) */}
-      <section className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-8">
+      <motion.section 
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-8"
+      >
         {/* Long Article Card (Large Spanning) */}
-        <article className="md:col-span-8 flex flex-col md:flex-row gap-8 p-8 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all group">
-          <div className="w-full md:w-1/2 aspect-video md:aspect-square rounded-lg overflow-hidden bg-surface-container-highest">
-            <img alt="Taxes" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIG3Sw3WZw5SXSTkskU33yPvGPGjg78pIryVR4jd1-QbDdr0VQiKNwdqCMZJzI8vJxNY9hQvY1c951ncfMn7Blw5_1k-WxwLPaEADw-YIKpUzk3YIJd-O6QYDoqSNScX_ZaJCjL1bs7t-VLZu-3NBdO1JjIF3AP_JUrgmKEymKjB3hgsMIzz8-pSVLzTYSwG0kR0rCxzx7a5CdEewoy90yq7miJORtkaQp0LzK2-M7n-JEOpNto6LUssnyKssDIQKL1Cx4yTNzgak" />
+        <motion.article 
+          variants={item}
+          className="md:col-span-8 flex flex-col md:flex-row gap-10 p-10 rounded-[3rem] bg-surface-container-low hover:bg-surface-container transition-all group border border-outline-variant/10"
+        >
+          <div className="w-full md:w-1/2 aspect-video md:aspect-square rounded-[2rem] overflow-hidden bg-surface-container-highest">
+            <img alt="Taxes" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&q=80&w=1000" />
           </div>
           <div className="w-full md:w-1/2 flex flex-col justify-center">
-            <span className="text-secondary font-bold text-xs uppercase tracking-widest mb-4">Taxes & Compliance</span>
-            <h2 className="text-2xl font-bold text-on-surface leading-tight mb-4 group-hover:text-secondary transition-colors">
+            <span className="text-secondary font-black text-[10px] uppercase tracking-[0.3em] mb-6">Taxes & Compliance</span>
+            <h2 className="text-3xl font-black text-on-surface leading-tight mb-6 group-hover:text-secondary transition-colors tracking-tighter">
               O Labirinto do Simples Nacional: Anexo III vs V.
             </h2>
-            <p className="text-on-surface-variant text-sm leading-relaxed mb-6">
+            <p className="text-on-surface-variant text-sm font-medium leading-relaxed mb-8">
               Entenda o Fator R e como ele pode reduzir sua carga tributária de 15,5% para apenas 6% legalmente.
             </p>
-            <div className="flex items-center gap-2 text-on-surface font-bold text-xs uppercase tracking-tighter">
-              <span>Ler mais</span>
-              <MaterialSymbol name="arrow_forward" className="text-sm" />
+            <div className="flex items-center gap-3 text-on-surface font-black text-[10px] uppercase tracking-[0.2em]">
+              <span>Ler análise completa</span>
+              <MaterialSymbol name="arrow_forward" className="text-lg text-secondary" />
             </div>
           </div>
-        </article>
+        </motion.article>
+
         {/* Small Card 1 */}
-        <article className="md:col-span-4 p-8 rounded-xl bg-surface-container-high hover:bg-surface-container-highest transition-all group">
-          <span className="text-amber-600 font-bold text-xs uppercase tracking-widest mb-4 block">Carreira</span>
-          <h3 className="text-xl font-bold text-on-surface leading-snug mb-4 group-hover:text-amber-600">
-            Negociando como PJ: O Guia de Valor de Mercado.
+        <motion.article 
+          variants={item}
+          className="md:col-span-4 p-10 rounded-[3rem] bg-surface-container-high hover:bg-surface-container-highest transition-all group border border-outline-variant/10"
+        >
+          <span className="text-secondary font-black text-[10px] uppercase tracking-[0.3em] mb-6 block">Carreira</span>
+          <h3 className="text-2xl font-black text-on-surface leading-tight mb-6 group-hover:text-secondary tracking-tighter transition-colors">
+            Negociando como PJ: Guia de Valor.
           </h3>
-          <p className="text-on-surface-variant text-sm leading-relaxed mb-6">
-            Como converter seu salário CLT em uma tarifa horária competitiva sem perder margem de lucro.
+          <p className="text-on-surface-variant text-sm font-medium leading-relaxed mb-8">
+            Como converter seu salário CLT em uma tarifa horária competitiva sem perder margem.
           </p>
-          <div className="mt-auto pt-4 border-t border-outline-variant/20 flex justify-between items-center text-xs text-on-surface-variant font-medium">
-            <span>5 min de leitura</span>
+          <div className="mt-auto pt-6 border-t border-outline-variant/10 flex justify-between items-center text-[10px] text-on-surface-variant font-black uppercase tracking-widest">
+            <span>5 min leitura</span>
             <span>12 Out 2024</span>
           </div>
-        </article>
+        </motion.article>
+
         {/* Small Card 2 */}
-        <article className="md:col-span-4 p-8 rounded-xl bg-surface-container-high hover:bg-surface-container-highest transition-all group border-l-4 border-secondary">
-          <span className="text-secondary font-bold text-xs uppercase tracking-widest mb-4 block">Checklist</span>
-          <h3 className="text-xl font-bold text-on-surface leading-snug mb-4 group-hover:text-secondary">
-            Documentação Essencial para Abrir sua ME.
+        <motion.article 
+          variants={item}
+          className="md:col-span-4 p-10 rounded-[3rem] bg-surface-container-low hover:bg-surface-container transition-all group border-l-8 border-secondary border-y border-r border-outline-variant/10"
+        >
+          <span className="text-secondary font-black text-[10px] uppercase tracking-[0.3em] mb-6 block">Checklist</span>
+          <h3 className="text-2xl font-black text-on-surface leading-tight mb-6 group-hover:text-secondary tracking-tighter transition-colors">
+            Documentação para Abrir sua ME.
           </h3>
-          <p className="text-on-surface-variant text-sm leading-relaxed mb-6">
-            De contrato social a certificados digitais: tudo o que você precisa para começar em 48 horas.
+          <p className="text-on-surface-variant text-sm font-medium leading-relaxed mb-8">
+            De contrato social a certificados digitais: tudo o que você precisa para começar hoje.
           </p>
-          <div className="mt-auto pt-4 border-t border-outline-variant/20 flex justify-between items-center text-xs text-on-surface-variant font-medium">
-            <span>8 min de leitura</span>
+          <div className="mt-auto pt-6 border-t border-outline-variant/10 flex justify-between items-center text-[10px] text-on-surface-variant font-black uppercase tracking-widest">
+            <span>8 min leitura</span>
             <span>10 Out 2024</span>
           </div>
-        </article>
+        </motion.article>
+
         {/* Medium Article Card (Asymmetric Layout) */}
-        <article className="md:col-span-8 relative rounded-xl overflow-hidden bg-primary p-12 flex flex-col justify-end min-h-[350px]">
-          <div className="absolute inset-0 opacity-20">
-            <img alt="Architecture" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvwKw8EK2wnCPXQPJLooT8f9_xCCWM6tPWokN_yHDZqDpED-unXhzZ_UK_QeaVmT1Py8TTmOGLyZDymLapX6ryxdOWTJGomvHfqP94Mcx1d3lKbA6y6koy4UCm6pIZVHfggJMM1u3bdqzA5af0JSW2n0mX247hocQ8HkjUr7ebLmfJ8YDpT7ZU3GnFR18Of28A5znUxD4NgHhKjLkO8Ja4LwiOTSgoxU0hMebdLnV5XU2PuAxVxJHa1OHNbDyY1LdGFqwuAOhwntQ" />
+        <motion.article 
+          variants={item}
+          className="md:col-span-8 relative rounded-[3rem] overflow-hidden bg-primary p-16 flex flex-col justify-end min-h-[450px] premium-gradient"
+        >
+          <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
+            <img alt="Architecture" className="w-full h-full object-cover grayscale" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1000" />
           </div>
           <div className="relative z-10">
-            <span className="text-secondary-fixed-dim font-black text-xs uppercase tracking-[0.2em] mb-4 block">Fiscal Intelligence</span>
-            <h2 className="text-3xl md:text-4xl font-black text-white leading-tight mb-6 max-w-xl">
-              A Matemática da Liberdade: Por que o salário líquido não é tudo.
+            <span className="text-secondary font-black text-[10px] uppercase tracking-[0.3em] mb-6 block">Fiscal Intelligence</span>
+            <h2 className="text-4xl md:text-5xl font-black text-white leading-tight mb-8 max-w-2xl tracking-tighter">
+              A Matemática da Liberdade: Além do Salário Líquido.
             </h2>
-            <div className="flex items-center gap-6">
-              <button className="px-8 py-3 bg-secondary text-white font-bold rounded-xl text-xs uppercase tracking-widest hover:scale-105 transition-transform">
-                Acessar Estudo
+            <div className="flex items-center gap-8">
+              <button className="px-10 py-4 bg-secondary text-white font-black rounded-2xl text-[10px] uppercase tracking-[0.2em] hover:scale-105 transition-transform shadow-2xl shadow-secondary/20">
+                Acessar Estudo Premium
               </button>
-              <span className="text-white/60 text-xs">Exclusivo para assinantes Fiscal Architect</span>
+              <span className="text-white/40 text-[10px] font-black uppercase tracking-widest">Acesso Exclusivo</span>
             </div>
           </div>
-        </article>
-      </section>
+        </motion.article>
+      </motion.section>
+
       {/* Newsletter Section (Editorial Treatment) */}
-      <section className="max-w-7xl mx-auto px-6 mt-24">
-        <div className="bg-surface-container-lowest p-12 md:p-24 rounded-xl flex flex-col md:flex-row items-center gap-12 border-l-8 border-secondary">
+      <section className="max-w-7xl mx-auto px-6 mt-40">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-white p-12 md:p-24 rounded-[4rem] flex flex-col md:flex-row items-center gap-16 shadow-[0_100px_150px_-50px_rgba(0,0,0,0.1)] border border-slate-50"
+        >
           <div className="w-full md:w-1/2">
-            <h2 className="text-3xl md:text-5xl font-black text-on-surface tracking-tighter mb-6 leading-none">
+            <h2 className="text-4xl md:text-7xl font-black text-on-surface tracking-tighter mb-8 leading-[0.9]">
               Mantenha-se <br/><span className="text-secondary">Arquitetonicamente</span> <br/>Informado.
             </h2>
-            <p className="text-on-surface-variant text-lg leading-relaxed font-light">
-              Receba análises fiscais de alto nível e insights sobre o mercado PJ brasileiro diretamente na sua caixa de entrada, toda terça-feira.
+            <p className="text-on-surface-variant text-xl leading-relaxed font-medium">
+              Receba análises fiscais de alto nível e insights sobre o mercado PJ brasileiro.
             </p>
           </div>
           <div className="w-full md:w-1/2">
-            <form className="flex flex-col gap-4">
+            <form className="space-y-6">
               <div className="relative">
-                <input className="w-full px-6 py-5 bg-surface-container-high border-0 rounded-xl text-on-surface focus:ring-2 focus:ring-secondary transition-all placeholder:text-on-surface-variant/50" placeholder="Seu melhor e-mail corporativo" type="email" />
-                <button className="absolute right-3 top-3 bottom-3 px-6 bg-primary text-white rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-colors" type="submit">
+                <input className="w-full px-8 py-7 bg-surface-container-low border-0 rounded-3xl text-on-surface focus:ring-2 focus:ring-secondary/20 transition-all placeholder:text-on-surface-variant/30 font-bold" placeholder="E-mail corporativo" type="email" />
+                <button className="absolute right-3 top-3 bottom-3 px-10 bg-primary text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-slate-800 transition-colors" type="submit">
                   Assinar
                 </button>
               </div>
-              <p className="text-[10px] text-on-surface-variant px-2">
-                Respeitamos sua privacidade. Sem spam, apenas inteligência fiscal.
+              <p className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant/30 px-4">
+                Privacidade garantida. Inteligência semanal.
               </p>
             </form>
           </div>
-        </div>
+        </motion.div>
       </section>
+
+      <footer className="py-20 text-center border-t border-outline-variant/10 mt-40">
+        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-on-surface/20">© 2024 The Fiscal Architect. Inteligência que transforma burocracia em patrimônio.</p>
+      </footer>
     </main>
   )
 }

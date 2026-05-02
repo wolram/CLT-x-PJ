@@ -1,248 +1,444 @@
-import Link from 'next/link'
+'use client'
+
+import { useState, useMemo } from 'react'
+import { motion } from 'framer-motion'
 import { MaterialSymbol } from '@/components/MaterialSymbol'
+import { Sidebar } from '@/components/Sidebar'
+import { FiscalCard } from '@/components/FiscalCard'
+import { Card } from '@/components/ui/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Slider } from '@/components/ui/slider'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { calculateSimulation } from '@/lib/simulation'
+import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { cn } from '@/lib/utils'
 
 export default function DashboardPage() {
+  const [grossMonthly, setGrossMonthly] = useState(15000)
+  const [benefitsValue, setBenefitsValue] = useState(1800)
+  const [simplesAliquota, setSimplesAliquota] = useState(6)
+
+  const results = useMemo(() => 
+    calculateSimulation(grossMonthly, benefitsValue, simplesAliquota), 
+    [grossMonthly, benefitsValue, simplesAliquota]
+  )
+
+  const formatCurrency = (val: number) => 
+    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val)
+
+  const formatPercentage = (val: number) => `${val.toFixed(1)}%`
+
+  const handleBenefitsChange = (val: number | readonly number[]) => {
+    const numVal = Array.isArray(val) ? val[0] : val
+    setBenefitsValue(numVal as number)
+  }
+
+  const handleAliquotaChange = (val: number | readonly number[]) => {
+    const numVal = Array.isArray(val) ? val[0] : val
+    setSimplesAliquota(numVal as number)
+  }
+
+  // Chart data - Comparison
+  const comparisonData = [
+    {
+      name: 'Bruto',
+      CLT: results.clt.gross,
+      PJ: results.pj.gross,
+    },
+    {
+      name: 'Deduções',
+      CLT: results.clt.inss + results.clt.irrf,
+      PJ: results.pj.tax + results.pj.accounting,
+    },
+    {
+      name: 'Benefícios',
+      CLT: results.clt.benefits,
+      PJ: 0,
+    },
+    {
+      name: 'Líquido',
+      CLT: results.clt.net,
+      PJ: results.pj.net,
+    },
+  ]
+
+  // Chart data - Annual Evolution (12 months)
+  const annualData = Array.from({ length: 12 }, (_, i) => ({
+    month: `M${i + 1}`,
+    CLT: results.clt.net * (i + 1),
+    PJ: results.pj.net * (i + 1),
+    savings: (results.pj.net - results.clt.net) * (i + 1),
+  }))
+
+  // Chart data - PJ Cost Breakdown
+  const pjBreakdown = [
+    { name: 'Líquido', value: results.pj.net, color: '#904d00' },
+    { name: 'Simples Nacional', value: results.pj.tax, color: '#ba1a1a' },
+    { name: 'Contabilidade', value: results.pj.accounting, color: '#76777d' },
+  ]
+
+  // Detailed breakdown table
+  const breakdownTableData = [
+    { label: 'Bruto Mensal', clt: results.clt.gross, pj: results.pj.gross },
+    { label: 'INSS / Simples', clt: results.clt.inss, pj: results.pj.tax },
+    { label: 'IRRF / Contabilidade', clt: results.clt.irrf, pj: results.pj.accounting },
+    { label: 'Benefícios (VR/Saúde)', clt: results.clt.benefits, pj: 0 },
+    { label: 'Líquido Mensal', clt: results.clt.net, pj: results.pj.net },
+    { label: 'Líquido Anual', clt: results.clt.annualTotal, pj: results.pj.annualTotal },
+  ]
+
+  const handlePdfExport = () => {
+    alert('PDF export coming soon!')
+  }
+
+  const handleShare = () => {
+    const url = `${window.location.origin}/dashboard?salary=${grossMonthly}`
+    navigator.clipboard.writeText(url)
+    alert('Link copiado para a área de transferência!')
+  }
+
   return (
     <main className="flex min-h-screen bg-surface-container-lowest">
-      {/* SideNavBar Shell */}
-      <aside className="hidden md:flex flex-col h-screen w-64 bg-slate-950 transition-transform duration-300 ease-out sticky top-0 shrink-0">
-        <div className="flex flex-col h-full py-8">
-          <div className="px-6 mb-12">
-            <h1 className="text-lg font-black text-slate-50 uppercase tracking-widest">Fiscal Architect</h1>
-            <p className="text-slate-400 text-[10px] mt-1 tracking-widest uppercase">Consultoria Premium</p>
-          </div>
-          <nav className="flex-1 space-y-1">
-            <Link href="/calculator" className="flex items-center gap-4 text-amber-500 bg-slate-900/50 border-l-4 border-amber-600 px-4 py-3 font-sans text-sm uppercase tracking-widest">
-              <MaterialSymbol name="calculate" />
-              Calculadora
-            </Link>
-            <Link href="#" className="flex items-center gap-4 text-slate-400 px-4 py-3 hover:bg-slate-900/80 hover:text-slate-100 transition-all duration-300 font-sans text-sm uppercase tracking-widest">
-              <MaterialSymbol name="history" />
-              Histórico
-            </Link>
-            <Link href="/blog" className="flex items-center gap-4 text-slate-400 px-4 py-3 hover:bg-slate-900/80 hover:text-slate-100 transition-all duration-300 font-sans text-sm uppercase tracking-widest">
-              <MaterialSymbol name="menu_book" />
-              Educação
-            </Link>
-            <Link href="#" className="flex items-center gap-4 text-slate-400 px-4 py-3 hover:bg-slate-900/80 hover:text-slate-100 transition-all duration-300 font-sans text-sm uppercase tracking-widest">
-              <MaterialSymbol name="settings" />
-              Configurações
-            </Link>
-          </nav>
-          <div className="px-6 mt-auto">
-            <div className="bg-slate-900 p-4 rounded-xl border-0">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-slate-50 font-bold text-xs">JD</div>
-                <div>
-                  <p className="text-slate-100 text-xs font-bold">João Diniz</p>
-                  <p className="text-slate-500 text-[10px]">Plano Free</p>
-                </div>
-              </div>
-              <button className="w-full bg-amber-600 text-slate-50 text-[10px] font-black uppercase tracking-widest py-3 rounded-lg hover:bg-amber-500 transition-colors">
-                Assinar Pro
-              </button>
-            </div>
-          </div>
-        </div>
-      </aside>
-      <main className="flex-1 min-w-0">
-        {/* TopAppBar Navigation */}
+      <Sidebar />
+      
+      <div className="flex-1 min-w-0">
+        {/* TopAppBar Navigation - Mobile Only */}
         <header className="fixed top-0 w-full z-50 bg-slate-950/60 backdrop-blur-xl md:hidden">
           <div className="flex justify-between items-center px-6 h-20">
-            <span className="text-xl font-bold tracking-tighter text-slate-50">Calculadora CLT x CNPJ</span>
+            <span className="text-xl font-bold tracking-tighter text-slate-50">Fiscal Architect</span>
             <button className="text-slate-50">
               <MaterialSymbol name="menu" />
             </button>
           </div>
         </header>
-        <div className="pt-24 md:pt-12 px-6 md:px-12 max-w-7xl mx-auto pb-24">
-          {/* Hero Header Section */}
-          <section className="mb-16">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div className="max-w-2xl">
-                <h2 className="text-on-surface text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-                  Sua arquitetura <br/><span className="text-secondary">financeira otimizada.</span>
-                </h2>
-                <p className="text-on-surface-variant text-lg leading-relaxed max-w-lg">
-                  Analisamos as nuances entre o modelo tradicional (CLT) e a agilidade empresarial (PJ). Descubra onde sua remuneração realmente performa melhor.
-                </p>
-              </div>
-              <div className="flex gap-4">
-                <div className="bg-surface-container-low px-6 py-4 rounded-xl text-center">
-                  <p className="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Dólar Hoje</p>
-                  <p className="text-xl font-bold tabular-nums">R$ 5,12</p>
-                </div>
-                <div className="bg-secondary-container/10 px-6 py-4 rounded-xl text-center border-b-2 border-secondary">
-                  <p className="text-[10px] uppercase tracking-widest text-secondary mb-1">Sugerido</p>
-                  <p className="text-xl font-bold text-secondary">Modelo PJ</p>
+
+        <div className="pt-24 md:pt-16 px-6 md:px-12 max-w-7xl mx-auto pb-24">
+          {/* Header Section */}
+          <section className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+            <div className="max-w-2xl">
+              <motion.h2 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="text-on-surface text-4xl md:text-6xl font-black tracking-tighter mb-4"
+              >
+                Inteligência <span className="text-secondary">Estratégica.</span>
+              </motion.h2>
+              <p className="text-on-surface-variant text-lg leading-relaxed max-w-lg">
+                Seu panorama fiscal em tempo real. Ajuste os valores abaixo para ver o impacto imediato na sua remuneração.
+              </p>
+            </div>
+            
+            {/* Salary Input Card */}
+            <div className="w-full md:w-auto">
+              <div className="bg-surface-container-low p-8 rounded-[2rem] border border-outline-variant/20 shadow-xl">
+                <Label className="block text-[10px] font-black uppercase tracking-[0.2em] text-secondary mb-4">
+                  Salário Mensal Base
+                </Label>
+                <div className="flex items-center gap-4">
+                  <span className="text-2xl font-black text-on-surface/40">R$</span>
+                  <Input 
+                    type="number" 
+                    value={grossMonthly}
+                    onChange={(e) => setGrossMonthly(Number(e.target.value))}
+                    className="no-border-input bg-transparent text-4xl font-black text-on-surface tabular-nums w-48 border-none focus-visible:ring-0"
+                  />
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg" style={{ background: 'linear-gradient(135deg, #904d00, #d97706)' }}>
+                    <MaterialSymbol name="edit" className="text-xl" />
+                  </div>
                 </div>
               </div>
             </div>
           </section>
-          {/* Main Comparison Bento Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
-            {/* CLT Column */}
-            <div className="lg:col-span-6 flex flex-col gap-8">
-              <div className="bg-surface-container-low rounded-xl p-8 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
-                <div className="flex justify-between items-start mb-12">
-                  <div>
-                    <span className="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 inline-block">Modelo Tradicional</span>
-                    <h3 className="text-2xl font-bold">Consolidado (CLT)</h3>
+
+          {/* KPI Cards - 4 Columns */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
+          >
+            <FiscalCard 
+              title="Líquido CLT Mensal"
+              value={formatCurrency(results.clt.net)}
+              subtitle="Poder de compra real"
+              icon="account_balance"
+              variant="surface"
+            />
+            <FiscalCard 
+              title="Líquido PJ Mensal"
+              value={formatCurrency(results.pj.net)}
+              subtitle="Eficiência tributária"
+              icon="rocket_launch"
+              variant="secondary"
+              trend={{ value: `+${results.comparison.percentageGain.toFixed(1)}%`, positive: results.comparison.percentageGain > 0 }}
+            />
+            <FiscalCard 
+              title="Diferença Mensal"
+              value={formatCurrency(results.comparison.monthlyDiff)}
+              subtitle="Excedente operacional"
+              icon="payments"
+              variant="primary"
+            />
+            <FiscalCard 
+              title="Diferença Anual"
+              value={formatCurrency(results.comparison.annualDiff)}
+              subtitle={`ROI: ${formatPercentage(results.comparison.roi)}`}
+              icon="trending_up"
+              variant="surface"
+            />
+          </motion.div>
+
+          {/* Charts Section - Tabs */}
+          <Card className="mb-12 bg-surface-container-low border-outline-variant/15">
+            <div className="p-8">
+              <h3 className="text-2xl font-black mb-8">Análise Comparativa</h3>
+              
+              <Tabs defaultValue="comparison" className="w-full">
+                <TabsList className="grid w-full grid-cols-3 bg-surface-container-high">
+                  <TabsTrigger value="comparison">Comparação</TabsTrigger>
+                  <TabsTrigger value="evolution">Evolução Anual</TabsTrigger>
+                  <TabsTrigger value="distribution">Distribuição</TabsTrigger>
+                </TabsList>
+
+                {/* Tab 1: Comparison BarChart */}
+                <TabsContent value="comparison" className="mt-8">
+                  <div className="h-80 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={comparisonData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="var(--outline)" />
+                        <XAxis dataKey="name" stroke="var(--on-surface-variant)" />
+                        <YAxis stroke="var(--on-surface-variant)" />
+                        <Tooltip 
+                          formatter={(value) => formatCurrency(value as number)}
+                          contentStyle={{ 
+                            backgroundColor: 'var(--surface-container-low)', 
+                            border: '1px solid var(--outline-variant)',
+                            borderRadius: '8px'
+                          }}
+                        />
+                        <Legend />
+                        <Bar dataKey="CLT" fill="var(--primary)" />
+                        <Bar dataKey="PJ" fill="var(--secondary)" />
+                      </BarChart>
+                    </ResponsiveContainer>
                   </div>
-                  <div className="text-right">
-                    <p className="text-on-surface-variant text-xs uppercase tracking-widest">Salário Bruto</p>
-                    <p className="text-2xl font-bold tabular-nums">R$ 15.000,00</p>
+                </TabsContent>
+
+                {/* Tab 2: Evolution LineChart */}
+                <TabsContent value="evolution" className="mt-8">
+                  <div className="h-80 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={annualData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="var(--outline)" />
+                        <XAxis dataKey="month" stroke="var(--on-surface-variant)" />
+                        <YAxis stroke="var(--on-surface-variant)" />
+                        <Tooltip 
+                          formatter={(value) => formatCurrency(value as number)}
+                          contentStyle={{ 
+                            backgroundColor: 'var(--surface-container-low)', 
+                            border: '1px solid var(--outline-variant)',
+                            borderRadius: '8px'
+                          }}
+                        />
+                        <Legend />
+                        <Line type="monotone" dataKey="CLT" stroke="var(--primary)" strokeWidth={2} dot={false} />
+                        <Line type="monotone" dataKey="PJ" stroke="var(--secondary)" strokeWidth={2} dot={false} />
+                        <Line type="monotone" dataKey="savings" stroke="var(--tertiary)" strokeWidth={2} strokeDasharray="5 5" dot={false} />
+                      </LineChart>
+                    </ResponsiveContainer>
                   </div>
-                </div>
-                <div className="space-y-6 mb-12">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-on-surface-variant">INSS (Teto)</span>
-                    <span className="font-medium text-error tabular-nums">- R$ 908,85</span>
+                </TabsContent>
+
+                {/* Tab 3: Distribution PieChart */}
+                <TabsContent value="distribution" className="mt-8">
+                  <div className="h-80 w-full flex items-center justify-center">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={pjBreakdown}
+                          cx="50%"
+                          cy="50%"
+                          labelLine={false}
+                          label={({ name, value }) => `${name}: ${formatCurrency(value)}`}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          dataKey="value"
+                        >
+                          {pjBreakdown.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <Tooltip formatter={(value) => formatCurrency(value as number)} />
+                      </PieChart>
+                    </ResponsiveContainer>
                   </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-on-surface-variant">IRRF (27,5%)</span>
-                    <span className="font-medium text-error tabular-nums">- R$ 3.120,40</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-on-surface-variant">Benefícios (VR/VT/Saúde)</span>
-                    <span className="font-medium text-secondary tabular-nums">+ R$ 1.800,00</span>
-                  </div>
-                </div>
-                <div className="pt-8 border-t border-outline-variant/20">
-                  <p className="text-on-surface-variant text-xs uppercase tracking-widest mb-2">Remuneração Líquida Estimada</p>
-                  <p className="text-6xl font-black tracking-tighter tabular-nums">R$ 10.970,<span className="text-3xl">75</span></p>
-                </div>
-              </div>
-              {/* CLT Pros/Cons */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-surface-container rounded-xl p-6">
-                  <p className="text-xs font-bold uppercase tracking-widest text-primary mb-4 flex items-center gap-2">
-                    <MaterialSymbol name="check_circle" className="text-sm" /> Vantagens
-                  </p>
-                  <ul className="text-sm space-y-3 text-on-surface-variant">
-                    <li>13º Salário Garantido</li>
-                    <li>Férias Remuneradas + 1/3</li>
-                    <li>Estabilidade (FGTS/Aviso)</li>
-                  </ul>
-                </div>
-                <div className="bg-surface-container rounded-xl p-6">
-                  <p className="text-xs font-bold uppercase tracking-widest text-error mb-4 flex items-center gap-2">
-                    <MaterialSymbol name="cancel" className="text-sm" /> Desvantagens
-                  </p>
-                  <ul className="text-sm space-y-3 text-on-surface-variant">
-                    <li>Alta Carga Tributária</li>
-                    <li>Menor Flexibilidade</li>
-                    <li>Teto do INSS Limitado</li>
-                  </ul>
-                </div>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </Card>
+
+          {/* Detailed Breakdown Table */}
+          <Card className="mb-12 bg-surface-container-low border-outline-variant/15">
+            <div className="p-8">
+              <h3 className="text-2xl font-black mb-6">Detalhamento Completo</h3>
+              
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="border-outline-variant/20">
+                      <TableHead className="text-on-surface font-black">Item</TableHead>
+                      <TableHead className="text-on-surface font-black text-right">CLT</TableHead>
+                      <TableHead className="text-on-surface font-black text-right">PJ</TableHead>
+                      <TableHead className="text-on-surface font-black text-right">Diferença</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {breakdownTableData.map((row, idx) => (
+                      <TableRow key={idx} className="border-outline-variant/20">
+                        <TableCell className="font-bold text-on-surface">{row.label}</TableCell>
+                        <TableCell className="text-right font-mono">{formatCurrency(row.clt)}</TableCell>
+                        <TableCell className="text-right font-mono">{formatCurrency(row.pj)}</TableCell>
+                        <TableCell className={cn(
+                          "text-right font-mono font-bold",
+                          row.clt < row.pj ? "text-secondary" : "text-on-surface"
+                        )}>
+                          {formatCurrency(row.pj - row.clt)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
             </div>
-            {/* PJ Column */}
-            <div className="lg:col-span-6 flex flex-col gap-8">
-              <div className="bg-surface-container-high rounded-xl p-8 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
-                <div className="flex justify-between items-start mb-12">
+          </Card>
+
+          {/* Main Content Grid - Insight Card + Config */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Insight Card */}
+            <Card className="lg:col-span-1 bg-slate-950 border-outline-variant/15 text-slate-50">
+              <div className="p-8 h-full flex flex-col justify-between relative overflow-hidden">
+                <div className="relative z-10">
+                  <div className="w-14 h-14 rounded-full flex items-center justify-center mb-8 shadow-2xl" style={{ background: 'linear-gradient(135deg, #904d00, #d97706)' }}>
+                    <MaterialSymbol name="auto_awesome" className="text-2xl text-white" />
+                  </div>
+                  <h4 className="text-xl font-bold mb-4">Insight do Arquiteto</h4>
+                  <p className="text-slate-400 leading-relaxed text-sm mb-6">
+                    Você precisa de 
+                    <span className="text-secondary font-black mx-1">
+                      {formatCurrency(results.comparison.requiredCltToMatchPj)}
+                    </span>
+                    brutos CLT para empatar com PJ de
+                    <span className="text-secondary font-black mx-1">
+                      {formatCurrency(results.pj.net)}
+                    </span>
+                    mensais.
+                  </p>
+                  
+                  <div className="flex gap-2 mb-6">
+                    <Badge variant="default" className="bg-secondary">CLT</Badge>
+                    <Badge variant="secondary">PJ</Badge>
+                  </div>
+
+                  <div className="flex gap-3 flex-col">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={handlePdfExport}
+                      className="w-full border-slate-700 text-slate-50 hover:bg-slate-900"
+                    >
+                      <MaterialSymbol name="picture_as_pdf" className="mr-2" />
+                      Exportar PDF
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={handleShare}
+                      className="w-full border-slate-700 text-slate-50 hover:bg-slate-900"
+                    >
+                      <MaterialSymbol name="share" className="mr-2" />
+                      Compartilhar
+                    </Button>
+                  </div>
+                </div>
+                
+                {/* Background decoration */}
+                <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-secondary/10 rounded-full blur-3xl"></div>
+              </div>
+            </Card>
+
+            {/* Quick Config Card */}
+            <Card className="lg:col-span-2 bg-surface-container-low border-outline-variant/15">
+              <div className="p-8 h-full flex flex-col justify-between">
+                <div>
+                  <h3 className="text-2xl font-black mb-8">Configuração Rápida</h3>
+                  
+                  {/* Benefits Slider */}
+                  <div className="mb-8">
+                    <div className="flex justify-between items-center mb-3">
+                      <Label className="text-sm font-bold text-on-surface">
+                        Valor de Benefícios (VR + Saúde)
+                      </Label>
+                      <span className="text-2xl font-black text-secondary">
+                        {formatCurrency(benefitsValue)}
+                      </span>
+                    </div>
+                    <Slider 
+                      value={[benefitsValue]}
+                      onValueChange={handleBenefitsChange}
+                      min={500}
+                      max={3000}
+                      step={100}
+                      className="w-full"
+                    />
+                    <p className="text-xs text-on-surface-variant mt-2">Inclui Vale Refeição, Plano de Saúde, etc.</p>
+                  </div>
+
+                  {/* Simples Aliquota Slider */}
                   <div>
-                    <span className="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 inline-block">Modelo Empresarial</span>
-                    <h3 className="text-2xl font-bold">Prestador (PJ)</h3>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-on-surface-variant text-xs uppercase tracking-widest">Faturamento Bruto</p>
-                    <p className="text-2xl font-bold tabular-nums">R$ 15.000,00</p>
-                  </div>
-                </div>
-                <div className="space-y-6 mb-12">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-on-surface-variant">Simples Nac. (Anexo III)</span>
-                    <span className="font-medium text-error tabular-nums">- R$ 900,00</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-on-surface-variant">Contabilidade + Taxas</span>
-                    <span className="font-medium text-error tabular-nums">- R$ 350,00</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-on-surface-variant">Pró-labore (Mínimo)</span>
-                    <span className="font-medium text-secondary-container tabular-nums">Retenção Zero*</span>
+                    <div className="flex justify-between items-center mb-3">
+                      <Label className="text-sm font-bold text-on-surface">
+                        Alíquota Simples Nacional
+                      </Label>
+                      <span className="text-2xl font-black text-secondary">
+                        {simplesAliquota}%
+                      </span>
+                    </div>
+                    <Slider 
+                      value={[simplesAliquota]}
+                      onValueChange={handleAliquotaChange}
+                      min={6}
+                      max={14}
+                      step={1}
+                      className="w-full"
+                    />
+                    <p className="text-xs text-on-surface-variant mt-2">Intervalo: 6% - 14% conforme faturamento anual</p>
                   </div>
                 </div>
-                <div className="pt-8 border-t border-outline-variant/20">
-                  <p className="text-on-surface-variant text-xs uppercase tracking-widest mb-2 text-secondary font-bold">Remuneração Líquida Estimada</p>
-                  <p className="text-6xl font-black tracking-tighter tabular-nums text-secondary">R$ 13.750,<span className="text-3xl text-secondary/80">00</span></p>
-                </div>
-              </div>
-              {/* PJ Pros/Cons */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-surface-container-highest rounded-xl p-6">
-                  <p className="text-xs font-bold uppercase tracking-widest text-secondary mb-4 flex items-center gap-2">
-                    <MaterialSymbol name="rocket_launch" className="text-sm" /> Vantagens
-                  </p>
-                  <ul className="text-sm space-y-3 text-on-surface-variant">
-                    <li>Maior Salário Líquido</li>
-                    <li>Flexibilidade de Horário</li>
-                    <li>Múltiplas Fontes de Renda</li>
-                  </ul>
-                </div>
-                <div className="bg-surface-container-highest rounded-xl p-6">
-                  <p className="text-xs font-bold uppercase tracking-widest text-error mb-4 flex items-center gap-2">
-                    <MaterialSymbol name="warning" className="text-sm" /> Desvantagens
-                  </p>
-                  <ul className="text-sm space-y-3 text-on-surface-variant">
-                    <li>Ausência de 13º e Férias</li>
-                    <li>Custos de Saúde Próprios</li>
-                    <li>Risco de Gestão Fiscal</li>
-                  </ul>
+
+                {/* Summary Stats */}
+                <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-outline-variant/20">
+                  <div>
+                    <p className="text-xs text-on-surface-variant font-bold uppercase tracking-wider mb-1">Ganho Mensal</p>
+                    <p className="text-xl font-black text-secondary">
+                      {formatCurrency(results.comparison.monthlyDiff)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-on-surface-variant font-bold uppercase tracking-wider mb-1">Ganho Anual</p>
+                    <p className="text-xl font-black text-secondary">
+                      {formatCurrency(results.comparison.annualDiff)}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Card>
           </div>
-          {/* Visual Charts & Impact Section */}
-          <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-            {/* Tax Impact Visualization */}
-            <div className="lg:col-span-2 bg-surface-container-low p-8 rounded-xl">
-              <h4 className="text-xl font-bold mb-8">Distribuição de Encargos</h4>
-              <div className="flex flex-col gap-12">
-                <div className="space-y-4">
-                  <div className="flex justify-between items-end mb-2">
-                    <span className="text-xs font-bold uppercase tracking-wider">Custo Total CLT (Empresa)</span>
-                    <span className="text-xl font-bold tabular-nums">R$ 25.800,00</span>
-                  </div>
-                  <div className="h-8 w-full bg-surface-container flex rounded-lg overflow-hidden">
-                    <div className="h-full bg-primary-container flex items-center justify-center text-[10px] text-white font-bold" style={{width: '58%'}}>SALÁRIO LÍQUIDO</div>
-                    <div className="h-full bg-error flex items-center justify-center text-[10px] text-white font-bold" style={{width: '25%'}}>IMPOSTOS</div>
-                    <div className="h-full bg-amber-600 flex items-center justify-center text-[10px] text-white font-bold" style={{width: '17%'}}>BENEFÍCIOS</div>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-end mb-2">
-                    <span className="text-xs font-bold uppercase tracking-wider">Custo Total PJ (Contrato)</span>
-                    <span className="text-xl font-bold tabular-nums">R$ 15.000,00</span>
-                  </div>
-                  <div className="h-8 w-full bg-surface-container flex rounded-lg overflow-hidden">
-                    <div className="h-full bg-secondary flex items-center justify-center text-[10px] text-white font-bold" style={{width: '91%'}}>SALÁRIO LÍQUIDO</div>
-                    <div className="h-full bg-error flex items-center justify-center text-[10px] text-white font-bold" style={{width: '9%'}}>IMPOSTOS</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Insights Card */}
-            <div className="bg-slate-950 text-slate-50 p-8 rounded-xl flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center mb-6">
-                  <MaterialSymbol name="lightbulb" />
-                </div>
-                <h4 className="text-xl font-bold mb-4 italic">O Veredito do Arquiteto</h4>
-                <p className="text-slate-400 text-sm leading-relaxed">
-                  No faturamento de 15k, o modelo PJ oferece uma vantagem líquida de <span className="text-amber-500 font-bold">25.3%</span>. Para equiparar o CLT ao PJ neste nível, o salário bruto CLT precisaria ser de aproximadamente R$ 19.800,00.
-                </p>
-              </div>
-              <Link href="/calculator" className="mt-8 flex items-center gap-2 text-amber-500 text-sm font-bold uppercase tracking-widest hover:gap-4 transition-all">
-                Ver simulação completa <MaterialSymbol name="arrow_forward" />
-              </Link>
-            </div>
-          </section>
         </div>
-      </main>
+      </div>
     </main>
   )
 }
