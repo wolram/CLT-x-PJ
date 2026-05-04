@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "public": true,
+  "cleanUrls": true,
+  "framework": "nextjs",
+  "buildCommand": "cd web/redesign && npm install && npm run build",
+  "outputDirectory": "web/redesign/.next"
+}

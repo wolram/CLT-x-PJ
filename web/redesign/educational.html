@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#904d00",
+                    "tertiary-fixed-dim": "#b9c8de",
+                    "outline-variant": "#c6c6cd",
+                    "on-primary-fixed": "#141b2b",
+                    "secondary-container": "#fe932c",
+                    "surface-bright": "#f8f9ff",
+                    "on-secondary-fixed-variant": "#6e3900",
+                    "primary-container": "#141b2b",
+                    "on-secondary-fixed": "#2f1500",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#d4e4fa",
+                    "surface-variant": "#d4e4fa",
+                    "inverse-on-surface": "#e9f1ff",
+                    "on-surface-variant": "#45464c",
+                    "outline": "#76777d",
+                    "on-tertiary-fixed": "#0d1c2d",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#0d1c2d",
+                    "surface-dim": "#ccdbf2",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed": "#d4e4fa",
+                    "primary-fixed-dim": "#c0c6db",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#0d1c2d",
+                    "on-primary-fixed-variant": "#404758",
+                    "secondary-fixed": "#ffdcc3",
+                    "on-tertiary-container": "#768599",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "tertiary": "#000000",
+                    "on-secondary-container": "#663500",
+                    "surface-container-high": "#dbe9ff",
+                    "primary-fixed": "#dce2f7",
+                    "on-tertiary-fixed-variant": "#39485a",
+                    "inverse-surface": "#233143",
+                    "surface-tint": "#575e70",
+                    "surface-container-low": "#eef4ff",
+                    "on-primary-container": "#7d8497",
+                    "surface-container": "#e5efff",
+                    "on-surface": "#0d1c2d",
+                    "on-error": "#ffffff",
+                    "primary": "#000000",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#ffb77d",
+                    "background": "#f8f9ff",
+                    "inverse-primary": "#c0c6db"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .tabular-nums { font-variant-numeric: tabular-nums; }
+    </style>
+</head>
+<body class="bg-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-slate-950/60 backdrop-blur-xl no-border bg-slate-900/10 flat no shadows">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-6 h-20">
+<div class="text-xl font-bold tracking-tighter text-slate-50">Calculadora CLT x CNPJ</div>
+<div class="hidden md:flex items-center gap-8 font-sans tracking-tight">
+<a class="text-slate-400 hover:text-slate-100 transition-colors" href="#">Calculadora</a>
+<a class="text-amber-50 font-semibold border-b-2 border-amber-600 pb-1" href="#">Recursos</a>
+<a class="text-slate-400 hover:text-slate-100 transition-colors" href="#">Baixar App</a>
+</div>
+<button class="bg-amber-600 hover:bg-amber-500 text-slate-950 px-6 py-2 rounded-xl font-bold text-sm uppercase tracking-widest transition-all duration-300 scale-95 duration-200 ease-in-out">
+                Entrar
+            </button>
+</div>
+</nav>
+<main class="pt-24 pb-20">
+<!-- Hero Section: Featured Article -->
+<section class="max-w-7xl mx-auto px-6 mb-16">
+<div class="relative group overflow-hidden rounded-xl bg-surface-container-low min-h-[500px] flex items-end">
+<img alt="Financial Planning" class="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Modern high-end architectural office interior with large windows, soft morning light, and minimalist wooden furniture, symbolizing fiscal clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYjRmIu3al10-JB3m5zt6ZFXLxHPoCEm3WTekvEYBDRBPIOsvwTH1jJr5W--_FQzGyY7X8hOd34kd1sTo6BwT1gvqi7uuy1Y2Ey46EjeGwZWBnOKd_iE7rsV8ry7bsI8xwVOvrR1n6zTCCTNUkdmbZks9wGJlSs96h3ZQBszJHLScNQL-gF0rs_nVOwkNtBU2i-6bwQ5jMkuWG0LYEXzu8qKt4gbNMFJjASWohu0lDVdMG8w_A7lW6GYoicJq24F7I7-BYaZ_9MUc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+<div class="relative p-8 md:p-16 max-w-3xl">
+<div class="inline-block px-3 py-1 mb-6 rounded-full bg-secondary-container text-on-secondary-fixed text-xs font-bold tracking-widest uppercase">
+                        Featured Analysis
+                    </div>
+<h1 class="text-4xl md:text-6xl font-black text-slate-50 leading-tight tracking-tighter mb-6">
+                        A Grande Migração: Transição de CLT para PJ em 2024.
+                    </h1>
+<p class="text-slate-300 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl font-light">
+                        Uma análise profunda sobre a viabilidade fiscal, benefícios ocultos e os riscos contratuais que você precisa considerar antes de assinar seu próximo contrato.
+                    </p>
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-600">
+<img alt="Author" data-alt="Portrait of a professional financial advisor in a navy suit, clean studio lighting, looking confident and approachable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4Ewg7Pnw4r5lVyTPYjxogjmxTMrJ4wA1iVeHrtGV7l1EUi1Y3K1xfvwOmetElJqOgFRpTEpdI0NUtAVGChmfv8BpdL1Mg1G_ram5P4W_sH9DpBwyyO-1Y_sAj_YXLztH03NpJKq6fIdBrPqazUZ0F8UNb2uGwHMXd6ATnZ63PEpddJ0YIx9tTUfHcQRmrsjUM_yAb6dXL94BsnnT_BMYbbSxEaGz8KFhH8NWolEpOEdjGzJJbOqh1WNEsF3BPPd6Ua8TAf8CONG4"/>
+</div>
+<div>
+<p class="text-slate-100 font-bold text-sm">Ricardo S. Architect</p>
+<p class="text-slate-400 text-xs">Sócio Sênior de Estratégia Fiscal</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Categories & Filter Navigation -->
+<section class="max-w-7xl mx-auto px-6 mb-12">
+<div class="flex flex-wrap items-center gap-4 py-4 overflow-x-auto no-scrollbar border-b border-outline-variant/10">
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary font-bold text-sm tracking-wide">Tudo</button>
+<button class="px-6 py-2 rounded-full bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface-variant font-medium text-sm tracking-wide">CLT vs PJ</button>
+<button class="px-6 py-2 rounded-full bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface-variant font-medium text-sm tracking-wide">Impostos</button>
+<button class="px-6 py-2 rounded-full bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface-variant font-medium text-sm tracking-wide">Carreira</button>
+<button class="px-6 py-2 rounded-full bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface-variant font-medium text-sm tracking-wide">Planejamento</button>
+<button class="px-6 py-2 rounded-full bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface-variant font-medium text-sm tracking-wide">Jurisprudência</button>
+</div>
+</section>
+<!-- Editorial Grid Layout (Bento Style) -->
+<section class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Long Article Card (Large Spanning) -->
+<article class="md:col-span-8 flex flex-col md:flex-row gap-8 p-8 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all group">
+<div class="w-full md:w-1/2 aspect-video md:aspect-square rounded-lg overflow-hidden bg-surface-container-highest">
+<img alt="Taxes" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Macro shot of Brazilian Real banknotes arranged neatly with a minimalist gold calculator on a dark slate surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIG3Sw3WZw5SXSTkskU33yPvGPGjg78pIryVR4jd1-QbDdr0VQiKNwdqCMZJzI8vJxNY9hQvY1c951ncfMn7Blw5_1k-WxwLPaEADw-YIKpUzk3YIJd-O6QYDoqSNScX_ZaJCjL1bs7t-VLZu-3NBdO1JjIF3AP_JUrgmKEymKjB3hgsMIzz8-pSVLzTYSwG0kR0rCxzx7a5CdEewoy90yq7miJORtkaQp0LzK2-M7n-JEOpNto6LUssnyKssDIQKL1Cx4yTNzgak"/>
+</div>
+<div class="w-full md:w-1/2 flex flex-col justify-center">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest mb-4">Taxes &amp; Compliance</span>
+<h2 class="text-2xl font-bold text-on-surface leading-tight mb-4 group-hover:text-secondary transition-colors">
+                        O Labirinto do Simples Nacional: Anexo III vs V.
+                    </h2>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                        Entenda o Fator R e como ele pode reduzir sua carga tributária de 15,5% para apenas 6% legalmente.
+                    </p>
+<div class="flex items-center gap-2 text-on-surface font-bold text-xs uppercase tracking-tighter">
+<span>Ler mais</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</article>
+<!-- Small Card 1 -->
+<article class="md:col-span-4 p-8 rounded-xl bg-surface-container-high hover:bg-surface-container-highest transition-all group">
+<span class="text-amber-600 font-bold text-xs uppercase tracking-widest mb-4 block">Carreira</span>
+<h3 class="text-xl font-bold text-on-surface leading-snug mb-4 group-hover:text-amber-600">
+                    Negociando como PJ: O Guia de Valor de Mercado.
+                </h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                    Como converter seu salário CLT em uma tarifa horária competitiva sem perder margem de lucro.
+                </p>
+<div class="mt-auto pt-4 border-t border-outline-variant/20 flex justify-between items-center text-xs text-on-surface-variant font-medium">
+<span>5 min de leitura</span>
+<span>12 Out 2024</span>
+</div>
+</article>
+<!-- Small Card 2 -->
+<article class="md:col-span-4 p-8 rounded-xl bg-surface-container-high hover:bg-surface-container-highest transition-all group border-l-4 border-secondary">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest mb-4 block">Checklist</span>
+<h3 class="text-xl font-bold text-on-surface leading-snug mb-4 group-hover:text-secondary">
+                    Documentação Essencial para Abrir sua ME.
+                </h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                    De contrato social a certificados digitais: tudo o que você precisa para começar em 48 horas.
+                </p>
+<div class="mt-auto pt-4 border-t border-outline-variant/20 flex justify-between items-center text-xs text-on-surface-variant font-medium">
+<span>8 min de leitura</span>
+<span>10 Out 2024</span>
+</div>
+</article>
+<!-- Medium Article Card (Asymmetric Layout) -->
+<article class="md:col-span-8 relative rounded-xl overflow-hidden bg-primary p-12 flex flex-col justify-end min-h-[350px]">
+<div class="absolute inset-0 opacity-20">
+<img alt="Architecture" class="w-full h-full object-cover" data-alt="Blurred background of a modern skyscraper's glass facade with geometric reflections of the sky, high-tech financial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvwKw8EK2wnCPXQPJLooT8f9_xCCWM6tPWokN_yHDZqDpED-unXhzZ_UK_QeaVmT1Py8TTmOGLyZDymLapX6ryxdOWTJGomvHfqP94Mcx1d3lKbA6y6koy4UCm6pIZVHfggJMM1u3bdqzA5af0JSW2n0mX247hocQ8HkjUr7ebLmfJ8YDpT7ZU3GnFR18Of28A5znUxD4NgHhKjLkO8Ja4LwiOTSgoxU0hMebdLnV5XU2PuAxVxJHa1OHNbDyY1LdGFqwuAOhwntQ"/>
+</div>
+<div class="relative z-10">
+<span class="text-secondary-fixed-dim font-black text-xs uppercase tracking-[0.2em] mb-4 block">Fiscal Intelligence</span>
+<h2 class="text-3xl md:text-4xl font-black text-white leading-tight mb-6 max-w-xl">
+                        A Matemática da Liberdade: Por que o salário líquido não é tudo.
+                    </h2>
+<div class="flex items-center gap-6">
+<button class="px-8 py-3 bg-secondary text-white font-bold rounded-xl text-xs uppercase tracking-widest hover:scale-105 transition-transform">
+                            Acessar Estudo
+                        </button>
+<span class="text-white/60 text-xs">Exclusivo para assinantes Fiscal Architect</span>
+</div>
+</div>
+</article>
+</section>
+<!-- Newsletter Section (Editorial Treatment) -->
+<section class="max-w-7xl mx-auto px-6 mt-24">
+<div class="bg-surface-container-lowest p-12 md:p-24 rounded-xl flex flex-col md:flex-row items-center gap-12 border-l-8 border-secondary">
+<div class="w-full md:w-1/2">
+<h2 class="text-3xl md:text-5xl font-black text-on-surface tracking-tighter mb-6 leading-none">
+                        Mantenha-se <br/><span class="text-secondary">Arquitetonicamente</span> <br/>Informado.
+                    </h2>
+<p class="text-on-surface-variant text-lg leading-relaxed font-light">
+                        Receba análises fiscais de alto nível e insights sobre o mercado PJ brasileiro diretamente na sua caixa de entrada, toda terça-feira.
+                    </p>
+</div>
+<div class="w-full md:w-1/2">
+<form class="flex flex-col gap-4">
+<div class="relative">
+<input class="w-full px-6 py-5 bg-surface-container-high border-0 rounded-xl text-on-surface focus:ring-2 focus:ring-secondary transition-all placeholder:text-on-surface-variant/50" placeholder="Seu melhor e-mail corporativo" type="email"/>
+<button class="absolute right-3 top-3 bottom-3 px-6 bg-primary text-white rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-colors" type="submit">
+                                Assinar
+                            </button>
+</div>
+<p class="text-[10px] text-on-surface-variant px-2">
+                            Respeitamos sua privacidade. Sem spam, apenas inteligência fiscal.
+                        </p>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-950 text-slate-400 py-20">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-16">
+<div class="max-w-xs">
+<div class="text-2xl font-black text-slate-50 tracking-tighter mb-6">The Fiscal Architect</div>
+<p class="text-sm leading-relaxed opacity-60">
+                    Provendo clareza estrutural para profissionais que buscam excelência em sua jornada financeira e contratual no Brasil.
+                </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+<div>
+<h4 class="text-slate-50 font-bold text-xs uppercase tracking-widest mb-6">Plataforma</h4>
+<ul class="space-y-4 text-sm font-sans">
+<li><a class="hover:text-amber-500 transition-colors" href="#">Calculadora CLT x PJ</a></li>
+<li><a class="hover:text-amber-500 transition-colors" href="#">Simulador de Impostos</a></li>
+<li><a class="hover:text-amber-500 transition-colors" href="#">Dashboard Pro</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-slate-50 font-bold text-xs uppercase tracking-widest mb-6">Conteúdo</h4>
+<ul class="space-y-4 text-sm font-sans">
+<li><a class="hover:text-amber-500 transition-colors" href="#">Blog Educacional</a></li>
+<li><a class="hover:text-amber-500 transition-colors" href="#">Guias Práticos</a></li>
+<li><a class="hover:text-amber-500 transition-colors" href="#">Estudos de Caso</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-slate-50 font-bold text-xs uppercase tracking-widest mb-6">Suporte</h4>
+<ul class="space-y-4 text-sm font-sans">
+<li><a class="hover:text-amber-500 transition-colors" href="#">FAQ</a></li>
+<li><a class="hover:text-amber-500 transition-colors" href="#">Privacidade</a></li>
+<li><a class="hover:text-amber-500 transition-colors" href="#">Termos</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-xs opacity-40">© 2024 The Fiscal Architect. Todos os direitos reservados.</p>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-slate-500 hover:text-slate-300 cursor-pointer">share</span>
+<span class="material-symbols-outlined text-slate-500 hover:text-slate-300 cursor-pointer">mail</span>
+<span class="material-symbols-outlined text-slate-500 hover:text-slate-300 cursor-pointer">rss_feed</span>
+</div>
+</div>
+</footer>
+<!-- SideNavBar (Hidden by default, triggered by menu if added) -->
+<!-- This serves as a conceptual anchor for sub-navigation in internal pages -->
+</body></html>

@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLT x PJ - Apresentação Criativa</title>
+    <style>
+        :root {
+            --primary-bg: #0a0a0f;
+            --secondary-bg: #14141a;
+            --tertiary-bg: #1e1e28;
+            --gold: #d4a853;
+            --gold-light: #e8c878;
+            --gold-dark: #b8923f;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0bc;
+            --text-muted: #6e6e7a;
+            --border: #2a2a36;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --error: #f87171;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            padding: 60px 80px;
+            background: var(--primary-bg);
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+            background: rgba(20, 20, 26, 0.9);
+            padding: 12px 24px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+        }
+
+        .nav button {
+            background: var(--tertiary-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .nav button:hover {
+            background: var(--gold);
+            color: var(--primary-bg);
+        }
+
+        .nav button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            color: var(--text-secondary);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+        }
+
+        /* Slide 1: Cover */
+        .slide-cover {
+            text-align: center;
+            align-items: center;
+        }
+
+        .slide-cover .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 40px;
+        }
+
+        .slide-cover h1 {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide-cover .subtitle {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .slide-cover .tagline {
+            font-size: 18px;
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        /* Slide 2: Brand Overview */
+        .slide-brand h2 {
+            font-size: 42px;
+            margin-bottom: 40px;
+            color: var(--gold);
+        }
+
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .brand-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .brand-card h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--gold);
+        }
+
+        .brand-card p, .brand-card li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .brand-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .brand-card ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        /* Slide 3: Color Palette */
+        .slide-colors h2 {
+            font-size: 42px;
+            margin-bottom: 40px;
+            color: var(--gold);
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .color-swatch {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .color-swatch .preview {
+            height: 120px;
+        }
+
+        .color-swatch .info {
+            padding: 16px;
+            background: var(--secondary-bg);
+        }
+
+        .color-swatch .name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .color-swatch .hex {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        /* Slide 4: Typography */
+        .slide-typography h2 {
+            font-size: 42px;
+            margin-bottom: 40px;
+            color: var(--gold);
+        }
+
+        .typography-showcase {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 40px;
+        }
+
+        .typography-showcase h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .typography-showcase h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .typography-showcase h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+        }
+
+        .typography-showcase p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .typography-showcase .mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--gold);
+        }
+
+        /* Slide 5: Social Media */
+        .slide-social h2 {
+            font-size: 42px;
+            margin-bottom: 40px;
+            color: var(--gold);
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .social-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .social-card .platform {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--gold);
+        }
+
+        .social-card .frequency {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .social-card .best-time {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Slide 6: Content Calendar */
+        .slide-calendar h2 {
+            font-size: 42px;
+            margin-bottom: 40px;
+            color: var(--gold);
+        }
+
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--secondary-bg);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .calendar-table th,
+        .calendar-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .calendar-table th {
+            background: var(--tertiary-bg);
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .calendar-table td {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Slide 7: KPIs */
+        .slide-kpis h2 {
+            font-size: 42px;
+            margin-bottom: 40px;
+            color: var(--gold);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .kpi-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .kpi-card h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--gold);
+        }
+
+        .kpi-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .kpi-item:last-child {
+            border-bottom: none;
+        }
+
+        .kpi-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .kpi-value {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Slide 8: Email Sequence */
+        .slide-email h2 {
+            font-size: 42px;
+            margin-bottom: 40px;
+            color: var(--gold);
+        }
+
+        .email-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .email-item {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .email-day {
+            background: var(--gold);
+            color: var(--primary-bg);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .email-content h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .email-content p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Slide 9: Landing Page */
+        .slide-landing h2 {
+            font-size: 42px;
+            margin-bottom: 40px;
+            color: var(--gold);
+        }
+
+        .landing-preview {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 40px;
+        }
+
+        .landing-hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .landing-hero h1 {
+            font-size: 36px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .landing-hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--primary-bg);
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        .cta-secondary {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+        }
+
+        /* Slide 10: Next Steps */
+        .slide-next h2 {
+            font-size: 42px;
+            margin-bottom: 40px;
+            color: var(--gold);
+        }
+
+        .next-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .next-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .next-card h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--gold);
+        }
+
+        .next-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .next-card ul li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .next-card ul li:before {
+            content: "→ ";
+            color: var(--gold);
+        }
+
+        .next-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gold);
+            transition: width 0.3s;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="presentation">
+        <!-- Slide 1: Cover -->
+        <div class="slide slide-cover active" data-slide="1">
+            <img src="brand/logos/logo-dark.svg" alt="CLT x PJ Logo" class="logo">
+            <h1>CLT x PJ</h1>
+            <p class="subtitle">Plataforma de Comparação de Propostas</p>
+            <p class="tagline">"Decida sua proposta com clareza."</p>
+        </div>
+
+        <!-- Slide 2: Brand Overview -->
+        <div class="slide slide-brand" data-slide="2">
+            <h2>Brand Overview</h2>
+            <div class="brand-grid">
+                <div class="brand-card">
+                    <h3>Essência</h3>
+                    <p>CLT x PJ é uma marca de clareza para negociação profissional. Existe para transformar uma decisão confusa em uma escolha objetiva, segura e bem explicada.</p>
+                </div>
+                <div class="brand-card">
+                    <h3>Posicionamento</h3>
+                    <p>Para profissionais e empresas que precisam comparar uma proposta CLT com uma proposta PJ sem cair em achismo, CLT x PJ traduz impostos, benefícios, risco e liquidez em uma leitura clara e acionável.</p>
+                </div>
+                <div class="brand-card">
+                    <h3>Pilares da Marca</h3>
+                    <ul>
+                        <li>Clareza: explica sem juridiquês</li>
+                        <li>Confiança: fala com sobriedade</li>
+                        <li>Negociação: ajuda a tomar decisão</li>
+                    </ul>
+                </div>
+                <div class="brand-card">
+                    <h3>Tom de Voz</h3>
+                    <ul>
+                        <li>Direto</li>
+                        <li>Calmo</li>
+                        <li>Inteligente</li>
+                        <li>Prático</li>
+                        <li>Sem promessas mágicas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Color Palette -->
+        <div class="slide slide-colors" data-slide="3">
+            <h2>Paleta de Cores</h2>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="preview" style="background: #0a0a0f;"></div>
+                    <div class="info">
+                        <div class="name">Primary BG</div>
+                        <div class="hex">#0a0a0f</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="preview" style="background: #d4a853;"></div>
+                    <div class="info">
+                        <div class="name">Gold</div>
+                        <div class="hex">#d4a853</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="preview" style="background: #ffffff;"></div>
+                    <div class="info">
+                        <div class="name">Text Primary</div>
+                        <div class="hex">#ffffff</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="preview" style="background: #34d399;"></div>
+                    <div class="info">
+                        <div class="name">Success</div>
+                        <div class="hex">#34d399</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="preview" style="background: #14141a;"></div>
+                    <div class="info">
+                        <div class="name">Secondary BG</div>
+                        <div class="hex">#14141a</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="preview" style="background: #e8c878;"></div>
+                    <div class="info">
+                        <div class="name">Gold Light</div>
+                        <div class="hex">#e8c878</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="preview" style="background: #b0b0bc;"></div>
+                    <div class="info">
+                        <div class="name">Text Secondary</div>
+                        <div class="hex">#b0b0bc</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="preview" style="background: #f87171;"></div>
+                    <div class="info">
+                        <div class="name">Error</div>
+                        <div class="hex">#f87171</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Typography -->
+        <div class="slide slide-typography" data-slide="4">
+            <h2>Sistema Tipográfico</h2>
+            <div class="typography-showcase">
+                <h1>Inter - Heading 1</h1>
+                <h2>Inter - Heading 2</h2>
+                <h3>Inter - Heading 3</h3>
+                <p>Texto principal em Inter, limpo e assertivo. A tipografia transmite clareza e confiança, alinhada com o posicionamento da marca.</p>
+                <p class="mono">JetBrains Mono - Código e dados técnicos</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Social Media Strategy -->
+        <div class="slide slide-social" data-slide="5">
+            <h2>Estratégia de Social Media</h2>
+            <div class="social-grid">
+                <div class="social-card">
+                    <div class="platform">LinkedIn</div>
+                    <div class="frequency">3x por semana</div>
+                    <div class="best-time">8:00, 12:00, 18:00 BRT</div>
+                </div>
+                <div class="social-card">
+                    <div class="platform">Instagram</div>
+                    <div class="frequency">1-2x por dia</div>
+                    <div class="best-time">9:00, 13:00, 19:00 BRT</div>
+                </div>
+                <div class="social-card">
+                    <div class="platform">Twitter/X</div>
+                    <div class="frequency">3x por dia</div>
+                    <div class="best-time">8:00, 12:00, 17:00 BRT</div>
+                </div>
+                <div class="social-card">
+                    <div class="platform">YouTube</div>
+                    <div class="frequency">1x por semana</div>
+                    <div class="best-time">18:00 BRT</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Content Calendar -->
+        <div class="slide slide-calendar" data-slide="6">
+            <h2>Calendário de Conteúdo - Mês 1</h2>
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>Semana</th>
+                        <th>Tema</th>
+                        <th>Foco</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Semana 1</td>
+                        <td>Lançamento</td>
+                        <td>Introdução à marca e proposta de valor</td>
+                    </tr>
+                    <tr>
+                        <td>Semana 2</td>
+                        <td>Educação</td>
+                        <td>Impostos, benefícios, diferenças CLT vs PJ</td>
+                    </tr>
+                    <tr>
+                        <td>Semana 3</td>
+                        <td>Prova Social</td>
+                        <td>Depoimentos, cases de sucesso</td>
+                    </tr>
+                    <tr>
+                        <td>Semana 4</td>
+                        <td>Conversão</td>
+                        <td>CTAs fortes, early access, urgência</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Slide 7: KPIs -->
+        <div class="slide slide-kpis" data-slide="7">
+            <h2>KPIs e Metas</h2>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h3>LinkedIn - Mês 1</h3>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Impressions</span>
+                        <span class="kpi-value">10,000</span>
+                    </div>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Engagement Rate</span>
+                        <span class="kpi-value">3%</span>
+                    </div>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Followers</span>
+                        <span class="kpi-value">+500</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <h3>Instagram - Mês 1</h3>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Reach</span>
+                        <span class="kpi-value">5,000</span>
+                    </div>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Engagement</span>
+                        <span class="kpi-value">5%</span>
+                    </div>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Followers</span>
+                        <span class="kpi-value">+300</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <h3>Twitter/X - Mês 1</h3>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Impressions</span>
+                        <span class="kpi-value">15,000</span>
+                    </div>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Engagement Rate</span>
+                        <span class="kpi-value">2%</span>
+                    </div>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Link Clicks</span>
+                        <span class="kpi-value">100</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <h3>App/Website - Mês 1</h3>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Sessions</span>
+                        <span class="kpi-value">2,000</span>
+                    </div>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Sign-ups</span>
+                        <span class="kpi-value">100</span>
+                    </div>
+                    <div class="kpi-item">
+                        <span class="kpi-label">Conversion Rate</span>
+                        <span class="kpi-value">5%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Email Sequence -->
+        <div class="slide slide-email" data-slide="8">
+            <h2>Sequência de Emails</h2>
+            <div class="email-timeline">
+                <div class="email-item">
+                    <div class="email-day">Dia 0</div>
+                    <div class="email-content">
+                        <h3>Welcome</h3>
+                        <p>Boas-vindas e introdução à plataforma. CTA para começar comparação.</p>
+                    </div>
+                </div>
+                <div class="email-item">
+                    <div class="email-day">Dia 3</div>
+                    <div class="email-content">
+                        <h3>Educacional - Como Funciona</h3>
+                        <p>Explicar o processo de comparação em 3 passos simples.</p>
+                    </div>
+                </div>
+                <div class="email-item">
+                    <div class="email-day">Dia 7</div>
+                    <div class="email-content">
+                        <h3>Educacional - Benefícios</h3>
+                        <p>Detalhar benefícios CLT vs PJ e armadilhas comuns.</p>
+                    </div>
+                </div>
+                <div class="email-item">
+                    <div class="email-day">Dia 14</div>
+                    <div class="email-content">
+                        <h3>Prova Social</h3>
+                        <p>Case de sucesso: profissional que economizou R$ 15mil/ano.</p>
+                    </div>
+                </div>
+                <div class="email-item">
+                    <div class="email-day">Dia 21</div>
+                    <div class="email-content">
+                        <h3>Conversão</h3>
+                        <p>Lançamento oficial + early access com urgência.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Landing Page -->
+        <div class="slide slide-landing" data-slide="9">
+            <h2>Landing Page</h2>
+            <div class="landing-preview">
+                <div class="landing-hero">
+                    <h1>Compare CLT e PJ no valor real — não no acha.</h1>
+                    <p>Descubra quanto vale realmente sua proposta de trabalho. Impostos, benefícios, risco e liquidez explicados sem juridiquês.</p>
+                    <a href="#" class="cta-button">Comparar minha proposta</a>
+                    <a href="#" class="cta-button cta-secondary">Conhecer plataforma</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Next Steps -->
+        <div class="slide slide-next" data-slide="10">
+            <h2>Próximos Passos</h2>
+            <div class="next-grid">
+                <div class="next-card">
+                    <h3>Brand Assets</h3>
+                    <ul>
+                        <li>Finalizar logos em múltiplos formatos</li>
+                        <li>Criar favicon e app icons</li>
+                        <li>Exportar paleta para Figma/Canva</li>
+                    </ul>
+                </div>
+                <div class="next-card">
+                    <h3>Social Media</h3>
+                    <ul>
+                        <li>Criar templates para Instagram</li>
+                        <li>Produzir carrosséis para LinkedIn</li>
+                        <li>Desenvolver scripts para vídeos</li>
+                    </ul>
+                </div>
+                <div class="next-card">
+                    <h3>Content</h3>
+                    <ul>
+                        <li>Revisar copy da landing page</li>
+                        <li>Finalizar sequência de emails</li>
+                        <li>Produzir conteúdo para mês 1</li>
+                    </ul>
+                </div>
+                <div class="next-card">
+                    <h3>Launch</h3>
+                    <ul>
+                        <li>Configurar analytics e tracking</li>
+                        <li>Preparar campanha de lançamento</li>
+                        <li>Ativar early access</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+        <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">10</span></span>
+        <button id="nextBtn" onclick="changeSlide(1)">Próximo →</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 10;
+
+        function changeSlide(direction) {
+            const newSlide = currentSlide + direction;
+            if (newSlide < 1 || newSlide > totalSlides) return;
+
+            document.querySelector(`.slide[data-slide="${currentSlide}"]`).classList.remove('active');
+            currentSlide = newSlide;
+            document.querySelector(`.slide[data-slide="${currentSlide}"]`).classList.add('active');
+
+            document.getElementById('currentSlide').textContent = currentSlide;
+            document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            }
+        });
+
+        // Initialize
+        document.getElementById('prevBtn').disabled = true;
+        document.getElementById('progressBar').style.width = `${(1 / totalSlides) * 100}%`;
+    </script>
+</body>
+</html>

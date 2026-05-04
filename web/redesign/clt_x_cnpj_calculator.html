@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#d4e4fa",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#663500",
+                    "background": "#f8f9ff",
+                    "on-background": "#0d1c2d",
+                    "inverse-on-surface": "#e9f1ff",
+                    "on-tertiary-fixed-variant": "#39485a",
+                    "inverse-surface": "#233143",
+                    "surface-tint": "#575e70",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#141b2b",
+                    "on-surface-variant": "#45464c",
+                    "outline-variant": "#c6c6cd",
+                    "on-primary-container": "#7d8497",
+                    "on-tertiary-fixed": "#0d1c2d",
+                    "on-surface": "#0d1c2d",
+                    "surface-container-highest": "#d4e4fa",
+                    "surface-bright": "#f8f9ff",
+                    "surface-container-low": "#eef4ff",
+                    "surface-container-lowest": "#ffffff",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#d4e4fa",
+                    "surface-container": "#e5efff",
+                    "on-tertiary-container": "#768599",
+                    "surface-container-high": "#dbe9ff",
+                    "secondary-fixed": "#ffdcc3",
+                    "tertiary-fixed-dim": "#b9c8de",
+                    "secondary-fixed-dim": "#ffb77d",
+                    "on-secondary-fixed": "#2f1500",
+                    "on-primary-fixed-variant": "#404758",
+                    "primary-fixed": "#dce2f7",
+                    "surface": "#f8f9ff",
+                    "inverse-primary": "#c0c6db",
+                    "on-primary-fixed": "#141b2b",
+                    "tertiary-container": "#0d1c2d",
+                    "outline": "#76777d",
+                    "on-secondary-fixed-variant": "#6e3900",
+                    "primary-fixed-dim": "#c0c6db",
+                    "primary": "#000000",
+                    "tertiary": "#000000",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "surface-dim": "#ccdbf2",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#904d00",
+                    "secondary-container": "#fe932c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .glass-nav { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); }
+        .tabular-numbers { font-variant-numeric: tabular-nums; }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-slate-950/60 backdrop-blur-xl no-border bg-slate-900/10">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-6 h-20">
+<div class="text-xl font-bold tracking-tighter text-slate-50">Calculadora CLT x CNPJ</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-400 hover:text-slate-100 transition-colors font-sans tracking-tight" href="#">Calculadora</a>
+<a class="text-slate-400 hover:text-slate-100 transition-colors font-sans tracking-tight" href="#">Oportunidades</a>
+<a class="text-amber-500 font-semibold border-b-2 border-amber-600 pb-1 font-sans tracking-tight" href="#">Blog</a>
+<a class="text-slate-400 hover:text-slate-100 transition-colors font-sans tracking-tight" href="#">Recursos</a>
+</div>
+<button class="bg-secondary text-on-secondary px-6 py-2 rounded-xl font-sans text-sm uppercase tracking-widest hover:opacity-90 transition-all">Entrar</button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
+<!-- Article Content -->
+<article class="lg:col-span-8">
+<!-- Hero Header -->
+<header class="mb-12">
+<div class="flex items-center gap-4 mb-6">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Carreira &amp; PJ</span>
+<span class="text-on-surface-variant text-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                            14 de Outubro, 2024
+                        </span>
+</div>
+<h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter text-on-surface mb-8 leading-[1.1]">
+                        Como negociar seu primeiro contrato PJ
+                    </h1>
+<p class="text-xl text-on-surface-variant leading-relaxed mb-10 border-l-4 border-secondary pl-6">
+                        A transição de CLT para PJ exige mais do que apenas uma mudança de contrato; exige uma mentalidade de arquiteto financeiro para garantir que sua liberdade venha acompanhada de segurança.
+                    </p>
+<div class="aspect-[21/9] rounded-full overflow-hidden mb-12 relative">
+<img alt="Professional negotiation" class="w-full h-full object-cover" data-alt="Modern high-end office interior with two professionals shaking hands through a glass partition, warm golden hour lighting, cinematic atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmEa_-CUonOjPeMEFj2yDaWSpHd1HdfnHv4WHExSFRZNP9hGSedqJbjdZU69dvSV8T4QQJt9O-EjG9av9BW8EhJVWZoXGSMd_KJSRkN9ImTOv_O8FumwcSxbJzay-7dOHD0ToE9rU82kWSWCp8N2EL2YkQ19y9dCfBqOjnClg-qZHxr3be6XNWUhQ26OVTKZic_z5lS9RCDlLx-NnAqTR0K6JhlVreoColXWosIC1dvdOZ3NQk6Si8qc3xjgA25_9KQmUJKpXc8x4"/>
+</div>
+</header>
+<!-- Body Text -->
+<div class="space-y-8 text-lg leading-relaxed text-on-surface-variant">
+<p>
+                        A primeira proposta de contrato PJ costuma ser um misto de empolgação e medo. Para muitos profissionais, o valor bruto parece astronômico comparado ao salário CLT, mas sem o suporte de um "arquiteto fiscal", é fácil cair em armadilhas de fluxo de caixa e impostos mal calculados.
+                    </p>
+<h2 class="text-3xl font-bold text-on-surface tracking-tight pt-4">1. O Valor da Hora não é o seu Salário</h2>
+<p>
+                        Diferente do CLT, onde o custo do seu trabalho é diluído em benefícios e encargos pagos pela empresa, no PJ você é a sua própria empresa. Ao negociar, você deve considerar o custo de férias, 13º salário, FGTS e, principalmente, a sua previdência privada. 
+                    </p>
+<div class="bg-surface-container-low p-8 rounded-full border-l-4 border-secondary my-10">
+<p class="text-on-surface italic font-medium">
+                            "Uma regra de ouro no mercado brasileiro: seu faturamento bruto PJ deve ser, no mínimo, 60% a 70% superior ao seu antigo salário líquido CLT para manter o mesmo padrão de vida e segurança."
+                        </p>
+</div>
+<h2 class="text-3xl font-bold text-on-surface tracking-tight pt-4">2. Flexibilidade como Moeda de Troca</h2>
+<p>
+                        Se a empresa não consegue chegar no valor financeiro que você arquitetou, use a natureza do contrato PJ a seu favor. Você pode negociar menos horas semanais, entregas por projeto ou a possibilidade de atender outros clientes simultaneamente.
+                    </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-12">
+<div class="bg-surface-container-high p-8 rounded-xl">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">gavel</span>
+<h3 class="text-xl font-bold text-on-surface mb-2">Cláusulas de Rescisão</h3>
+<p class="text-sm">Sempre negocie um aviso prévio de 30 a 60 dias. Sem a proteção do FGTS, o tempo é seu único seguro-desemprego.</p>
+</div>
+<div class="bg-surface-container-high p-8 rounded-xl">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">payments</span>
+<h3 class="text-xl font-bold text-on-surface mb-2">Reajustes Anuais</h3>
+<p class="text-sm">Garanta que o contrato preveja reajuste automático por índices como IPCA ou IGPM para proteger seu poder de compra.</p>
+</div>
+</div>
+<h2 class="text-3xl font-bold text-on-surface tracking-tight pt-4">3. A Anatomia do Contrato Perfeito</h2>
+<p>
+                        Não aceite contratos genéricos. Cada detalhe deve ser desenhado para sua proteção. Verifique se o escopo de trabalho está bem definido para evitar o "escopo creeping" (quando pedem mais do que o contratado sem pagar extra).
+                    </p>
+<div class="my-12">
+<img alt="Document and pen" class="w-full h-80 object-cover rounded-xl" data-alt="Close-up of a high-quality fountain pen resting on a signed legal document with sophisticated beige and gold tones, soft focus background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJeBByGwkQNadv6XK-CMhenVfCLnNXcLK1UQIGBhYpwmGD7r_zy1NwCt5sUEv9Mnn-OK3EblXMaCaKpDyWGSqDyGnyeyHsEp_oF3R8iP8yFWOl_JPXjNc35MuNghKFqD6tXTmlRS1e44ng-pxMFhtbe2qmQLiGcYEzCFOlKQDHb3UUcuaEOlr2CtaGbNLlpoM8SzTb_lp9pPMPcJViS4JKyNa921-W8Nzv066Si4XYU44bsPLV7xuofGOtpL5FNOdTu5VbZlq4s_4"/>
+</div>
+<p>
+                        Lembre-se: em uma negociação PJ, você não é um funcionário pedindo um favor, mas um prestador de serviço oferecendo uma solução estratégica. O tom deve ser de parceria comercial, não de subordinação.
+                    </p>
+</div>
+<!-- Tags & Share -->
+<footer class="mt-16 pt-8 border-t border-outline-variant flex flex-wrap justify-between items-center gap-4">
+<div class="flex gap-2">
+<span class="text-xs bg-surface-container text-on-tertiary-container px-3 py-1 rounded-full">#Negociação</span>
+<span class="text-xs bg-surface-container text-on-tertiary-container px-3 py-1 rounded-full">#CarreiraPJ</span>
+<span class="text-xs bg-surface-container text-on-tertiary-container px-3 py-1 rounded-full">#Finanças</span>
+</div>
+<div class="flex gap-4">
+<button class="text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button class="text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+</div>
+</footer>
+</article>
+<!-- Sidebar CTA & Extras -->
+<aside class="lg:col-span-4 space-y-8">
+<!-- Calculator CTA -->
+<div class="sticky top-28 bg-primary-container text-on-primary rounded-xl p-8 overflow-hidden relative">
+<div class="relative z-10">
+<h3 class="text-2xl font-bold text-slate-50 mb-4 tracking-tight">Não negocie no escuro.</h3>
+<p class="text-on-primary-container mb-8 text-sm leading-relaxed">
+                            Use nossa calculadora exclusiva para descobrir exatamente quanto você deve pedir no seu contrato PJ para superar seu salário atual.
+                        </p>
+<a class="block w-full bg-gradient-to-br from-secondary to-secondary-container text-on-secondary text-center py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-[1.02] transition-transform" href="#">
+                            Acessar Calculadora
+                        </a>
+</div>
+<!-- Abstract Background Shape -->
+<div class="absolute -bottom-12 -right-12 w-48 h-48 bg-secondary opacity-20 rounded-full blur-3xl"></div>
+</div>
+<!-- Related Posts -->
+<div class="bg-surface-container-low p-8 rounded-xl">
+<h4 class="text-lg font-bold text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+                        Mais Lidos
+                    </h4>
+<ul class="space-y-6">
+<li class="group cursor-pointer">
+<a class="block" href="#">
+<span class="text-xs text-secondary font-bold uppercase tracking-widest mb-1 block">Impostos</span>
+<h5 class="font-bold text-on-surface group-hover:text-secondary transition-colors leading-tight">Como escolher o CNAE correto para pagar menos impostos</h5>
+</a>
+</li>
+<li class="group cursor-pointer">
+<a class="block" href="#">
+<span class="text-xs text-secondary font-bold uppercase tracking-widest mb-1 block">Planejamento</span>
+<h5 class="font-bold text-on-surface group-hover:text-secondary transition-colors leading-tight">A reserva de emergência ideal para quem é PJ</h5>
+</a>
+</li>
+<li class="group cursor-pointer">
+<a class="block" href="#">
+<span class="text-xs text-secondary font-bold uppercase tracking-widest mb-1 block">Direito</span>
+<h5 class="font-bold text-on-surface group-hover:text-secondary transition-colors leading-tight">O que não pode faltar no seu contrato de prestação de serviços</h5>
+</a>
+</li>
+</ul>
+</div>
+<!-- Newsletter -->
+<div class="bg-surface-container-highest p-8 rounded-xl border border-white/20">
+<h4 class="text-lg font-bold text-on-surface mb-2">Newsletter</h4>
+<p class="text-sm text-on-surface-variant mb-6">Receba pílulas de inteligência fiscal toda segunda-feira.</p>
+<div class="space-y-3">
+<input class="w-full bg-surface-bright border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-secondary/50" placeholder="seu@email.com" type="email"/>
+<button class="w-full bg-on-surface text-surface-container-lowest py-3 rounded-xl text-sm font-bold uppercase tracking-widest">Inscrever-se</button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-950 tonal-shift bg-slate-900 w-full py-12 px-6">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 max-w-7xl mx-auto">
+<div class="text-sm font-bold text-slate-300">Fiscal Architect</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-slate-500 hover:text-slate-300 transition-colors font-sans text-xs leading-relaxed" href="#">Calculadora</a>
+<a class="text-slate-500 hover:text-slate-300 transition-colors font-sans text-xs leading-relaxed" href="#">Oportunidades</a>
+<a class="text-amber-500 underline font-sans text-xs leading-relaxed" href="#">Blog</a>
+<a class="text-slate-500 hover:text-slate-300 transition-colors font-sans text-xs leading-relaxed" href="#">Recursos</a>
+<a class="text-slate-500 hover:text-slate-300 transition-colors font-sans text-xs leading-relaxed" href="#">Privacidade</a>
+<a class="text-slate-500 hover:text-slate-300 transition-colors font-sans text-xs leading-relaxed" href="#">Termos</a>
+</div>
+<div class="text-slate-500 font-sans text-xs leading-relaxed text-center md:text-right">
+                © 2024 The Fiscal Architect. Todos os direitos reservados.
+            </div>
+</div>
+</footer>
+</body></html>

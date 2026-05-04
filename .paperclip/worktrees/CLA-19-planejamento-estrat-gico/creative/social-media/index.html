@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLT x PJ - Social Media Templates</title>
+  <link rel="stylesheet" href="templates.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui;
+      background: #0a0a0f;
+      color: #fff;
+      padding: 40px;
+    }
+    h1 { margin-bottom: 16px; color: #d4a853; font-size: 32px; }
+    h2 { margin: 40px 0 20px; color: #b0b0bc; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; }
+    .subtitle { color: #6e6e7a; margin-bottom: 40px; font-size: 16px; }
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .template-preview {
+      background: #14141a;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .template-preview .template-name {
+      padding: 16px;
+      background: #1e1e28;
+      font-size: 14px;
+      color: #6e6e7a;
+      border-bottom: 1px solid #2a2a36;
+    }
+    .template-preview iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+    }
+    .template-preview.instagram iframe { height: 280px; }
+    .template-preview.instagram-story iframe { height: 500px; }
+    .template-preview.instagram-carousel iframe { height: 280px; }
+    .template-preview.linkedin iframe { height: 156px; }
+    .template-preview.twitter iframe { height: 168px; }
+    .template-preview.youtube iframe { height: 168px; }
+    .guide-link {
+      display: inline-block;
+      margin-top: 40px;
+      padding: 16px 32px;
+      background: #14141a;
+      border: 2px solid #2a2a36;
+      border-radius: 12px;
+      color: #d4a853;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .guide-link:hover { border-color: #d4a853; }
+  </style>
+</head>
+<body>
+  <h1>Social Media Templates</h1>
+  <p class="subtitle">CLT x PJ — Brand-aligned templates for all platforms</p>
+
+  <h2>Instagram</h2>
+  <div class="preview-grid">
+    <div class="template-preview instagram">
+      <div class="template-name">Post - Hero Comparison (1080×1080)</div>
+      <iframe src="instagram-post.html"></iframe>
+    </div>
+    <div class="template-preview instagram-story">
+      <div class="template-name">Story - Question Hook (1080×1920)</div>
+      <iframe src="instagram-story.html"></iframe>
+    </div>
+    <div class="template-preview instagram-carousel">
+      <div class="template-name">Carousel - 5 Slides (1080×1080 each)</div>
+      <iframe src="instagram-carousel.html"></iframe>
+    </div>
+  </div>
+
+  <h2>LinkedIn</h2>
+  <div class="preview-grid">
+    <div class="template-preview linkedin">
+      <div class="template-name">Post - Data Comparison (1200×627)</div>
+      <iframe src="linkedin-post.html"></iframe>
+    </div>
+  </div>
+
+  <h2>Twitter / X</h2>
+  <div class="preview-grid">
+    <div class="template-preview twitter">
+      <div class="template-name">Card - Split Layout (1200×675)</div>
+      <iframe src="twitter-card.html"></iframe>
+    </div>
+  </div>
+
+  <h2>YouTube</h2>
+  <div class="preview-grid">
+    <div class="template-preview youtube">
+      <div class="template-name">Thumbnail - Bold Text (1280×720)</div>
+      <iframe src="youtube-thumb.html"></iframe>
+    </div>
+  </div>
+
+  <a href="CANVA-FIGMA-GUIDE.md" class="guide-link">📖 Canva / Figma Import Guide</a>
+</body>
+</html>

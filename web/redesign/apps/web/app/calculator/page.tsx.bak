@@ -1,0 +1,217 @@
+'use client'
+
+import { useState, useMemo } from 'react'
+import { MaterialSymbol } from '@/components/MaterialSymbol'
+import { Navbar } from '@/components/Navbar'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Slider } from '@/components/ui/slider'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { calculateSimulation } from '@/lib/simulation'
+
+export default function CalculatorPage() {
+  const [grossSalary, setGrossSalary] = useState(15000)
+  const results = useMemo(() => calculateSimulation(grossSalary), [grossSalary])
+
+  const formatCurrency = (val: number) =>
+    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val)
+
+  return (
+    <main className="bg-white dark:bg-slate-950 min-h-screen">
+      <Navbar />
+
+      <div className="pt-32 pb-24 px-4 sm:px-6 max-w-7xl mx-auto">
+        {/* Header Section */}
+        <div className="mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-950 dark:text-white mb-4">
+            Comparador CLT vs PJ
+          </h1>
+          <p className="text-lg text-slate-600 dark:text-slate-400">
+            Simule sua situação financeira para diferentes cenários de salário bruto
+          </p>
+        </div>
+
+        {/* Input Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          {/* Left Panel - Input Controls */}
+          <div className="lg:col-span-1">
+            <Card className="p-6 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+              <Label className="text-sm font-semibold text-slate-950 dark:text-white mb-4 block">
+                Salário Bruto Mensal
+              </Label>
+
+              {/* Input Field */}
+              <div className="mb-6">
+                <Input
+                  type="number"
+                  value={grossSalary}
+                  onChange={(e) => setGrossSalary(Number(e.target.value))}
+                  className="flex-1 bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-950 dark:text-white font-bold rounded-lg"
+                />
+              </div>
+
+              {/* Range Slider */}
+              <div className="pt-2">
+                <Slider
+                  value={[grossSalary]}
+                  onValueChange={(value: readonly number[]) => setGrossSalary(value[0])}
+                  min={1000}
+                  max={100000}
+                  step={1000}
+                  className="w-full"
+                />
+              </div>
+
+              <div className="text-xs text-slate-600 dark:text-slate-400 mt-2">
+                R$ 1.000 - R$ 100.000
+              </div>
+            </Card>
+          </div>
+
+          {/* Right Panel - Results */}
+          <div className="lg:col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* CLT Card */}
+              <Card className="p-4 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-2">
+                  Regime CLT
+                </div>
+                <div className="text-2xl font-bold text-slate-950 dark:text-white mb-4">
+                  {formatCurrency(results.clt.liquidSalary)}
+                </div>
+                <div className="space-y-1 text-xs text-slate-600 dark:text-slate-400">
+                  <div>Bruto: {formatCurrency(results.clt.grossSalary)}</div>
+                  <div>Descontos: {formatCurrency(results.clt.deductions)}</div>
+                  <div>Benefícios: {formatCurrency(results.clt.benefits)}</div>
+                </div>
+              </Card>
+
+              {/* PJ Card */}
+              <Card className="p-4 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-2">
+                  Regime PJ
+                </div>
+                <div className="text-2xl font-bold text-slate-950 dark:text-white mb-4">
+                  {formatCurrency(results.pj.liquidSalary)}
+                </div>
+                <div className="space-y-1 text-xs text-slate-600 dark:text-slate-400">
+                  <div>Bruto: {formatCurrency(results.pj.grossSalary)}</div>
+                  <div>Impostos: {formatCurrency(results.pj.taxes)}</div>
+                  <div>Economia: {formatCurrency(results.pj.netIncome)}</div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </div>
+
+        {/* Detailed Breakdown */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* CLT Breakdown */}
+          <Card className="p-6 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+            <h2 className="text-lg font-bold text-slate-950 dark:text-white mb-4 flex items-center gap-2">
+              <Badge className="bg-blue-100 text-blue-900">CLT</Badge>
+              Detalhamento
+            </h2>
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span className="text-slate-600 dark:text-slate-400">Salário Bruto</span>
+                <span className="font-semibold text-slate-950 dark:text-white">{formatCurrency(results.clt.grossSalary)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-600 dark:text-slate-400">INSS (-8%)</span>
+                <span className="font-semibold text-slate-950 dark:text-white">{formatCurrency(results.clt.inss)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-600 dark:text-slate-400">IRRF</span>
+                <span className="font-semibold text-slate-950 dark:text-white">{formatCurrency(results.clt.irrf)}</span>
+              </div>
+              <div className="flex justify-between pt-3 border-t border-slate-200 dark:border-slate-700">
+                <span className="text-slate-600 dark:text-slate-400">Descontos Totais</span>
+                <span className="font-semibold text-slate-950 dark:text-white">{formatCurrency(results.clt.deductions)}</span>
+              </div>
+              <div className="flex justify-between pt-3 border-t border-slate-200 dark:border-slate-700 text-green-600 dark:text-green-400">
+                <span>Salário Líquido</span>
+                <span className="font-bold">{formatCurrency(results.clt.liquidSalary)}</span>
+              </div>
+              <div className="flex justify-between text-amber-600 dark:text-amber-400">
+                <span>Benefícios Mensais</span>
+                <span className="font-bold">{formatCurrency(results.clt.benefits)}</span>
+              </div>
+            </div>
+          </Card>
+
+          {/* PJ Breakdown */}
+          <Card className="p-6 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+            <h2 className="text-lg font-bold text-slate-950 dark:text-white mb-4 flex items-center gap-2">
+              <Badge className="bg-amber-100 text-amber-900">PJ</Badge>
+              Detalhamento
+            </h2>
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span className="text-slate-600 dark:text-slate-400">Salário Bruto</span>
+                <span className="font-semibold text-slate-950 dark:text-white">{formatCurrency(results.pj.grossSalary)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-600 dark:text-slate-400">ISS (5%)</span>
+                <span className="font-semibold text-slate-950 dark:text-white">{formatCurrency(results.pj.iss)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-600 dark:text-slate-400">IRRF (15%)</span>
+                <span className="font-semibold text-slate-950 dark:text-white">{formatCurrency(results.pj.irrf)}</span>
+              </div>
+              <div className="flex justify-between pt-3 border-t border-slate-200 dark:border-slate-700">
+                <span className="text-slate-600 dark:text-slate-400">Impostos Totais</span>
+                <span className="font-semibold text-slate-950 dark:text-white">{formatCurrency(results.pj.taxes)}</span>
+              </div>
+              <div className="flex justify-between pt-3 border-t border-slate-200 dark:border-slate-700 text-green-600 dark:text-green-400">
+                <span>Líquido Estimado</span>
+                <span className="font-bold">{formatCurrency(results.pj.liquidSalary)}</span>
+              </div>
+              <div className="flex justify-between text-red-600 dark:text-red-400">
+                <span>Custos Adicionais</span>
+                <span className="font-bold">~R$ 500-1.000</span>
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* Comparison Summary */}
+        <Card className="mt-8 p-6 border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950">
+          <h2 className="text-lg font-bold text-amber-950 dark:text-amber-100 mb-4">
+            Resumo Comparativo
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div>
+              <div className="text-amber-600 dark:text-amber-400 font-semibold mb-1">Diferença Líquida</div>
+              <div className="text-2xl font-bold text-amber-950 dark:text-amber-100">
+                {formatCurrency(Math.abs(results.pj.liquidSalary - results.clt.liquidSalary))}
+              </div>
+              <div className="text-xs text-amber-700 dark:text-amber-300 mt-1">
+                {results.pj.liquidSalary > results.clt.liquidSalary ? 'PJ tem vantagem' : 'CLT tem vantagem'}
+              </div>
+            </div>
+            <div>
+              <div className="text-amber-600 dark:text-amber-400 font-semibold mb-1">Carga Tributária</div>
+              <div className="text-2xl font-bold text-amber-950 dark:text-amber-100">
+                {((results.clt.deductions / results.clt.grossSalary) * 100).toFixed(1)}% CLT
+              </div>
+              <div className="text-xs text-amber-700 dark:text-amber-300 mt-1">
+                vs {((results.pj.taxes / results.pj.grossSalary) * 100).toFixed(1)}% PJ
+              </div>
+            </div>
+            <div>
+              <div className="text-amber-600 dark:text-amber-400 font-semibold mb-1">Benefícios CLT</div>
+              <div className="text-2xl font-bold text-amber-950 dark:text-amber-100">
+                {formatCurrency(results.clt.benefits)}
+              </div>
+              <div className="text-xs text-amber-700 dark:text-amber-300 mt-1">
+                Não incluso em PJ
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </main>
+  )
+}

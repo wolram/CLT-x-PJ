@@ -1,0 +1,102 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/cltxpj.app.br/**'
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'web/cltxpj.app.br/package-lock.json'
+
+      - name: Install root dependencies
+        working-directory: web/cltxpj.app.br
+        run: npm install
+
+      - name: Run tests
+        working-directory: web/cltxpj.app.br
+        run: npm test
+
+      - name: Install admin dependencies
+        working-directory: web/cltxpj.app.br/admin
+        run: npm install
+
+      - name: Build admin app
+        working-directory: web/cltxpj.app.br/admin
+        run: npm run build
+        env:
+          VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Prepare deployment directory
+        run: |
+          mkdir -p public/admin
+          mkdir -p public/legacy-calc
+          mkdir -p public/exp-v2
+          
+          # 1. Main Production Site (Root)
+          if [ -d web/cltxpj.app.br ]; then
+            cp web/cltxpj.app.br/*.html public/ 2>/dev/null || true
+            [ -d web/cltxpj.app.br/css ] && cp -r web/cltxpj.app.br/css public/ || true
+            [ -d web/cltxpj.app.br/js ] && cp -r web/cltxpj.app.br/js public/ || true
+            [ -d web/cltxpj.app.br/blog ] && cp -r web/cltxpj.app.br/blog public/ || true
+            [ -f web/cltxpj.app.br/logo.jpg ] && cp web/cltxpj.app.br/logo.jpg public/ || true
+            [ -d web/cltxpj.app.br/admin-dist ] && cp -r web/cltxpj.app.br/admin-dist/* public/admin/ || true
+          fi
+
+          # 2. Legacy Calculator Version
+          if [ -d archive/web-legacy/CalcCLTxCNPJ ]; then
+            cp -r archive/web-legacy/CalcCLTxCNPJ/* public/legacy-calc/ 2>/dev/null || true
+          fi
+
+          # 3. Experiment V2
+          if [ -d archive/experiments/cltxcnpjv2 ]; then
+            cp -r archive/experiments/cltxcnpjv2/* public/exp-v2/ 2>/dev/null || true
+          fi
+
+          # Add .nojekyll to bypass Jekyll processing
+          touch public/.nojekyll
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './public'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: test-and-build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

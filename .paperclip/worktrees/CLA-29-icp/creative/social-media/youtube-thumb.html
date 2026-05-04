@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Thumbnail</title>
+  <link rel="stylesheet" href="templates.css">
+  <style>
+    body { margin: 0; padding: 0; background: #000; }
+    .scaled { transform: scale(0.25); transform-origin: top left; width: 400%; height: 400%; }
+  </style>
+</head>
+<body>
+  <div class="scaled">
+    <!-- YouTube thumbnail: Bold text + brand badge -->
+    <div class="template-youtube-thumb social-template" style="display:grid; grid-template-rows:1fr auto; align-items:end; position:relative;">
+      <div style="position:absolute; top:40px; left:40px; display:flex; align-items:center; gap:16px;">
+        <div class="logo-badge" style="font-size:28px; font-weight:700; background:rgba(0,0,0,0.6); padding:10px 20px; border-radius:8px;">CLT x PJ</div>
+      </div>
+      <div style="position:absolute; top:40px; right:40px;">
+        <div class="tag" style="font-size:20px; font-weight:600; background:var(--clt-x-pj-gold); color:var(--clt-x-pj-primary-bg); padding:8px 16px; border-radius:6px;">NOVO</div>
+      </div>
+      <div class="content" style="padding:40px;">
+        <div class="headline" style="font-size:64px; font-weight:700; line-height:1.1; margin-bottom:16px;">CLT ou PJ:<br>Qual vale mais<br>a pena em 2026?</div>
+        <div style="font-size:24px; color:var(--clt-x-pj-text-secondary);">Comparação real com números</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
